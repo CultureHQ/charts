@@ -1,17 +1,10 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { memo, useState, useEffect, useMemo } from "react";
+
 import getColorList from "./get-color-list";
+import useScalarAnimation from "./use-scalar-animation";
 
 const TWO_PI = 2 * Math.PI;
 const getCoords = percent => [Math.cos(TWO_PI * percent), Math.sin(TWO_PI * percent)];
-
-const getScalar = time => {
-  if (time < 0.5) {
-    return 8 * Math.pow(time, 4);
-  }
-
-  const inverse = 1 - time;
-  return 1 - 8 * Math.pow(inverse, 4);
-};
 
 const getSlices = (data, colors, scalar) => {
   const total = Object.keys(data).reduce((accum, key) => accum + data[key], 0);
@@ -43,29 +36,9 @@ const getSlices = (data, colors, scalar) => {
   });
 };
 
-const PieChart = ({ data }) => {
+const PieChart = memo(({ data }) => {
   const colors = useMemo(() => getColorList(Object.keys(data).length), [data]);
-
-  const [scalar, setScalar] = useState(0);
-  const [opacity, setOpacity] = useState(0);
-
-  useEffect(() => {
-    let time = 0;
-
-    const interval = setInterval(() => {
-      time += 0.015;
-
-      if (time >= 1) {
-        clearInterval(interval);
-        return;
-      }
-
-      setScalar(getScalar(time));
-      setOpacity(time);
-    }, 20);
-
-    return () => clearInterval(interval);
-  }, [data]);
+  const [scalar, opacity] = useScalarAnimation();
 
   return (
     <svg viewBox="-1 -1 2 2" style={{ transform: "rotate(-90deg)" }}>
@@ -77,6 +50,6 @@ const PieChart = ({ data }) => {
       ))}
     </svg>
   );
-};
+});
 
 export default PieChart;
