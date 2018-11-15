@@ -4,7 +4,7 @@ import getColorList from "./get-color-list";
 const TWO_PI = 2 * Math.PI;
 const getCoords = percent => [Math.cos(TWO_PI * percent), Math.sin(TWO_PI * percent)];
 
-const getSlices = (data, scalar, colors) => {
+const getSlices = (data, colors, scalar) => {
   const total = Object.keys(data).reduce((accum, key) => accum + data[key], 0);
   let cursor = 0;
 
@@ -35,8 +35,10 @@ const getScalar = time => {
 };
 
 const PieChart = ({ data }) => {
+  const colors = useMemo(() => getColorList(Object.keys(data).length), [data]);
+
   const [scalar, setScalar] = useState(0);
-  const colors = useMemo(() => getColorList(Object.keys(data).length), data);
+  const [opacity, setOpacity] = useState(0);
 
   useEffect(() => {
     let time = 0;
@@ -50,17 +52,16 @@ const PieChart = ({ data }) => {
       }
 
       setScalar(getScalar(time));
+      setOpacity(time);
     }, 20);
 
     return () => clearInterval(interval);
   }, [data]);
 
-  const slices = getSlices(data, scalar, colors);
-
   return (
     <svg viewBox="-1 -1 2 2" style={{ transform: "rotate(-90deg)" }}>
-      {slices.map(({ key, d, color }) => (
-        <path key={key} d={d} fill={color} />
+      {getSlices(data, colors, scalar).map(({ key, d, color }) => (
+        <path key={key} d={d} fill={color} opacity={opacity} />
       ))}
     </svg>
   );

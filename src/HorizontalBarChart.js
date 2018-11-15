@@ -30,7 +30,7 @@ const HorizontalBarChart = ({ data }) => {
               attributeName="opacity"
               from={0}
               to={1}
-              dur=".1s"
+              dur="1.5s"
               fill="freeze"
             />
             <animateTransform
