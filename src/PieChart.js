@@ -4,6 +4,15 @@ import getColorList from "./get-color-list";
 const TWO_PI = 2 * Math.PI;
 const getCoords = percent => [Math.cos(TWO_PI * percent), Math.sin(TWO_PI * percent)];
 
+const getScalar = time => {
+  if (time < 0.5) {
+    return 8 * Math.pow(time, 4);
+  }
+
+  const inverse = 1 - time;
+  return 1 - 8 * Math.pow(inverse, 4);
+};
+
 const getSlices = (data, colors, scalar) => {
   const total = Object.keys(data).reduce((accum, key) => accum + data[key], 0);
   let cursor = 0;
@@ -19,19 +28,19 @@ const getSlices = (data, colors, scalar) => {
 
     return {
       key,
-      d: `M ${startX} ${startY} A 1 1 0 ${largeArc} 1 ${endX} ${endY} L 0 0 Z`,
+      outerPath: [
+        `M ${startX} ${startY}`,
+        `A 1 1 0 ${largeArc} 1 ${endX} ${endY}`,
+        `L 0 0 Z`
+      ].join(" "),
+      innerPath: [
+        `M ${startX * .95} ${startY * .95}`,
+        `A .95 .95 0 ${largeArc} 1 ${endX * .95} ${endY * .95}`,
+        `L 0 0 Z`
+      ].join(" "),
       color: colors[index]
     };
   });
-};
-
-const getScalar = time => {
-  if (time < 0.5) {
-    return 8 * Math.pow(time, 4);
-  }
-
-  const inverse = 1 - time;
-  return 1 - 8 * Math.pow(inverse, 4);
 };
 
 const PieChart = ({ data }) => {
@@ -60,8 +69,11 @@ const PieChart = ({ data }) => {
 
   return (
     <svg viewBox="-1 -1 2 2" style={{ transform: "rotate(-90deg)" }}>
-      {getSlices(data, colors, scalar).map(({ key, d, color }) => (
-        <path key={key} d={d} fill={color} opacity={opacity} />
+      {getSlices(data, colors, scalar).map(({ key, outerPath, innerPath, color }) => (
+        <g key={key}>
+          <path d={outerPath} fill={color} opacity={opacity * .5} />
+          <path d={innerPath} fill={color} opacity={opacity} />
+        </g>
       ))}
     </svg>
   );
