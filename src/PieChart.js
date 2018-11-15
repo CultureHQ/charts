@@ -6,7 +6,7 @@ import useScalarAnimation from "./use-scalar-animation";
 const TWO_PI = 2 * Math.PI;
 const getCoords = percent => [Math.cos(TWO_PI * percent), Math.sin(TWO_PI * percent)];
 
-const getSlices = (data, colors, scalar) => {
+const getSlices = (data, scalar) => {
   const total = Object.keys(data).reduce((accum, key) => accum + data[key], 0);
   let cursor = 0;
 
@@ -30,23 +30,54 @@ const getSlices = (data, colors, scalar) => {
         `M ${startX * .95} ${startY * .95}`,
         `A .95 .95 0 ${largeArc} 1 ${endX * .95} ${endY * .95}`,
         `L 0 0 Z`
-      ].join(" "),
-      color: colors[index]
+      ].join(" ")
     };
   });
 };
 
-const PieChart = memo(({ data, style = {} }) => {
-  const colors = useMemo(() => getColorList(Object.keys(data).length), [data]);
-  const [scalar, opacity] = useScalarAnimation();
+const PieChartSlice = ({ outerPath, innerPath, color, opacity, scaling }) => {
+  const [hovering, setHovering] = useState(false);
+
+  const onMouseEnter = () => setHovering(true);
+  const onMouseLeave = () => setHovering(false);
+
+  const transform = hovering && !scaling ? "scale(1.05)" : null;
 
   return (
-    <svg viewBox="-1 -1 2 2" style={{ transform: "rotate(-90deg)", ...style }}>
-      {getSlices(data, colors, scalar).map(({ key, outerPath, innerPath, color }) => (
-        <g key={key}>
-          <path d={outerPath} fill={color} opacity={opacity * .5} />
-          <path d={innerPath} fill={color} opacity={opacity} />
-        </g>
+    <g
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      style={{ transition: scaling ? null : "transform 300ms" }}
+      transform={transform}
+    >
+      <path
+        d={outerPath}
+        fill={color}
+        opacity={opacity * (hovering ? .6 : .3)}
+        style={{ transition: scaling ? null : "opacity 300ms" }}
+      />
+      <path d={innerPath} fill={color} opacity={opacity} />
+    </g>
+  );
+};
+
+const pieChartStyle = { transform: "rotate(-90deg)", overflow: "visible" };
+
+const PieChart = memo(({ data, style = {} }) => {
+  const colors = useMemo(() => getColorList(Object.keys(data).length), [data]);
+  const [opacity, scalar, scaling] = useScalarAnimation();
+
+  return (
+    <svg viewBox="-1 -1 2 2" style={{ ...pieChartStyle, ...style }}>
+      {getSlices(data, scalar).map(({ key, outerPath, innerPath }, index) => (
+        <PieChartSlice
+          key={key}
+          outerPath={outerPath}
+          innerPath={innerPath}
+          color={colors[index]}
+          opacity={opacity}
+          scaling={scaling}
+        />
       ))}
     </svg>
   );

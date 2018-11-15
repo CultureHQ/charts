@@ -17,7 +17,7 @@ const getChartConfig = data => {
 
 const HorizontalBarChart = memo(({ data, style = {} }) => {
   const { colors, maxValue, maxKeyLen, viewBox } = useMemo(() => getChartConfig(data), [data]);
-  const [scalar, opacity] = useScalarAnimation();
+  const [opacity, scalar] = useScalarAnimation();
 
   return (
     <svg viewBox={viewBox} style={style}>

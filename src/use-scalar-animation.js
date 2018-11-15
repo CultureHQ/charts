@@ -10,8 +10,9 @@ const getScalar = time => {
 };
 
 const useScalarAnimation = () => {
-  const [scalar, setScalar] = useState(0);
   const [opacity, setOpacity] = useState(0);
+  const [scalar, setScalar] = useState(0);
+  const [scaling, setScaling] = useState(true);
 
   useEffect(() => {
     let time = 0;
@@ -21,6 +22,7 @@ const useScalarAnimation = () => {
 
       if (time >= 1) {
         clearInterval(interval);
+        setScaling(false);
         return;
       }
 
@@ -31,7 +33,7 @@ const useScalarAnimation = () => {
     return () => clearInterval(interval);
   }, []);
 
-  return [scalar, opacity]
+  return [opacity, scalar, scaling];
 };
 
 export default useScalarAnimation;
