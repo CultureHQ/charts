@@ -1,0 +1,9 @@
+.container {
+  margin: 0 auto;
+  width: 80%;
+}
+
+svg {
+  margin-bottom: 100px;
+  max-height: 400px;
+}
