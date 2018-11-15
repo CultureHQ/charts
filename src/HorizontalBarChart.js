@@ -1,7 +1,7 @@
-import React from "react";
+import React, { memo } from "react";
 import getColorList from "./get-color-list";
 
-const HorizontalBarChart = ({ data }) => {
+const HorizontalBarChart = memo(({ data }) => {
   const colors = getColorList(Object.keys(data).length);
 
   const maxValue = Math.max(...Object.values(data));
@@ -44,6 +44,6 @@ const HorizontalBarChart = ({ data }) => {
       ))}
     </svg>
   );
-};
+});
 
 export default HorizontalBarChart;
