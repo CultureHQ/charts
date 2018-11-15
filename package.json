@@ -1,0 +1,19 @@
+{
+  "name": "@culturehq/charts",
+  "version": "1.0.0",
+  "description": "A tiny charting library",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CultureHQ/charts.git"
+  },
+  "author": "Kevin Deisz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CultureHQ/charts/issues"
+  },
+  "homepage": "https://github.com/CultureHQ/charts#readme"
+}
