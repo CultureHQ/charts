@@ -36,12 +36,12 @@ const getSlices = (data, colors, scalar) => {
   });
 };
 
-const PieChart = memo(({ data }) => {
+const PieChart = memo(({ data, style = {} }) => {
   const colors = useMemo(() => getColorList(Object.keys(data).length), [data]);
   const [scalar, opacity] = useScalarAnimation();
 
   return (
-    <svg viewBox="-1 -1 2 2" style={{ transform: "rotate(-90deg)" }}>
+    <svg viewBox="-1 -1 2 2" style={{ transform: "rotate(-90deg)", ...style }}>
       {getSlices(data, colors, scalar).map(({ key, outerPath, innerPath, color }) => (
         <g key={key}>
           <path d={outerPath} fill={color} opacity={opacity * .5} />

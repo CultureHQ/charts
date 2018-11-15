@@ -1,9 +1,5 @@
-.container {
-  margin: 0 auto;
-  width: 80%;
-}
-
 svg {
-  margin-bottom: 100px;
-  max-height: 400px;
+  height: 300px;
+  width: 300px;
+  margin: 10px;
 }

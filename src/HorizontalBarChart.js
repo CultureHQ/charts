@@ -9,25 +9,25 @@ const getChartConfig = data => {
   const maxValue = Math.max(...Object.values(data));
   const maxKeyLen = Math.max(...Object.keys(data).map(key => key.length));
 
-  const maxX = (maxKeyLen + 2) * 10 + 300;
+  const maxX = (maxKeyLen + 2) * 10 + 250;
   const maxY = (Object.keys(data).length - 1) * 40 + 25;
 
   return { colors, maxValue, maxKeyLen, viewBox: `0 0 ${maxX} ${maxY}` };
 };
 
-const HorizontalBarChart = memo(({ data }) => {
+const HorizontalBarChart = memo(({ data, style = {} }) => {
   const { colors, maxValue, maxKeyLen, viewBox } = useMemo(() => getChartConfig(data), [data]);
   const [scalar, opacity] = useScalarAnimation();
 
   return (
-    <svg viewBox={viewBox}>
+    <svg viewBox={viewBox} style={style}>
       {Object.keys(data).map((key, index) => (
         <g key={key}>
           <text x={(maxKeyLen + 1) * 10} y={index * 40} dy="1em" textAnchor="end">
             {key}
           </text>
           <rect
-            width={(data[key] / maxValue) * 300 * scalar}
+            width={(data[key] / maxValue) * 250 * scalar}
             height={25}
             x={(maxKeyLen + 2) * 10}
             y={index * 40}

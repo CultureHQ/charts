@@ -1,23 +1,29 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { HorizontalBarChart, PieChart } from "../src";
+import { HorizontalBarChart, VerticalBarChart, PieChart } from "../src";
 
-const getRandomData = () => Math.floor(Math.random() * 100);
+const getRandomDatum = () => Math.floor(Math.random() * 100);
+const getRandomData = () => ({
+  alpha: getRandomDatum(),
+  beta: getRandomDatum(),
+  gamma: getRandomDatum(),
+  delta: getRandomDatum(),
+  epsilon: getRandomDatum()
+})
 
-const data = {
-  alpha: getRandomData(),
-  beta: getRandomData(),
-  gamma: getRandomData(),
-  delta: getRandomData(),
-  epsilon: getRandomData()
+const style = {
+  height: "300px",
+  width: "300px",
+  margin: "10px"
 };
 
 const App = () => (
-  <div className="container">
-    <HorizontalBarChart data={data} />
-    <PieChart data={data} />
-  </div>
+  <>
+    <HorizontalBarChart data={getRandomData()} style={style} />
+    <VerticalBarChart data={getRandomData()} style={style} />
+    <PieChart data={getRandomData()} style={style} />
+  </>
 );
 
 ReactDOM.render(<App />, document.getElementById("main"));
