@@ -24,7 +24,15 @@ const HorizontalBarChart = ({ data }) => {
             y={index * 40}
             fill={colors[index]}
             style={{ transformBox: "fill-box" }}
+            opacity={0}
           >
+            <animate
+              attributeName="opacity"
+              from={0}
+              to={1}
+              dur=".1s"
+              fill="freeze"
+            />
             <animateTransform
               attributeName="transform"
               type="scale"
