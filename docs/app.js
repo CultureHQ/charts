@@ -1,4 +1,4 @@
-import React, { StrictMode } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 
 import { HorizontalBarChart, PieChart } from "../src";
@@ -14,12 +14,10 @@ const data = {
 };
 
 const App = () => (
-  <StrictMode>
-    <div className="container">
-      <HorizontalBarChart data={data} />
-      <PieChart data={data} />
-    </div>
-  </StrictMode>
+  <div className="container">
+    <HorizontalBarChart data={data} />
+    <PieChart data={data} />
+  </div>
 );
 
 ReactDOM.render(<App />, document.getElementById("main"));

@@ -14,7 +14,7 @@ const HorizontalBarChart = ({ data }) => {
     <svg viewBox={`0 0 ${maxX} ${maxY}`}>
       {Object.keys(data).map((key, index) => (
         <g key={key}>
-          <text x={(maxKeyLen + 1) * 10} y={index * 40} dy="1em" text-anchor="end">
+          <text x={(maxKeyLen + 1) * 10} y={index * 40} dy="1em" textAnchor="end">
             {key}
           </text>
           <rect
@@ -31,7 +31,7 @@ const HorizontalBarChart = ({ data }) => {
               from="0 1"
               to="1 1"
               begin="0s"
-              dur="1s"
+              dur="1.5s"
               repeatCount="0"
               keySplines="0.4, 0, 0.2, 1"
               keyTimes="0; 1"
