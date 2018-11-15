@@ -19,7 +19,7 @@ const getSlices = (data, colors, scalar) => {
 
     return {
       key,
-      d: `M ${startX} ${startY} A 1 1 0 ${largeArc} 1 ${endX} ${endY} L 0 0`,
+      d: `M ${startX} ${startY} A 1 1 0 ${largeArc} 1 ${endX} ${endY} L 0 0 Z`,
       color: colors[index]
     };
   });
