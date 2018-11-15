@@ -1,3 +1,4 @@
+import React from "react";
 import getColorList from "./get-color-list";
 
 const TWO_PI = 2 * Math.PI;
