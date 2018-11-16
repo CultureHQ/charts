@@ -1,7 +1,6 @@
 import React, { useMemo, memo } from "react";
 
 import getColorList from "./get-color-list";
-import useScalarAnimation from "./use-scalar-animation";
 
 const getChartConfig = data => {
   const colors = getColorList(Object.keys(data).length);
@@ -17,7 +16,6 @@ const getChartConfig = data => {
 
 const HorizontalBarChart = memo(({ data }) => {
   const { colors, maxValue, maxKeyLen, viewBox } = useMemo(() => getChartConfig(data), [data]);
-  const [opacity, scalar] = useScalarAnimation();
 
   return (
     <svg viewBox={viewBox}>
@@ -27,13 +25,12 @@ const HorizontalBarChart = memo(({ data }) => {
             {key}
           </text>
           <rect
-            width={(data[key] / maxValue) * 250 * scalar}
+            className="chq-charts--bar"
+            width={(data[key] / maxValue) * 250}
             height={25}
             x={(maxKeyLen + 2) * 10}
             y={index * 40}
             fill={colors[index]}
-            style={{ transformBox: "fill-box" }}
-            opacity={opacity}
           />
         </g>
       ))}
