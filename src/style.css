@@ -20,17 +20,37 @@
   opacity: .6;
 }
 
-.chq-charts--bar {
+.chq-charts--hori-bar {
   animation: chqChartsScaleX 1.5s ease-in-out forwards;
   opacity: 0;
   transform: scale3d(0, 1, 1);
   transform-box: fill-box;
 }
 
+.chq-charts--vert-bar {
+  animation: chqChartsScaleY 1.5s ease-in-out forwards;
+  opacity: 0;
+  transform: scale3d(1, 0, 1);
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
 @keyframes chqChartsScaleX {
   from {
     opacity: 0;
     transform: scale3d(0, 1, 1);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes chqChartsScaleY {
+  from {
+    opacity: 0;
+    transform: scale3d(1, 0, 1);
   }
 
   to {

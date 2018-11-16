@@ -1,22 +1,17 @@
-import React, { memo, useMemo } from "react";
+import React, { memo } from "react";
 
 import getColorList from "./get-color-list";
-import useScalarAnimation from "./use-scalar-animation";
-
-const getChartConfig = data => ({
-  colors: getColorList(Object.keys(data).length),
-  maxValue: Math.max(...Object.values(data)),
-  maxX: Object.keys(data).length * 40
-});
 
 const VerticalBarChart = memo(({ data }) => {
-  const { colors, maxValue, maxX } = useMemo(() => getChartConfig(data), [data]);
-  const [opacity, scalar] = useScalarAnimation();
+  const colors = getColorList(Object.keys(data).length);
+
+  const maxValue = Math.max(...Object.values(data));
+  const maxX = Object.keys(data).length * 40;
 
   return (
     <svg viewBox={`0 0 ${maxX} 300`}>
       {Object.keys(data).map((key, index) => {
-        const height = (data[key] / maxValue) * 250 * scalar;
+        const height = (data[key] / maxValue) * 250;
 
         return (
           <g key={key}>
@@ -29,13 +24,12 @@ const VerticalBarChart = memo(({ data }) => {
               {key}
             </text>
             <rect
+              className="chq-charts--vert-bar"
               width={25}
               height={height}
               x={index * 40}
               y={250 - height}
               fill={colors[index]}
-              style={{ transformBox: "fill-box" }}
-              opacity={opacity}
             />
           </g>
         );

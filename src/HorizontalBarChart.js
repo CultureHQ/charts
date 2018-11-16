@@ -25,7 +25,7 @@ const HorizontalBarChart = memo(({ data }) => {
             {key}
           </text>
           <rect
-            className="chq-charts--bar"
+            className="chq-charts--hori-bar"
             width={(data[key] / maxValue) * 250}
             height={25}
             x={(maxKeyLen + 2) * 10}
