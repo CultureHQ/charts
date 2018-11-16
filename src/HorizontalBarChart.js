@@ -15,12 +15,12 @@ const getChartConfig = data => {
   return { colors, maxValue, maxKeyLen, viewBox: `0 0 ${maxX} ${maxY}` };
 };
 
-const HorizontalBarChart = memo(({ data, style = {} }) => {
+const HorizontalBarChart = memo(({ data }) => {
   const { colors, maxValue, maxKeyLen, viewBox } = useMemo(() => getChartConfig(data), [data]);
   const [opacity, scalar] = useScalarAnimation();
 
   return (
-    <svg viewBox={viewBox} style={style}>
+    <svg viewBox={viewBox}>
       {Object.keys(data).map((key, index) => (
         <g key={key}>
           <text x={(maxKeyLen + 1) * 10} y={index * 40} dy="1em" textAnchor="end">

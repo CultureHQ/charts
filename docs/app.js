@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import { HorizontalBarChart, VerticalBarChart, PieChart } from "../src";
+import "../src/style.css";
 
 const getRandomDatum = () => Math.floor(Math.random() * 100);
 
@@ -13,17 +14,11 @@ const data = {
   epsilon: getRandomDatum()
 };
 
-const style = {
-  height: "300px",
-  width: "300px",
-  margin: "10px"
-};
-
 const App = () => (
   <>
-    <HorizontalBarChart data={data} style={style} />
-    <VerticalBarChart data={data} style={style} />
-    <PieChart data={data} style={style} />
+    <HorizontalBarChart data={data} />
+    <VerticalBarChart data={data} />
+    <PieChart data={data} />
   </>
 );
 

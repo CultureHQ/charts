@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect, useMemo } from "react";
+import React, { PureComponent, memo, useState, useEffect, useMemo } from "react";
 
 import getColorList from "./get-color-list";
 import useScalarAnimation from "./use-scalar-animation";
@@ -35,49 +35,17 @@ const getSlices = (data, scalar) => {
   });
 };
 
-const PieChartSlice = ({ outerPath, innerPath, color, opacity, scaling }) => {
-  const [hovering, setHovering] = useState(false);
-
-  const onMouseEnter = () => setHovering(true);
-  const onMouseLeave = () => setHovering(false);
-
-  const transform = hovering && !scaling ? "scale(1.05)" : null;
-
-  return (
-    <g
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      style={{ transition: scaling ? null : "transform 300ms" }}
-      transform={transform}
-    >
-      <path
-        d={outerPath}
-        fill={color}
-        opacity={opacity * (hovering ? .6 : .3)}
-        style={{ transition: scaling ? null : "opacity 300ms" }}
-      />
-      <path d={innerPath} fill={color} opacity={opacity} />
-    </g>
-  );
-};
-
-const pieChartStyle = { transform: "rotate(-90deg)", overflow: "visible" };
-
-const PieChart = memo(({ data, style = {} }) => {
+const PieChart = memo(({ data }) => {
   const colors = useMemo(() => getColorList(Object.keys(data).length), [data]);
   const [opacity, scalar, scaling] = useScalarAnimation();
 
   return (
-    <svg viewBox="-1 -1 2 2" style={{ ...pieChartStyle, ...style }}>
+    <svg className="chq-charts--pie" viewBox="-1 -1 2 2">
       {getSlices(data, scalar).map(({ key, outerPath, innerPath }, index) => (
-        <PieChartSlice
-          key={key}
-          outerPath={outerPath}
-          innerPath={innerPath}
-          color={colors[index]}
-          opacity={opacity}
-          scaling={scaling}
-        />
+        <g key={key} className="chq-charts--pie-slice">
+          <path d={outerPath} fill={colors[index]} opacity={opacity} />
+          <path d={innerPath} fill={colors[index]} opacity={opacity} />
+        </g>
       ))}
     </svg>
   );

@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "yarn build:js && yarn build:docs",
-    "build:js": "babel src --out-dir ./dist --ignore '**/__tests__' && sed -i '' -e \"s/styles\\/app.scss/main.css/\" dist/index.js && cp src/*.json dist",
+    "build:js": "babel src --out-dir dist --copy-files",
     "build:docs": "webpack --mode production",
     "lint": "eslint .",
     "start": "webpack-dev-server --mode development --hot",
@@ -28,13 +28,13 @@
   "devDependencies": {
     "@babel/cli": "^7.1.5",
     "@babel/core": "^7.1.6",
-    "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/preset-env": "^7.1.6",
     "@babel/preset-react": "^7.0.0",
     "babel-core": "^7.0.0-0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.4",
+    "css-loader": "^1.0.0",
     "eslint": "^5.9.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
@@ -44,6 +44,7 @@
     "jest-axe": "^3.1.0",
     "react": "^16.7.0-alpha.2",
     "react-dom": "^16.7.0-alpha.2",
+    "style-loader": "^0.23.0",
     "webpack": "^4.25.1",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.9"

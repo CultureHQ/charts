@@ -1,0 +1,21 @@
+.chq-charts--pie {
+  overflow: visible;
+  transform: rotate(-90deg);
+}
+
+.chq-charts--pie-slice {
+  transition: transform 300ms;
+}
+
+.chq-charts--pie-slice:hover {
+  transform: scale(1.05);
+}
+
+.chq-charts--pie-slice path:first-child {
+  opacity: .3;
+  transition: opacity 300ms;
+}
+
+.chq-charts--pie-slice:hover path:first-child {
+  opacity: .6;
+}

@@ -9,12 +9,12 @@ const getChartConfig = data => ({
   maxX: Object.keys(data).length * 40
 });
 
-const VerticalBarChart = memo(({ data, style = {} }) => {
+const VerticalBarChart = memo(({ data }) => {
   const { colors, maxValue, maxX } = useMemo(() => getChartConfig(data), [data]);
   const [opacity, scalar] = useScalarAnimation();
 
   return (
-    <svg viewBox={`0 0 ${maxX} 300`} style={style}>
+    <svg viewBox={`0 0 ${maxX} 300`}>
       {Object.keys(data).map((key, index) => {
         const height = (data[key] / maxValue) * 250 * scalar;
 
