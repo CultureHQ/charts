@@ -1,7 +1,6 @@
-import React, { PureComponent, memo, useState, useEffect, useMemo } from "react";
+import React, { PureComponent } from "react";
 
-import getColorList from "./get-color-list";
-import useScalarAnimation from "./use-scalar-animation";
+import getColorList from "./getColorList";
 
 const TWO_PI = 2 * Math.PI;
 const getCoords = percent => [Math.cos(TWO_PI * percent), Math.sin(TWO_PI * percent)];
@@ -35,20 +34,59 @@ const getSlices = (data, scalar) => {
   });
 };
 
-const PieChart = memo(({ data }) => {
-  const colors = useMemo(() => getColorList(Object.keys(data).length), [data]);
-  const [opacity, scalar, scaling] = useScalarAnimation();
+const getScalar = time => {
+  if (time < 0.5) {
+    return 8 * Math.pow(time, 4);
+  }
 
-  return (
-    <svg className="chq-charts--pie" viewBox="-1 -1 2 2">
-      {getSlices(data, scalar).map(({ key, outerPath, innerPath }, index) => (
-        <g key={key} className="chq-charts--pie-slice">
-          <path d={outerPath} fill={colors[index]} opacity={opacity} />
-          <path d={innerPath} fill={colors[index]} opacity={opacity} />
-        </g>
-      ))}
-    </svg>
-  );
-});
+  const inverse = 1 - time;
+  return 1 - 8 * Math.pow(inverse, 4);
+};
+
+class PieChart extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      colors: getColorList(Object.keys(props.data).length),
+      scalar: 0
+    };
+  }
+
+  componentDidMount() {
+    let time = 0;
+
+    this.interval = setInterval(() => {
+      time += 0.015;
+
+      if (time >= 1) {
+        clearInterval(this.interval);
+        return;
+      }
+
+      this.setState({ scalar: getScalar(time) });
+    }, 20);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  render() {
+    const { data } = this.props;
+    const { colors, scalar } = this.state;
+
+    return (
+      <svg className="chq-charts--pie" viewBox="-1 -1 2 2">
+        {getSlices(data, scalar).map(({ key, outerPath, innerPath }, index) => (
+          <g key={key} className="chq-charts--pie-slice">
+            <path d={outerPath} fill={colors[index]} />
+            <path d={innerPath} fill={colors[index]} />
+          </g>
+        ))}
+      </svg>
+    );
+  }
+}
 
 export default PieChart;

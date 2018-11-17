@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-import getColorList from "./get-color-list";
+import getColorList from "./getColorList";
 
 const HorizontalBarChart = memo(({ data }) => {
   const colors = getColorList(Object.keys(data).length);
