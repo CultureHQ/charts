@@ -1,8 +1,8 @@
-import React, { useMemo, memo } from "react";
+import React, { memo } from "react";
 
 import getColorList from "./get-color-list";
 
-const getChartConfig = data => {
+const HorizontalBarChart = memo(({ data }) => {
   const colors = getColorList(Object.keys(data).length);
 
   const maxValue = Math.max(...Object.values(data));
@@ -11,14 +11,8 @@ const getChartConfig = data => {
   const maxX = (maxKeyLen + 2) * 10 + 250;
   const maxY = (Object.keys(data).length - 1) * 40 + 25;
 
-  return { colors, maxValue, maxKeyLen, viewBox: `0 0 ${maxX} ${maxY}` };
-};
-
-const HorizontalBarChart = memo(({ data }) => {
-  const { colors, maxValue, maxKeyLen, viewBox } = useMemo(() => getChartConfig(data), [data]);
-
   return (
-    <svg viewBox={viewBox}>
+    <svg viewBox={`0 0 ${maxX} ${maxY}`}>
       {Object.keys(data).map((key, index) => (
         <g key={key}>
           <text x={(maxKeyLen + 1) * 10} y={index * 40} dy="1em" textAnchor="end">
