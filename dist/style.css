@@ -1,0 +1,78 @@
+.chq-charts--pie {
+  overflow: visible;
+  transform: rotate(-90deg);
+}
+
+.chq-charts--pie text {
+  animation: chqChartsFadeIn 1.5s ease-in-out forwards 1s;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.chq-charts--pie-slice {
+  animation: chqChartsFadeIn 1.5s ease-in-out forwards;
+  opacity: 0;
+  transition: transform 300ms;
+}
+
+.chq-charts--pie-slice:hover {
+  transform: scale(1.05);
+}
+
+.chq-charts--pie-slice path:first-child {
+  opacity: .3;
+  transition: opacity 300ms;
+}
+
+.chq-charts--pie-slice:hover path:first-child {
+  opacity: .6;
+}
+
+.chq-charts--hori-bar {
+  animation: chqChartsScaleX 1.5s ease-in-out forwards;
+  opacity: 0;
+  transform: scale3d(0, 1, 1);
+  transform-box: fill-box;
+}
+
+.chq-charts--vert-bar {
+  animation: chqChartsScaleY 1.5s ease-in-out forwards;
+  opacity: 0;
+  transform: scale3d(1, 0, 1);
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+@keyframes chqChartsFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes chqChartsScaleX {
+  from {
+    opacity: 0;
+    transform: scale3d(0, 1, 1);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes chqChartsScaleY {
+  from {
+    opacity: 0;
+    transform: scale3d(1, 0, 1);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
