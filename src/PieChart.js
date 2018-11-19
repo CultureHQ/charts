@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import ReactDOM from "react-dom";
 
 import getColorList from "./getColorList";
 
@@ -14,12 +15,14 @@ const getSlices = (data, scalar) => {
     const largeArc = percent > 0.5 ? 1 : 0;
 
     const [startX, startY] = getCoords(cursor);
+    const [centerX, centerY] = getCoords(cursor + percent / 2);
+    const [endX, endY] = getCoords(cursor + percent);
 
     cursor += percent;
-    const [endX, endY] = getCoords(cursor);
 
     return {
       key,
+      label: `${key} (${data[key]})`,
       outerPath: [
         `M ${startX} ${startY}`,
         `A 1 1 0 ${largeArc} 1 ${endX} ${endY}`,
@@ -29,7 +32,8 @@ const getSlices = (data, scalar) => {
         `M ${startX * .95} ${startY * .95}`,
         `A .95 .95 0 ${largeArc} 1 ${endX * .95} ${endY * .95}`,
         `L 0 0 Z`
-      ].join(" ")
+      ].join(" "),
+      infoBox: [centerX * .5, centerY * .5]
     };
   });
 };
@@ -76,13 +80,27 @@ class PieChart extends PureComponent {
     const { data } = this.props;
     const { colors, scalar } = this.state;
 
+    const slices = getSlices(data, scalar);
+
     return (
       <svg className="chq-charts--pie" viewBox="-1 -1 2 2">
-        {getSlices(data, scalar).map(({ key, outerPath, innerPath }, index) => (
+        {slices.map(({ key, outerPath, innerPath }, index) => (
           <g key={key} className="chq-charts--pie-slice">
             <path d={outerPath} fill={colors[index]} />
             <path d={innerPath} fill={colors[index]} />
           </g>
+        ))}
+        {slices.map(({ key, label, infoBox: [x, y] }) => (
+          <text
+            key={key}
+            x={x}
+            y={y}
+            textAnchor="middle"
+            transform={`rotate(90, ${x}, ${y})`}
+            fontSize={0.1}
+          >
+            {label}
+          </text>
         ))}
       </svg>
     );

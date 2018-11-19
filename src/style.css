@@ -3,6 +3,12 @@
   transform: rotate(-90deg);
 }
 
+.chq-charts--pie text {
+  animation: chqChartsFadeIn 1.5s ease-in-out forwards 1s;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .chq-charts--pie-slice {
   animation: chqChartsFadeIn 1.5s ease-in-out forwards;
   opacity: 0;
