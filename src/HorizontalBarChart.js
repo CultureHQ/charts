@@ -15,7 +15,10 @@ const HorizontalBarChart = memo(({ data }) => {
   const startX = (maxKeyLen + 3) * 10 - 5;
 
   return (
-    <svg className="chq-charts--chart chq-charts--hori-bar" viewBox={`0 0 ${maxX + 15} ${maxY + 10}`}>
+    <svg
+      className="chq-charts--chart chq-charts--hori-bar"
+      viewBox={`0 0 ${maxX + 15} ${maxY + 10}`}
+    >
       {keys.map((key, index) => (
         <g key={key}>
           <text

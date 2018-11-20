@@ -10,7 +10,10 @@ const VerticalBarChart = memo(({ data }) => {
   const maxX = keys.length * 40;
 
   return (
-    <svg className="chq-charts--chart chq-charts--vert-bar" viewBox={`0 0 ${maxX} 325`}>
+    <svg
+      className="chq-charts--chart chq-charts--vert-bar"
+      viewBox={`0 0 ${maxX} 325`}
+    >
       {Object.keys(data).map((key, index) => {
         const height = (data[key] / maxValue) * 250;
 
