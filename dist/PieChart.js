@@ -157,7 +157,7 @@ function (_PureComponent) {
           colors = _this$state.colors,
           slices = _this$state.slices;
       return _react.default.createElement("svg", {
-        className: "chq-charts--pie",
+        className: "chq-charts--chart chq-charts--pie",
         viewBox: "-1.2 -1.2 2.4 2.4"
       }, slices.map(function (_ref, index) {
         var key = _ref.key,
@@ -165,7 +165,8 @@ function (_PureComponent) {
             innerPath = _ref.innerPath;
         return _react.default.createElement("g", {
           key: key,
-          className: "chq-charts--pie-slice"
+          className: "chq-charts--pie-slice",
+          tabIndex: 0
         }, _react.default.createElement("path", {
           d: outerPath,
           fill: colors[index]
@@ -184,7 +185,7 @@ function (_PureComponent) {
 
         return _react.default.createElement("g", {
           key: key,
-          className: "chq-charts--late chq-charts--noselect"
+          className: "chq-charts--noselect"
         }, _react.default.createElement("line", _extends({}, leaderLine, {
           stroke: "#666",
           strokeWidth: 0.01

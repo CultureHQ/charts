@@ -98,15 +98,15 @@ class PieChart extends PureComponent {
     const { colors, slices } = this.state;
 
     return (
-      <svg className="chq-charts--pie" viewBox="-1.2 -1.2 2.4 2.4">
+      <svg className="chq-charts--chart chq-charts--pie" viewBox="-1.2 -1.2 2.4 2.4">
         {slices.map(({ key, outerPath, innerPath }, index) => (
-          <g key={key} className="chq-charts--pie-slice">
+          <g key={key} className="chq-charts--pie-slice" tabIndex={0}>
             <path d={outerPath} fill={colors[index]} />
             <path d={innerPath} fill={colors[index]} />
           </g>
         ))}
         {slices.map(({ key, value, label, legend: [x, y], leaderLine }) => (
-          <g key={key} className="chq-charts--late chq-charts--noselect">
+          <g key={key} className="chq-charts--noselect">
             <line {...leaderLine} stroke="#666" strokeWidth={0.01} />
             <text x={x} y={y} textAnchor="middle" transform={`rotate(90, ${x}, ${y})`} fontSize={0.1}>
               <tspan x={x} y={y}>{label}</tspan>

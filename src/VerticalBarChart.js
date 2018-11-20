@@ -10,14 +10,13 @@ const VerticalBarChart = memo(({ data }) => {
   const maxX = keys.length * 40;
 
   return (
-    <svg className="chq-charts--vert-bar" viewBox={`0 0 ${maxX} 325`}>
+    <svg className="chq-charts--chart chq-charts--vert-bar" viewBox={`0 0 ${maxX} 325`}>
       {Object.keys(data).map((key, index) => {
         const height = (data[key] / maxValue) * 250;
 
         return (
           <g key={key}>
             <text
-              className="chq-charts--late"
               x={index * 40} y={305}
               textAnchor="middle"
               transform={`rotate(-30, ${index * 40}, 305)`}
@@ -25,14 +24,13 @@ const VerticalBarChart = memo(({ data }) => {
               {key}
             </text>
             <text
-              className="chq-charts--late"
               x={index * 40 + (25 / 2)} y={265 - height}
               textAnchor="middle"
             >
               {data[key]}
             </text>
             {height !== 0 && (
-              <g className="chq-charts--vert-bar-group">
+              <g className="chq-charts--vert-bar-group" tabIndex={0}>
                 <rect
                   width={25}
                   height={height}
@@ -50,8 +48,7 @@ const VerticalBarChart = memo(({ data }) => {
             )}
             {index !== keys.length - 1 && (
               <line
-                className="chq-charts--late"
-                x1={(index + 1) * 40 - 7.5} y1={285}
+              x1={(index + 1) * 40 - 7.5} y1={285}
                 x2={(index + 1) * 40 - 7.5} y2={265}
                 stroke="#ccc"
                 strokeWidth={1}
@@ -61,7 +58,6 @@ const VerticalBarChart = memo(({ data }) => {
         );
       })}
       <line
-        className="chq-charts--late"
         x1={-10} y1={280}
         x2={maxX} y2={280}
         stroke="#ccc"

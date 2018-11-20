@@ -33,23 +33,23 @@ var HorizontalBarChart = (0, _react.memo)(function (_ref) {
   var maxY = (keys.length - 1) * 40 + 25;
   var startX = (maxKeyLen + 3) * 10 - 5;
   return _react.default.createElement("svg", {
-    viewBox: "0 0 ".concat(maxX + 15, " ").concat(maxY)
+    className: "chq-charts--chart chq-charts--hori-bar",
+    viewBox: "0 0 ".concat(maxX + 15, " ").concat(maxY + 10)
   }, keys.map(function (key, index) {
     return _react.default.createElement("g", {
       key: key
     }, _react.default.createElement("text", {
-      className: "chq-charts--late",
       x: (maxKeyLen + 1) * 10,
       y: index * 40,
       dy: "1em",
       textAnchor: "end"
     }, key), _react.default.createElement("text", {
-      className: "chq-charts--late",
       x: startX + data[key] / maxValue * 250 + 10,
       y: index * 40 + 17.5,
       textAnchor: "left"
     }, data[key]), _react.default.createElement("g", {
-      className: "chq-charts--hori-bar-group"
+      className: "chq-charts--hori-bar-group",
+      tabIndex: 0
     }, _react.default.createElement("rect", {
       width: data[key] / maxValue * 250,
       height: 25,
@@ -64,7 +64,6 @@ var HorizontalBarChart = (0, _react.memo)(function (_ref) {
       y: index * 40 - 5,
       fill: colors[index]
     })), index !== keys.length - 1 && _react.default.createElement("line", {
-      className: "chq-charts--late",
       x1: startX - 10,
       y1: (index + 1) * 40 - 7.5,
       x2: startX + 10,
@@ -73,11 +72,10 @@ var HorizontalBarChart = (0, _react.memo)(function (_ref) {
       strokeWidth: 1
     }));
   }), _react.default.createElement("line", {
-    className: "chq-charts--late",
     x1: startX - 5,
     y1: -10,
     x2: startX - 5,
-    y2: maxY,
+    y2: maxY + 10,
     stroke: "#ccc",
     strokeWidth: 1
   }));

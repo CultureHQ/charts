@@ -11,8 +11,7 @@ const data = {
   beta: getRandomDatum(),
   gamma: getRandomDatum(),
   delta: getRandomDatum(),
-  epsilon: getRandomDatum(),
-  zeta: 0
+  epsilon: getRandomDatum()
 };
 
 const App = () => (

@@ -28,25 +28,24 @@ var VerticalBarChart = (0, _react.memo)(function (_ref) {
   var maxValue = Math.max.apply(Math, _toConsumableArray(Object.values(data)));
   var maxX = keys.length * 40;
   return _react.default.createElement("svg", {
-    className: "chq-charts--vert-bar",
+    className: "chq-charts--chart chq-charts--vert-bar",
     viewBox: "0 0 ".concat(maxX, " 325")
   }, Object.keys(data).map(function (key, index) {
     var height = data[key] / maxValue * 250;
     return _react.default.createElement("g", {
       key: key
     }, _react.default.createElement("text", {
-      className: "chq-charts--late",
       x: index * 40,
       y: 305,
       textAnchor: "middle",
       transform: "rotate(-30, ".concat(index * 40, ", 305)")
     }, key), _react.default.createElement("text", {
-      className: "chq-charts--late",
       x: index * 40 + 25 / 2,
       y: 265 - height,
       textAnchor: "middle"
     }, data[key]), height !== 0 && _react.default.createElement("g", {
-      className: "chq-charts--vert-bar-group"
+      className: "chq-charts--vert-bar-group",
+      tabIndex: 0
     }, _react.default.createElement("rect", {
       width: 25,
       height: height,
@@ -61,7 +60,6 @@ var VerticalBarChart = (0, _react.memo)(function (_ref) {
       y: 270 - height,
       fill: colors[index]
     })), index !== keys.length - 1 && _react.default.createElement("line", {
-      className: "chq-charts--late",
       x1: (index + 1) * 40 - 7.5,
       y1: 285,
       x2: (index + 1) * 40 - 7.5,
@@ -70,7 +68,6 @@ var VerticalBarChart = (0, _react.memo)(function (_ref) {
       strokeWidth: 1
     }));
   }), _react.default.createElement("line", {
-    className: "chq-charts--late",
     x1: -10,
     y1: 280,
     x2: maxX,

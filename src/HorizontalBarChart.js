@@ -15,11 +15,10 @@ const HorizontalBarChart = memo(({ data }) => {
   const startX = (maxKeyLen + 3) * 10 - 5;
 
   return (
-    <svg viewBox={`0 0 ${maxX + 15} ${maxY}`}>
+    <svg className="chq-charts--chart chq-charts--hori-bar" viewBox={`0 0 ${maxX + 15} ${maxY + 10}`}>
       {keys.map((key, index) => (
         <g key={key}>
           <text
-            className="chq-charts--late"
             x={(maxKeyLen + 1) * 10} y={index * 40}
             dy="1em"
             textAnchor="end"
@@ -27,14 +26,13 @@ const HorizontalBarChart = memo(({ data }) => {
             {key}
           </text>
           <text
-            className="chq-charts--late"
             x={startX + (data[key] / maxValue) * 250 + 10}
             y={index * 40 + 17.5}
             textAnchor="left"
           >
             {data[key]}
           </text>
-          <g className="chq-charts--hori-bar-group">
+          <g className="chq-charts--hori-bar-group" tabIndex={0}>
             <rect
               width={(data[key] / maxValue) * 250}
               height={25}
@@ -53,7 +51,6 @@ const HorizontalBarChart = memo(({ data }) => {
           </g>
           {index !== keys.length - 1 && (
             <line
-              className="chq-charts--late"
               x1={startX - 10} y1={(index + 1) * 40 - 7.5}
               x2={startX + 10} y2={(index + 1) * 40 - 7.5}
               stroke="#ccc"
@@ -63,9 +60,8 @@ const HorizontalBarChart = memo(({ data }) => {
         </g>
       ))}
       <line
-        className="chq-charts--late"
         x1={startX - 5} y1={-10}
-        x2={startX - 5} y2={maxY}
+        x2={startX - 5} y2={maxY + 10}
         stroke="#ccc"
         strokeWidth={1}
       />
