@@ -3,12 +3,6 @@
   transform: rotate(-90deg);
 }
 
-.chq-charts--pie-legend {
-  animation: chqChartsFadeIn 1.5s ease-in-out forwards 1s;
-  opacity: 0;
-  pointer-events: none;
-}
-
 .chq-charts--pie-slice {
   animation: chqChartsFadeIn 1.5s ease-in-out forwards;
   opacity: 0;
@@ -28,19 +22,38 @@
   opacity: .6;
 }
 
-.chq-charts--hori-bar {
+.chq-charts--hori-bar-group {
   animation: chqChartsScaleX 1.5s ease-in-out forwards;
   opacity: 0;
   transform: scale3d(0, 1, 1);
   transform-box: fill-box;
 }
 
-.chq-charts--vert-bar {
+.chq-charts--vert-bar-group {
   animation: chqChartsScaleY 1.5s ease-in-out forwards;
   opacity: 0;
   transform: scale3d(1, 0, 1);
   transform-box: fill-box;
   transform-origin: 50% 100%;
+}
+
+.chq-charts--bar-shadow {
+  opacity: 0;
+  transition: opacity 300ms ease-in-out;
+}
+
+.chq-charts--hori-bar-group:hover .chq-charts--bar-shadow,
+.chq-charts--vert-bar-group:hover .chq-charts--bar-shadow {
+  opacity: .5;
+}
+
+.chq-charts--late {
+  animation: chqChartsFadeIn 1s ease-in-out forwards 1.25s;
+  opacity: 0;
+}
+
+.chq-charts--noselect {
+  pointer-events: none;
 }
 
 @keyframes chqChartsFadeIn {

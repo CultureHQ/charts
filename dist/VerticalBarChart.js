@@ -23,28 +23,60 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 var VerticalBarChart = (0, _react.memo)(function (_ref) {
   var data = _ref.data;
-  var colors = (0, _getColorList.default)(Object.keys(data).length);
+  var keys = Object.keys(data);
+  var colors = (0, _getColorList.default)(keys.length);
   var maxValue = Math.max.apply(Math, _toConsumableArray(Object.values(data)));
-  var maxX = Object.keys(data).length * 40;
+  var maxX = keys.length * 40;
   return _react.default.createElement("svg", {
-    viewBox: "0 0 ".concat(maxX, " 300")
+    className: "chq-charts--vert-bar",
+    viewBox: "0 0 ".concat(maxX, " 325")
   }, Object.keys(data).map(function (key, index) {
     var height = data[key] / maxValue * 250;
     return _react.default.createElement("g", {
       key: key
     }, _react.default.createElement("text", {
+      className: "chq-charts--late",
       x: index * 40,
-      y: 280,
+      y: 305,
       textAnchor: "middle",
-      transform: "rotate(-30, ".concat(index * 40, ", 280)")
-    }, key), _react.default.createElement("rect", {
-      className: "chq-charts--vert-bar",
+      transform: "rotate(-30, ".concat(index * 40, ", 305)")
+    }, key), _react.default.createElement("text", {
+      className: "chq-charts--late",
+      x: index * 40 + 25 / 2,
+      y: 265 - height,
+      textAnchor: "middle"
+    }, data[key]), height !== 0 && _react.default.createElement("g", {
+      className: "chq-charts--vert-bar-group"
+    }, _react.default.createElement("rect", {
       width: 25,
       height: height,
       x: index * 40,
-      y: 250 - height,
+      y: 275 - height,
       fill: colors[index]
+    }), _react.default.createElement("rect", {
+      className: "chq-charts--bar-shadow",
+      width: 35,
+      height: height + 5,
+      x: index * 40 - 5,
+      y: 270 - height,
+      fill: colors[index]
+    })), index !== keys.length - 1 && _react.default.createElement("line", {
+      className: "chq-charts--late",
+      x1: (index + 1) * 40 - 7.5,
+      y1: 285,
+      x2: (index + 1) * 40 - 7.5,
+      y2: 265,
+      stroke: "#ccc",
+      strokeWidth: 1
     }));
+  }), _react.default.createElement("line", {
+    className: "chq-charts--late",
+    x1: -10,
+    y1: 280,
+    x2: maxX,
+    y2: 280,
+    stroke: "#ccc",
+    strokeWidth: 1
   }));
 });
 var _default = VerticalBarChart;

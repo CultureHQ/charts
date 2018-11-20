@@ -17,6 +17,8 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -52,7 +54,12 @@ var getSlices = function getSlices(data, scalar) {
     return accum + data[key];
   }, 0);
   var cursor = 0;
-  return Object.keys(data).map(function (key, index) {
+  var slices = [];
+  Object.keys(data).forEach(function (key, index) {
+    if (data[key] === 0) {
+      return;
+    }
+
     var percent = data[key] / total * scalar;
     var largeArc = percent > 0.5 ? 1 : 0;
 
@@ -72,14 +79,22 @@ var getSlices = function getSlices(data, scalar) {
         endY = _getCoords6[1];
 
     cursor += percent;
-    return {
+    slices.push({
       key: key,
-      label: "".concat(key, " (").concat(data[key], ")"),
+      value: data[key],
+      label: "".concat(key, " ").concat(Math.round(percent * 10000) / 100, "%"),
       outerPath: ["M ".concat(startX, " ").concat(startY), "A 1 1 0 ".concat(largeArc, " 1 ").concat(endX, " ").concat(endY), "L 0 0 Z"].join(" "),
       innerPath: ["M ".concat(startX * .95, " ").concat(startY * .95), "A .95 .95 0 ".concat(largeArc, " 1 ").concat(endX * .95, " ").concat(endY * .95), "L 0 0 Z"].join(" "),
-      infoBox: [centerX * .5, centerY * .5]
-    };
+      legend: [centerX * 1.2, centerY * 1.2],
+      leaderLine: {
+        x1: centerX * .75,
+        y1: centerY * .75,
+        x2: centerX * 1.05,
+        y2: centerY * 1.05
+      }
+    });
   });
+  return slices;
 };
 
 var getScalar = function getScalar(time) {
@@ -104,7 +119,7 @@ function (_PureComponent) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(PieChart).call(this, props));
     _this.state = {
       colors: (0, _getColorList.default)(Object.keys(props.data).length),
-      scalar: 0
+      slices: []
     };
     return _this;
   }
@@ -114,6 +129,7 @@ function (_PureComponent) {
     value: function componentDidMount() {
       var _this2 = this;
 
+      var data = this.props.data;
       var time = 0;
       this.interval = setInterval(function () {
         time += 0.015;
@@ -124,7 +140,7 @@ function (_PureComponent) {
         }
 
         _this2.setState({
-          scalar: getScalar(time)
+          slices: getSlices(data, getScalar(time))
         });
       }, 20);
     }
@@ -139,11 +155,10 @@ function (_PureComponent) {
       var data = this.props.data;
       var _this$state = this.state,
           colors = _this$state.colors,
-          scalar = _this$state.scalar;
-      var slices = getSlices(data, scalar);
+          slices = _this$state.slices;
       return _react.default.createElement("svg", {
         className: "chq-charts--pie",
-        viewBox: "-1 -1 2 2"
+        viewBox: "-1.2 -1.2 2.4 2.4"
       }, slices.map(function (_ref, index) {
         var key = _ref.key,
             outerPath = _ref.outerPath,
@@ -160,19 +175,33 @@ function (_PureComponent) {
         }));
       }), slices.map(function (_ref2) {
         var key = _ref2.key,
+            value = _ref2.value,
             label = _ref2.label,
-            _ref2$infoBox = _slicedToArray(_ref2.infoBox, 2),
-            x = _ref2$infoBox[0],
-            y = _ref2$infoBox[1];
+            _ref2$legend = _slicedToArray(_ref2.legend, 2),
+            x = _ref2$legend[0],
+            y = _ref2$legend[1],
+            leaderLine = _ref2.leaderLine;
 
-        return _react.default.createElement("text", {
+        return _react.default.createElement("g", {
           key: key,
+          className: "chq-charts--late chq-charts--noselect"
+        }, _react.default.createElement("line", _extends({}, leaderLine, {
+          stroke: "#666",
+          strokeWidth: 0.01
+        })), _react.default.createElement("text", {
           x: x,
           y: y,
           textAnchor: "middle",
           transform: "rotate(90, ".concat(x, ", ").concat(y, ")"),
           fontSize: 0.1
-        }, label);
+        }, _react.default.createElement("tspan", {
+          x: x,
+          y: y
+        }, label), _react.default.createElement("tspan", {
+          x: x,
+          y: y,
+          dy: "1.2em"
+        }, "(", value, ")")));
       }));
     }
   }]);

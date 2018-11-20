@@ -106,8 +106,8 @@ class PieChart extends PureComponent {
           </g>
         ))}
         {slices.map(({ key, value, label, legend: [x, y], leaderLine }) => (
-          <g key={key} className="chq-charts--pie-legend">
-            <line {...leaderLine} stroke="black" strokeWidth={0.01} />
+          <g key={key} className="chq-charts--late chq-charts--noselect">
+            <line {...leaderLine} stroke="#666" strokeWidth={0.01} />
             <text x={x} y={y} textAnchor="middle" transform={`rotate(90, ${x}, ${y})`} fontSize={0.1}>
               <tspan x={x} y={y}>{label}</tspan>
               <tspan x={x} y={y} dy="1.2em">({value})</tspan>
