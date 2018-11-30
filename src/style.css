@@ -1,3 +1,54 @@
+.chq-charts--wrap {
+  display: inline-block;
+  position: relative;
+}
+
+.chq-charts--info {
+  background-color: #f7f7f7;
+  box-sizing: border-box;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  padding: 40px 8px 8px;
+  pointer-events: none;
+  position: absolute;
+  text-align: center;
+  transition: opacity 300ms ease-in-out;
+}
+
+.chq-charts--info-show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.chq-charts--mono {
+  font-family: monospace;
+}
+
+.chq-charts--info button {
+  background: inherit;
+  border: 0;
+  border-radius: 5px;
+  color: #6a89af;
+  cursor: pointer;
+  display: inline;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  margin: 0;
+  outline: none;
+  padding: 4px 10px;
+  transition: background-color 300ms, color 300ms;
+}
+
+.chq-charts--info button:focus,
+.chq-charts--info button:hover {
+  background-color: #6a89af;
+  color: white;
+}
+
 .chq-charts--chart {
   overflow: visible;
 }
@@ -38,6 +89,7 @@
   animation: chqChartsScaleX 1.5s ease-in-out forwards;
   opacity: 0;
   outline: none;
+  cursor: pointer;
   transform: scale3d(0, 1, 1);
   transform-box: fill-box;
 }
