@@ -68,7 +68,7 @@ class PieChart extends PureComponent {
 
     this.state = {
       colors: getColorList(Object.keys(props.data).length),
-      slices: []
+      slices: getSlices(props.data, getScalar(0))
     };
   }
 
