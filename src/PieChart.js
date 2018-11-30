@@ -62,6 +62,34 @@ const getScalar = time => {
   return 1 - 8 * Math.pow(inverse, 4);
 };
 
+const PieChartSVG = ({ colors, slices }) => (
+  <svg
+    className="chq-charts--chart chq-charts--pie"
+    viewBox="-1.2 -1.2 2.4 2.4"
+  >
+    {slices.map(({ key, outerPath, innerPath }, index) => (
+      <g key={key} className="chq-charts--pie-slice" tabIndex={0}>
+        <path d={outerPath} fill={colors[index]} />
+        <path d={innerPath} fill={colors[index]} />
+      </g>
+    ))}
+    {slices.map(({ key, value, label, legend: [x, y], leaderLine }) => (
+      <g key={key} className="chq-charts--noselect">
+        <line {...leaderLine} stroke="#666" strokeWidth={0.01} />
+        <text
+          x={x} y={y}
+          textAnchor="middle"
+          transform={`rotate(90, ${x}, ${y})`}
+          fontSize={0.1}
+        >
+          <tspan x={x} y={y}>{label}</tspan>
+          <tspan x={x} y={y} dy="1.2em">({value})</tspan>
+        </text>
+      </g>
+    ))}
+  </svg>
+);
+
 class PieChart extends PureComponent {
   constructor(props) {
     super(props);
@@ -97,33 +125,7 @@ class PieChart extends PureComponent {
     const { data } = this.props;
     const { colors, slices } = this.state;
 
-    return (
-      <svg
-        className="chq-charts--chart chq-charts--pie"
-        viewBox="-1.2 -1.2 2.4 2.4"
-      >
-        {slices.map(({ key, outerPath, innerPath }, index) => (
-          <g key={key} className="chq-charts--pie-slice" tabIndex={0}>
-            <path d={outerPath} fill={colors[index]} />
-            <path d={innerPath} fill={colors[index]} />
-          </g>
-        ))}
-        {slices.map(({ key, value, label, legend: [x, y], leaderLine }) => (
-          <g key={key} className="chq-charts--noselect">
-            <line {...leaderLine} stroke="#666" strokeWidth={0.01} />
-            <text
-              x={x} y={y}
-              textAnchor="middle"
-              transform={`rotate(90, ${x}, ${y})`}
-              fontSize={0.1}
-            >
-              <tspan x={x} y={y}>{label}</tspan>
-              <tspan x={x} y={y} dy="1.2em">({value})</tspan>
-            </text>
-          </g>
-        ))}
-      </svg>
-    );
+    return <PieChartSVG colors={colors} slices={slices} />;
   }
 }
 
