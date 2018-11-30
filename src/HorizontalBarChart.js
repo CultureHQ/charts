@@ -143,7 +143,17 @@ class ChartInfoBox extends PureComponent {
   constructor(props) {
     super(props);
 
+    this.state = { roundedMean: getRoundedMean(props.data) };
+
     this.handleKeyDown = this.handleKeyDown.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { data } = this.props;
+
+    if (data !== prevProps.data) {
+      this.setState({ roundedMean: getRoundedMean(data) });
+    }
   }
 
   handleKeyDown(event) {
@@ -156,6 +166,7 @@ class ChartInfoBox extends PureComponent {
 
   render() {
     const { data, activeKey, onDeselect } = this.props;
+    const { roundedMean } = this.state;
 
     let className = "chq-charts--info";
     if (activeKey) {
@@ -163,14 +174,18 @@ class ChartInfoBox extends PureComponent {
     }
 
     return (
-      <div className={className} tabIndex={0} onKeyDown={this.handleKeyDown}>
+      <div
+        className={className}
+        tabIndex={activeKey ? 0 : -1}
+        onKeyDown={this.handleKeyDown}
+      >
         {activeKey && (
           <>
             {activeKey}
             <br /><br />
             Value: <span className="chq-charts--mono">{data[activeKey]}</span>
             <br />
-            Mean: <span className="chq-charts--mono">{getRoundedMean(data)}</span>
+            Mean: <span className="chq-charts--mono">{roundedMean}</span>
             <br /><br />
             <button type="button" onClick={onDeselect}>← Back</button>
           </>
@@ -191,6 +206,14 @@ class HorizontalBarChart extends PureComponent {
 
     this.handleDeselect = this.handleDeselect.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { data } = this.props;
+
+    if (data !== prevProps.data) {
+      this.setState({ chartConfig: makeChartConfig(data) });
+    }
   }
 
   handleDeselect() {
