@@ -10,12 +10,27 @@ test("renders slices", () => {
   expect(container.querySelectorAll(".chq-charts--pie-slice")).toHaveLength(4);
 });
 
-test("allows clicking on slices", () => {
+test("allows interacting with slices", () => {
   const data = { a: 10, b: 20, c: 30, d: 40 };
-  const { container } = render(<PieChart data={data} />);
 
-  fireEvent.click(container.querySelector(".chq-charts--pie-slice"));
-  expect(container.querySelector(".chq-charts--info-show")).toBeTruthy();
+  const { container } = render(<PieChart data={data} />);
+  const pieSlice = container.querySelector(".chq-charts--pie-slice");
+  const getInfoOpen = () => container.querySelector(".chq-charts--info-show");
+
+  fireEvent.click(pieSlice);
+  expect(getInfoOpen()).toBeTruthy();
+
+  fireEvent.click(pieSlice);
+  expect(getInfoOpen()).toBeFalsy();
+
+  fireEvent.keyDown(pieSlice, { key: "Enter" });
+  expect(getInfoOpen()).toBeTruthy();
+
+  fireEvent.keyDown(pieSlice, { key: "Escape" });
+  expect(getInfoOpen()).toBeFalsy();
+
+  fireEvent.keyDown(pieSlice, { key: "Shift" });
+  expect(getInfoOpen()).toBeFalsy();
 });
 
 test("syncs with data", () => {
