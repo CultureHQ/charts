@@ -17,3 +17,12 @@ test("allows clicking on bars", () => {
   fireEvent.click(container.querySelector(".chq-charts--vert-bar-group"));
   expect(container.querySelector(".chq-charts--info-show")).toBeTruthy();
 });
+
+test("syncs with data", () => {
+  const { container, rerender } = render(<VerticalBarChart data={{ a: 10 }} />);
+
+  const data = { a: 10, b: 20, c: 30, d: 40 };
+  rerender(<VerticalBarChart data={data} />);
+
+  expect(container.querySelectorAll(".chq-charts--vert-bar-group")).toHaveLength(4);
+});

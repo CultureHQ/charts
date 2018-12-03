@@ -17,3 +17,12 @@ test("allows clicking on slices", () => {
   fireEvent.click(container.querySelector(".chq-charts--pie-slice"));
   expect(container.querySelector(".chq-charts--info-show")).toBeTruthy();
 });
+
+test("syncs with data", () => {
+  const { container, rerender } = render(<PieChart data={{ a: 10 }} />);
+
+  const data = { a: 10, b: 20, c: 30, d: 40 };
+  rerender(<PieChart data={data} />);
+
+  expect(container.querySelectorAll(".chq-charts--pie-slice")).toHaveLength(4);
+});

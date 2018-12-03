@@ -17,3 +17,12 @@ test("allows clicking on bars", () => {
   fireEvent.click(container.querySelector(".chq-charts--hori-bar-group"));
   expect(container.querySelector(".chq-charts--info-show")).toBeTruthy();
 });
+
+test("syncs with data", () => {
+  const { container, rerender } = render(<HorizontalBarChart data={{ a: 10 }} />);
+
+  const data = { a: 10, b: 20, c: 30, d: 40 };
+  rerender(<HorizontalBarChart data={data} />);
+
+  expect(container.querySelectorAll(".chq-charts--hori-bar-group")).toHaveLength(4);
+});

@@ -91,8 +91,30 @@ class PieChartSVG extends PureComponent {
   }
 
   componentDidMount() {
+    this.beginInterval();
+  }
+
+  componentDidUpdate(prevProps) {
     const { data } = this.props;
 
+    if (data !== prevProps.data) {
+      clearInterval(this.interval);
+
+      this.setState({
+        colors: getColorList(Object.keys(data).length),
+        slices: getSlices(data, getScalar(0))
+      });
+
+      this.beginInterval();
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  beginInterval() {
+    const { data } = this.props;
     let time = 0;
 
     this.interval = setInterval(() => {
@@ -105,10 +127,6 @@ class PieChartSVG extends PureComponent {
 
       this.setState({ slices: getSlices(data, getScalar(time)) });
     }, 20);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
   }
 
   render() {
