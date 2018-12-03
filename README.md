@@ -8,6 +8,8 @@ First, add `@culturehq/charts` to your `package.json` `dependencies`, then insta
 
 There are three basic chart types, `HorizontalBarChart`, `PieChart`, and `VerticalBarChart`. Each accepts only one prop: `data`. It should be an object with the keys being the name of the data series and the values being the quantity.
 
+To get the styles, be sure to also import `@culturehq/charts/dist/style.css` into whatever stylesheet you're using.
+
 ## Testing locally
 
 You can run the tests by running `yarn test` and lint by running `yarn lint`. You can run the local server by running `yarn start` which will start the docs server on `http://localhost:8080`.
