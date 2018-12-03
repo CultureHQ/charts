@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 
 import getColorList from "./getColorList";
 import Chart from "./Chart";
+import ChartSegment from "./ChartSegment";
 
 const TWO_PI = 2 * Math.PI;
 const getCoords = percent => [Math.cos(TWO_PI * percent), Math.sin(TWO_PI * percent)];
@@ -63,51 +64,19 @@ const getScalar = time => {
   return 1 - 8 * Math.pow(inverse, 4);
 };
 
-class PieChartSlice extends PureComponent {
-  constructor(props) {
-    super(props);
+const PieChartGroup = ({ outerPath, innerPath, color, onClick, onKeyDown, tabIndex }) => (
+  <g
+    className="chq-charts--pie-slice"
+    tabIndex={tabIndex}
+    onClick={onClick}
+    onKeyDown={onKeyDown}
+  >
+    <path d={outerPath} fill={color} />
+    <path d={innerPath} fill={color} />
+  </g>
+);
 
-    this.handleClick = this.handleClick.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-  }
-
-  handleClick() {
-    const { dataKey, onToggle } = this.props;
-
-    onToggle(dataKey);
-  }
-
-  handleKeyDown(event) {
-    const { dataKey, onDeselect, onToggle } = this.props;
-
-    switch (event.key) {
-      case "Enter":
-        onToggle(dataKey);
-        break;
-      case "Escape":
-        onDeselect();
-        break;
-      default:
-        break;
-    }
-  }
-
-  render() {
-    const { outerPath, innerPath, color } = this.props;
-
-    return (
-      <g
-        className="chq-charts--pie-slice"
-        tabIndex={0}
-        onClick={this.handleClick}
-        onKeyDown={this.handleKeyDown}
-      >
-        <path d={outerPath} fill={color} />
-        <path d={innerPath} fill={color} />
-      </g>
-    );
-  }
-}
+const PieChartSlice = props => <ChartSegment component={PieChartGroup} {...props} />;
 
 class PieChartSVG extends PureComponent {
   constructor(props) {

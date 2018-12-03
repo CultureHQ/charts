@@ -2,6 +2,7 @@ import React, { PureComponent, memo } from "react";
 
 import getColorList from "./getColorList";
 import Chart from "./Chart";
+import ChartSegment from "./ChartSegment";
 
 const makeChartConfig = data => {
   const keys = Object.keys(data);
@@ -18,84 +19,55 @@ const makeChartConfig = data => {
   return { keys, colors, maxValue, maxKeyLen, maxX, maxY, startX };
 };
 
-class ChartBar extends PureComponent {
-  constructor(props) {
-    super(props);
+const ChartBarGroup = ({
+  maxKeyLen, maxValue, startX, index, isLast, activeKey, dataKey, dataValue,
+  color, tabIndex, onClick, onKeyDown
+}) => (
+  <g>
+    <text x={(maxKeyLen + 1) * 10} y={index * 40} dy="1em" textAnchor="end">
+      {dataKey}
+    </text>
+    <text
+      x={startX + (dataValue / maxValue) * 250 + 10}
+      y={index * 40 + 17.5}
+      textAnchor="left"
+    >
+      {dataValue}
+    </text>
+    <g
+      className="chq-charts--hori-bar-group"
+      tabIndex={tabIndex}
+      onClick={onClick}
+      onKeyDown={onKeyDown}
+    >
+      <rect
+        width={(dataValue / maxValue) * 250}
+        height={25}
+        x={startX}
+        y={index * 40}
+        fill={color}
+      />
+      <rect
+        className="chq-charts--bar-shadow"
+        width={(dataValue / maxValue) * 250 + 5}
+        height={35}
+        x={startX}
+        y={index * 40 - 5}
+        fill={color}
+      />
+    </g>
+    {!isLast && (
+      <line
+        x1={startX - 10} y1={(index + 1) * 40 - 7.5}
+        x2={startX + 10} y2={(index + 1) * 40 - 7.5}
+        stroke="#ccc"
+        strokeWidth={1}
+      />
+    )}
+  </g>
+);
 
-    this.handleClick = this.handleClick.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-  }
-
-  handleClick() {
-    const { onToggle, dataKey } = this.props;
-
-    onToggle(dataKey);
-  }
-
-  handleKeyDown(event) {
-    const { dataKey, onDeselect, onToggle } = this.props;
-
-    switch (event.key) {
-      case "Enter":
-        onToggle(dataKey);
-        break;
-      case "Escape":
-        onDeselect();
-        break;
-      default:
-        break;
-    }
-  }
-
-  render() {
-    const { maxKeyLen, maxValue, startX, index, isLast, activeKey, dataKey, dataValue, color } = this.props;
-
-    return (
-      <g>
-        <text x={(maxKeyLen + 1) * 10} y={index * 40} dy="1em" textAnchor="end">
-          {dataKey}
-        </text>
-        <text
-          x={startX + (dataValue / maxValue) * 250 + 10}
-          y={index * 40 + 17.5}
-          textAnchor="left"
-        >
-          {dataValue}
-        </text>
-        <g
-          className="chq-charts--hori-bar-group"
-          tabIndex={activeKey ? -1 : 0}
-          onClick={this.handleClick}
-          onKeyDown={this.handleKeyDown}
-        >
-          <rect
-            width={(dataValue / maxValue) * 250}
-            height={25}
-            x={startX}
-            y={index * 40}
-            fill={color}
-          />
-          <rect
-            className="chq-charts--bar-shadow"
-            width={(dataValue / maxValue) * 250 + 5}
-            height={35}
-            x={startX}
-            y={index * 40 - 5}
-            fill={color}
-          />
-        </g>
-        {!isLast && (
-          <line
-            x1={startX - 10} y1={(index + 1) * 40 - 7.5}
-            x2={startX + 10} y2={(index + 1) * 40 - 7.5}
-            stroke="#ccc"
-            strokeWidth={1}
-          />
-        )}
-      </g>
-    );
-  }
-}
+const ChartBar = props => <ChartSegment component={ChartBarGroup} {...props} />;
 
 class ChartSVG extends PureComponent {
   constructor(props) {
