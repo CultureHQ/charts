@@ -4,23 +4,22 @@
 }
 
 .chq-charts--info {
-  background-color: #f7f7f7;
+  background-color: rgba(247, 247, 247, 0);
   box-sizing: border-box;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  opacity: 0;
   padding: 27% 8px 8px;
   pointer-events: none;
   position: absolute;
   text-align: center;
-  transition: opacity 300ms ease-in-out, padding-top 400ms;
+  transition: background-color 300ms ease-in-out, padding-top 400ms;
 }
 
 .chq-charts--info-show {
+  background-color: rgba(247, 247, 247, .8);
   padding-top: 25%;
-  opacity: 1;
   pointer-events: all;
 }
 
@@ -29,7 +28,7 @@
 }
 
 .chq-charts--info button {
-  background: inherit;
+  background: none;
   border: 0;
   border-radius: 5px;
   color: #6a89af;
@@ -46,7 +45,8 @@
 
 .chq-charts--info button:focus,
 .chq-charts--info button:hover {
-  background-color: #dee5ed;
+  background-color: #f7f7f7;
+  box-shadow: 0 0 1px rgba(0, 0, 0, .2);
 }
 
 .chq-charts--chart {

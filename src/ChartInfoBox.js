@@ -13,9 +13,11 @@ class ChartInfoBox extends PureComponent {
   constructor(props) {
     super(props);
 
+    this.infoBoxRef = React.createRef();
     this.state = { roundedMean: getRoundedMean(props.data) };
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -34,6 +36,14 @@ class ChartInfoBox extends PureComponent {
     }
   }
 
+  handleClick(event) {
+    const { onDeselect } = this.props;
+
+    if (event.target === this.infoBoxRef.current) {
+      onDeselect();
+    }
+  }
+
   render() {
     const { data, activeKey, onDeselect } = this.props;
     const { roundedMean } = this.state;
@@ -45,12 +55,14 @@ class ChartInfoBox extends PureComponent {
 
     return (
       <div
+        ref={this.infoBoxRef}
         className={className}
         tabIndex={activeKey ? 0 : -1}
         onKeyDown={this.handleKeyDown}
+        onClick={this.handleClick}
       >
         {activeKey && (
-          <>
+          <span>
             {activeKey}
             <br /><br />
             Value: <span className="chq-charts--mono">{data[activeKey]}</span>
@@ -58,7 +70,7 @@ class ChartInfoBox extends PureComponent {
             Mean: <span className="chq-charts--mono">{roundedMean}</span>
             <br /><br />
             <button type="button" onClick={onDeselect}>← Back</button>
-          </>
+          </span>
         )}
       </div>
     );
