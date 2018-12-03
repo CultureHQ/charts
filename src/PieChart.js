@@ -109,13 +109,14 @@ class PieChartSVG extends PureComponent {
   }
 
   render() {
-    const { onToggle, onDeselect } = this.props;
+    const { onToggle, onDeselect, svgRef } = this.props;
     const { colors, slices } = this.state;
 
     return (
       <svg
         className="chq-charts--chart chq-charts--pie"
         viewBox="-1.2 -1.2 2.4 2.4"
+        ref={svgRef}
       >
         {slices.map(({ key, outerPath, innerPath }, index) => (
           <PieChartSlice

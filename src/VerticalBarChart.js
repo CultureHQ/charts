@@ -93,7 +93,7 @@ class ChartSVG extends PureComponent {
   }
 
   render() {
-    const { data, onToggle, onDeselect } = this.props;
+    const { data, onToggle, onDeselect, svgRef } = this.props;
     const { chartConfig } = this.state;
 
     const { keys, colors, maxValue, maxX } = chartConfig;
@@ -102,6 +102,7 @@ class ChartSVG extends PureComponent {
       <svg
         className="chq-charts--chart chq-charts--vert-bar"
         viewBox={`0 0 ${maxX} 325`}
+        ref={svgRef}
       >
         {keys.map((key, index) => (
           <ChartBar

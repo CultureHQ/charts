@@ -1,15 +1,28 @@
 import React, { PureComponent } from "react";
 
+import ChartExports from "./ChartExports";
 import ChartInfoBox from "./ChartInfoBox";
 
 class Chart extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = { activeKey: null };
+    this.svgRef = React.createRef();
+    this.state = { activeKey: null, hovering: false };
+
+    this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
 
     this.handleDeselect = this.handleDeselect.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
+  }
+
+  handleMouseEnter() {
+    this.setState({ hovering: true });
+  }
+
+  handleMouseLeave() {
+    this.setState({ hovering: false });
   }
 
   handleDeselect() {
@@ -24,20 +37,30 @@ class Chart extends PureComponent {
 
   render() {
     const { data, component: Component } = this.props;
-    const { activeKey } = this.state;
+    const { activeKey, hovering } = this.state;
 
     return (
-      <div className="chq-charts--wrap">
+      <div
+        className="chq-charts--wrap"
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
+      >
         <Component
           data={data}
           activeKey={activeKey}
           onDeselect={this.handleDeselect}
           onToggle={this.handleToggle}
+          svgRef={this.svgRef}
         />
         <ChartInfoBox
           data={data}
           activeKey={activeKey}
           onDeselect={this.handleDeselect}
+        />
+        <ChartExports
+          data={data}
+          hovering={hovering}
+          svgRef={this.svgRef}
         />
       </div>
     );
