@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [1.0.1] - 2018-12-03
+### Added
+- The ability to support a `className` prop on all three chart types.
+
+### Changed
+- The height on the export buttons from `1.5em` to `40px` to be more consistent.
+- Moved the info box up higher to support smaller screens.
+
+### Removed
+- The `module` directive from `package.json` since we need `preset-react` in order for it to work.
+
 ## [1.0.0] - 2018-12-03
 ### Added
 - Initial release 🎉

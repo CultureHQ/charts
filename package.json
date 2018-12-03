@@ -1,9 +1,8 @@
 {
   "name": "@culturehq/charts",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An SVG charting library",
   "main": "dist/index.js",
-  "module": "src/index.js",
   "scripts": {
     "build": "yarn build:js && yarn build:docs",
     "build:js": "babel src --out-dir ./dist --ignore '**/__tests__/**' && cp src/style.css dist/style.css",

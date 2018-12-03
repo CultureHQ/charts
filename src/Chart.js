@@ -36,12 +36,12 @@ class Chart extends PureComponent {
   }
 
   render() {
-    const { data, component: Component } = this.props;
+    const { className, data, component: Component } = this.props;
     const { activeKey, hovering } = this.state;
 
     return (
       <div
-        className="chq-charts--wrap"
+        className={`chq-charts--wrap ${className || ""}`}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >

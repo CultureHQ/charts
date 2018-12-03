@@ -14,11 +14,11 @@
 
 .chq-charts--export svg {
   border-radius: 4px;
-  height: 1.5em;
+  height: 40px;
   margin: 0;
   padding: 8px;
   transition: background-color 150ms;
-  width: 1.5em;
+  width: 40px;
 }
 
 .chq-charts--export svg:hover {
@@ -81,7 +81,7 @@
   box-shadow: 0 0 1px rgba(0, 0, 0, .2);
 }
 
-.chq-charts--chart {
+.chq-charts--wrap .chq-charts--chart {
   overflow: visible;
 }
 

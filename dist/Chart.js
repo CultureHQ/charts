@@ -90,13 +90,14 @@ function (_PureComponent) {
     key: "render",
     value: function render() {
       var _this$props = this.props,
+          className = _this$props.className,
           data = _this$props.data,
           Component = _this$props.component;
       var _this$state = this.state,
           activeKey = _this$state.activeKey,
           hovering = _this$state.hovering;
       return _react.default.createElement("div", {
-        className: "chq-charts--wrap",
+        className: "chq-charts--wrap ".concat(className || ""),
         onMouseEnter: this.handleMouseEnter,
         onMouseLeave: this.handleMouseLeave
       }, _react.default.createElement(Component, {
