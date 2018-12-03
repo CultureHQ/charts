@@ -33,7 +33,8 @@ const getSlices = (data, scalar) => {
     slices.push({
       key,
       value: data[key],
-      label: `${key} ${Math.round(percent * 10000) / 100}%`,
+      labelTop: key,
+      labelBottom: `${Math.round(percent * 10000) / 100}% (${data[key]})`,
       outerPath: [
         `M ${startX} ${startY}`,
         `A 1 1 0 ${largeArc} 1 ${endX} ${endY}`,
@@ -44,12 +45,12 @@ const getSlices = (data, scalar) => {
         `A 0.95 0.95 0 ${largeArc} 1 ${endX * 0.95} ${endY * 0.95}`,
         "L 0 0 Z"
       ].join(" "),
-      legend: [centerX * 1.2, centerY * 1.2],
+      legend: [centerX * 1.25, centerY * 1.25],
       leaderLine: {
         x1: centerX * 0.75,
         y1: centerY * 0.75,
-        x2: centerX * 1.05,
-        y2: centerY * 1.05
+        x2: centerX * 1.02,
+        y2: centerY * 1.02
       }
     });
   });
@@ -118,7 +119,7 @@ class PieChartSVG extends PureComponent {
     return (
       <svg
         className="chq-charts--chart"
-        viewBox="-1.2 -1.2 2.4 2.4"
+        viewBox="-1.4 -1.4 2.8 2.8"
         ref={svgRef}
       >
         {slices.map(({ key, outerPath, innerPath }, index) => (
@@ -132,21 +133,17 @@ class PieChartSVG extends PureComponent {
             onDeselect={onDeselect}
           />
         ))}
-        {slices.map(({ key, value, label, legend: [x, y], leaderLine }) => (
+        {slices.map(({ key, value, labelTop, labelBottom, legend: [x, y], leaderLine }) => (
           <g key={key} className="chq-charts--noselect">
             <line {...leaderLine} stroke="#666" strokeWidth={0.01} />
             <text
               x={x}
               y={y}
               textAnchor="middle"
-              fontSize={0.1}
+              fontSize={0.12}
             >
-              <tspan x={x} y={y}>{label}</tspan>
-              <tspan x={x} y={y} dy="1.2em">
-                (
-                {value}
-                )
-              </tspan>
+              <tspan x={x} y={y}>{labelTop}</tspan>
+              <tspan x={x} y={y} dy="1.2em">{labelBottom}</tspan>
             </text>
           </g>
         ))}
