@@ -32,7 +32,6 @@ const getSlices = (data, scalar) => {
 
     slices.push({
       key,
-      value: data[key],
       labelTop: key,
       labelBottom: `${Math.round(percent * 10000) / 100}% (${data[key]})`,
       outerPath: [
@@ -133,7 +132,7 @@ class PieChartSVG extends PureComponent {
             onDeselect={onDeselect}
           />
         ))}
-        {slices.map(({ key, value, labelTop, labelBottom, legend: [x, y], leaderLine }) => (
+        {slices.map(({ key, labelTop, labelBottom, legend: [x, y], leaderLine }) => (
           <g key={key} className="chq-charts--noselect">
             <line {...leaderLine} stroke="#666" strokeWidth={0.01} />
             <text
