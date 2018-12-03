@@ -7,17 +7,17 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _reactDom = _interopRequireDefault(require("react-dom"));
-
 var _getColorList = _interopRequireDefault(require("./getColorList"));
+
+var _Chart = _interopRequireDefault(require("./Chart"));
+
+var _ChartSegment = _interopRequireDefault(require("./ChartSegment"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -35,6 +35,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -46,7 +48,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var TWO_PI = 2 * Math.PI;
 
 var getCoords = function getCoords(percent) {
-  return [Math.cos(TWO_PI * percent), Math.sin(TWO_PI * percent)];
+  return [Math.cos(TWO_PI * (percent - 0.25)), Math.sin(TWO_PI * (percent - 0.25))];
 };
 
 var getSlices = function getSlices(data, scalar) {
@@ -55,7 +57,7 @@ var getSlices = function getSlices(data, scalar) {
   }, 0);
   var cursor = 0;
   var slices = [];
-  Object.keys(data).forEach(function (key, index) {
+  Object.keys(data).forEach(function (key) {
     if (data[key] === 0) {
       return;
     }
@@ -81,16 +83,16 @@ var getSlices = function getSlices(data, scalar) {
     cursor += percent;
     slices.push({
       key: key,
-      value: data[key],
-      label: "".concat(key, " ").concat(Math.round(percent * 10000) / 100, "%"),
+      labelTop: key,
+      labelBottom: "".concat(Math.round(percent * 10000) / 100, "% (").concat(data[key], ")"),
       outerPath: ["M ".concat(startX, " ").concat(startY), "A 1 1 0 ".concat(largeArc, " 1 ").concat(endX, " ").concat(endY), "L 0 0 Z"].join(" "),
-      innerPath: ["M ".concat(startX * .95, " ").concat(startY * .95), "A .95 .95 0 ".concat(largeArc, " 1 ").concat(endX * .95, " ").concat(endY * .95), "L 0 0 Z"].join(" "),
-      legend: [centerX * 1.2, centerY * 1.2],
+      innerPath: ["M ".concat(startX * 0.95, " ").concat(startY * 0.95), "A 0.95 0.95 0 ".concat(largeArc, " 1 ").concat(endX * 0.95, " ").concat(endY * 0.95), "L 0 0 Z"].join(" "),
+      legend: [centerX * 1.25, centerY * 1.25],
       leaderLine: {
-        x1: centerX * .75,
-        y1: centerY * .75,
-        x2: centerX * 1.05,
-        y2: centerY * 1.05
+        x1: centerX * 0.75,
+        y1: centerY * 0.75,
+        x2: centerX * 1.02,
+        y2: centerY * 1.02
       }
     });
   });
@@ -106,25 +108,52 @@ var getScalar = function getScalar(time) {
   return 1 - 8 * Math.pow(inverse, 4);
 };
 
-var PieChart =
+var PieChartGroup = function PieChartGroup(_ref) {
+  var outerPath = _ref.outerPath,
+      innerPath = _ref.innerPath,
+      color = _ref.color,
+      onClick = _ref.onClick,
+      onKeyDown = _ref.onKeyDown,
+      tabIndex = _ref.tabIndex;
+  return _react.default.createElement("g", {
+    className: "chq-charts--pie-slice",
+    tabIndex: tabIndex,
+    onClick: onClick,
+    onKeyDown: onKeyDown
+  }, _react.default.createElement("path", {
+    d: outerPath,
+    fill: color
+  }), _react.default.createElement("path", {
+    d: innerPath,
+    fill: color
+  }));
+};
+
+var PieChartSlice = function PieChartSlice(props) {
+  return _react.default.createElement(_ChartSegment.default, _extends({
+    component: PieChartGroup
+  }, props));
+};
+
+var PieChartSVG =
 /*#__PURE__*/
 function (_PureComponent) {
-  _inherits(PieChart, _PureComponent);
+  _inherits(PieChartSVG, _PureComponent);
 
-  function PieChart(props) {
+  function PieChartSVG(props) {
     var _this;
 
-    _classCallCheck(this, PieChart);
+    _classCallCheck(this, PieChartSVG);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(PieChart).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(PieChartSVG).call(this, props));
     _this.state = {
       colors: (0, _getColorList.default)(Object.keys(props.data).length),
-      slices: []
+      slices: getSlices(props.data, getScalar(0))
     };
     return _this;
   }
 
-  _createClass(PieChart, [{
+  _createClass(PieChartSVG, [{
     key: "componentDidMount",
     value: function componentDidMount() {
       var _this2 = this;
@@ -152,36 +181,38 @@ function (_PureComponent) {
   }, {
     key: "render",
     value: function render() {
-      var data = this.props.data;
+      var _this$props = this.props,
+          onToggle = _this$props.onToggle,
+          onDeselect = _this$props.onDeselect,
+          svgRef = _this$props.svgRef;
       var _this$state = this.state,
           colors = _this$state.colors,
           slices = _this$state.slices;
       return _react.default.createElement("svg", {
-        className: "chq-charts--chart chq-charts--pie",
-        viewBox: "-1.2 -1.2 2.4 2.4"
-      }, slices.map(function (_ref, index) {
-        var key = _ref.key,
-            outerPath = _ref.outerPath,
-            innerPath = _ref.innerPath;
-        return _react.default.createElement("g", {
-          key: key,
-          className: "chq-charts--pie-slice",
-          tabIndex: 0
-        }, _react.default.createElement("path", {
-          d: outerPath,
-          fill: colors[index]
-        }), _react.default.createElement("path", {
-          d: innerPath,
-          fill: colors[index]
-        }));
-      }), slices.map(function (_ref2) {
+        className: "chq-charts--chart",
+        viewBox: "-1.4 -1.4 2.8 2.8",
+        ref: svgRef
+      }, slices.map(function (_ref2, index) {
         var key = _ref2.key,
-            value = _ref2.value,
-            label = _ref2.label,
-            _ref2$legend = _slicedToArray(_ref2.legend, 2),
-            x = _ref2$legend[0],
-            y = _ref2$legend[1],
-            leaderLine = _ref2.leaderLine;
+            outerPath = _ref2.outerPath,
+            innerPath = _ref2.innerPath;
+        return _react.default.createElement(PieChartSlice, {
+          key: key,
+          dataKey: key,
+          outerPath: outerPath,
+          innerPath: innerPath,
+          color: colors[index],
+          onToggle: onToggle,
+          onDeselect: onDeselect
+        });
+      }), slices.map(function (_ref3) {
+        var key = _ref3.key,
+            labelTop = _ref3.labelTop,
+            labelBottom = _ref3.labelBottom,
+            _ref3$legend = _slicedToArray(_ref3.legend, 2),
+            x = _ref3$legend[0],
+            y = _ref3$legend[1],
+            leaderLine = _ref3.leaderLine;
 
         return _react.default.createElement("g", {
           key: key,
@@ -193,22 +224,29 @@ function (_PureComponent) {
           x: x,
           y: y,
           textAnchor: "middle",
-          transform: "rotate(90, ".concat(x, ", ").concat(y, ")"),
-          fontSize: 0.1
+          fontSize: 0.12
         }, _react.default.createElement("tspan", {
           x: x,
           y: y
-        }, label), _react.default.createElement("tspan", {
+        }, labelTop), _react.default.createElement("tspan", {
           x: x,
           y: y,
           dy: "1.2em"
-        }, "(", value, ")")));
+        }, labelBottom)));
       }));
     }
   }]);
 
-  return PieChart;
+  return PieChartSVG;
 }(_react.PureComponent);
+
+var PieChart = function PieChart(_ref4) {
+  var data = _ref4.data;
+  return _react.default.createElement(_Chart.default, {
+    component: PieChartSVG,
+    data: data
+  });
+};
 
 var _default = PieChart;
 exports.default = _default;
