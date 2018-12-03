@@ -1,7 +1,7 @@
 {
   "name": "@culturehq/charts",
   "version": "1.0.0",
-  "description": "A tiny charting library",
+  "description": "An SVG charting library",
   "main": "dist/index.js",
   "scripts": {
     "build": "yarn build:js && yarn build:docs",
@@ -26,9 +26,9 @@
     "react-dom": "^16"
   },
   "devDependencies": {
-    "@babel/cli": "^7.1.5",
-    "@babel/core": "^7.1.6",
-    "@babel/preset-env": "^7.1.6",
+    "@babel/cli": "^7.2.0",
+    "@babel/core": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
     "@babel/preset-react": "^7.0.0",
     "babel-core": "^7.0.0-0",
     "babel-eslint": "^10.0.1",
@@ -41,7 +41,6 @@
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
     "jest": "^23.6.0",
-    "jest-axe": "^3.1.0",
     "react": "^16.7.0-alpha.2",
     "react-dom": "^16.7.0-alpha.2",
     "react-testing-library": "^5.3.1",

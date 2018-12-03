@@ -1,6 +1,6 @@
 # @culturehq/charts
 
-A tiny SVG React charting library
+An SVG React charting library
 
 ## Getting started
 
