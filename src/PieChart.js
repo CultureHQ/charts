@@ -2,6 +2,7 @@ import React, { Fragment, PureComponent } from "react";
 import ReactDOM from "react-dom";
 
 import getColorList from "./getColorList";
+import Chart from "./Chart";
 
 const TWO_PI = 2 * Math.PI;
 const getCoords = percent => [Math.cos(TWO_PI * percent), Math.sin(TWO_PI * percent)];
@@ -62,35 +63,53 @@ const getScalar = time => {
   return 1 - 8 * Math.pow(inverse, 4);
 };
 
-const PieChartSVG = ({ colors, slices }) => (
-  <svg
-    className="chq-charts--chart chq-charts--pie"
-    viewBox="-1.2 -1.2 2.4 2.4"
-  >
-    {slices.map(({ key, outerPath, innerPath }, index) => (
-      <g key={key} className="chq-charts--pie-slice" tabIndex={0}>
-        <path d={outerPath} fill={colors[index]} />
-        <path d={innerPath} fill={colors[index]} />
-      </g>
-    ))}
-    {slices.map(({ key, value, label, legend: [x, y], leaderLine }) => (
-      <g key={key} className="chq-charts--noselect">
-        <line {...leaderLine} stroke="#666" strokeWidth={0.01} />
-        <text
-          x={x} y={y}
-          textAnchor="middle"
-          transform={`rotate(90, ${x}, ${y})`}
-          fontSize={0.1}
-        >
-          <tspan x={x} y={y}>{label}</tspan>
-          <tspan x={x} y={y} dy="1.2em">({value})</tspan>
-        </text>
-      </g>
-    ))}
-  </svg>
-);
+class PieChartSlice extends PureComponent {
+  constructor(props) {
+    super(props);
 
-class PieChart extends PureComponent {
+    this.handleClick = this.handleClick.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+  }
+
+  handleClick() {
+    const { dataKey, onToggle } = this.props;
+
+    onToggle(dataKey);
+  }
+
+  handleKeyDown(event) {
+    const { dataKey, onDeselect, onToggle } = this.props;
+
+    switch (event.key) {
+      case "Enter":
+        onToggle(dataKey);
+        break;
+      case "Escape":
+        onDeselect();
+        break;
+      default:
+        break;
+    }
+  }
+
+  render() {
+    const { outerPath, innerPath, color } = this.props;
+
+    return (
+      <g
+        className="chq-charts--pie-slice"
+        tabIndex={0}
+        onClick={this.handleClick}
+        onKeyDown={this.handleKeyDown}
+      >
+        <path d={outerPath} fill={color} />
+        <path d={innerPath} fill={color} />
+      </g>
+    );
+  }
+}
+
+class PieChartSVG extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -122,11 +141,44 @@ class PieChart extends PureComponent {
   }
 
   render() {
-    const { data } = this.props;
+    const { onToggle, onDeselect } = this.props;
     const { colors, slices } = this.state;
 
-    return <PieChartSVG colors={colors} slices={slices} />;
+    return (
+      <svg
+        className="chq-charts--chart chq-charts--pie"
+        viewBox="-1.2 -1.2 2.4 2.4"
+      >
+        {slices.map(({ key, outerPath, innerPath }, index) => (
+          <PieChartSlice
+            key={key}
+            dataKey={key}
+            outerPath={outerPath}
+            innerPath={innerPath}
+            color={colors[index]}
+            onToggle={onToggle}
+            onDeselect={onDeselect}
+          />
+        ))}
+        {slices.map(({ key, value, label, legend: [x, y], leaderLine }) => (
+          <g key={key} className="chq-charts--noselect">
+            <line {...leaderLine} stroke="#666" strokeWidth={0.01} />
+            <text
+              x={x} y={y}
+              textAnchor="middle"
+              transform={`rotate(90, ${x}, ${y})`}
+              fontSize={0.1}
+            >
+              <tspan x={x} y={y}>{label}</tspan>
+              <tspan x={x} y={y} dy="1.2em">({value})</tspan>
+            </text>
+          </g>
+        ))}
+      </svg>
+    );
   }
 }
+
+const PieChart = ({ data }) => <Chart component={PieChartSVG} data={data} />;
 
 export default PieChart;

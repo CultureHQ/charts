@@ -65,6 +65,7 @@
 
 .chq-charts--pie-slice {
   animation: chqChartsFadeIn 1.5s ease-in-out forwards;
+  cursor: pointer;
   opacity: 0;
   outline: none;
   transition: transform 300ms;
