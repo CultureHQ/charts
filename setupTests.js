@@ -2,7 +2,8 @@
 import "react-testing-library/cleanup-after-each";
 
 class XMLSerializer {
-  serializeToString(svg) {
+  // eslint-disable-next-line class-methods-use-this
+  serializeToString() {
     return "svg";
   }
 }

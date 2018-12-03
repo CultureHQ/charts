@@ -156,6 +156,30 @@ function (_PureComponent) {
   _createClass(PieChartSVG, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      this.beginInterval();
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      var data = this.props.data;
+
+      if (data !== prevProps.data) {
+        clearInterval(this.interval);
+        this.setState({
+          colors: (0, _getColorList.default)(Object.keys(data).length),
+          slices: getSlices(data, getScalar(0))
+        });
+        this.beginInterval();
+      }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      clearInterval(this.interval);
+    }
+  }, {
+    key: "beginInterval",
+    value: function beginInterval() {
       var _this2 = this;
 
       var data = this.props.data;
@@ -172,11 +196,6 @@ function (_PureComponent) {
           slices: getSlices(data, getScalar(time))
         });
       }, 20);
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      clearInterval(this.interval);
     }
   }, {
     key: "render",

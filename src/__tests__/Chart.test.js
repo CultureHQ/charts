@@ -3,10 +3,9 @@ import { render, fireEvent } from "react-testing-library";
 
 import Chart from "../Chart";
 
-const DummyChartSVG = ({ data, activeKey, onDeselect, onToggle, svgRef }) => (
+const DummyChartSVG = ({ onToggle, svgRef }) => (
   <div ref={svgRef}>
     <button type="button" onClick={() => onToggle("a")}>Toggle</button>
-    <button type="button" onClick={onDeselect}>Deselect</button>
   </div>
 );
 
