@@ -5,7 +5,10 @@ import Chart from "./Chart";
 import ChartSegment from "./ChartSegment";
 
 const TWO_PI = 2 * Math.PI;
-const getCoords = percent => [Math.cos(TWO_PI * percent), Math.sin(TWO_PI * percent)];
+const getCoords = percent => [
+  Math.cos(TWO_PI * (percent - 0.25)),
+  Math.sin(TWO_PI * (percent - 0.25))
+];
 
 const getSlices = (data, scalar) => {
   const total = Object.keys(data).reduce((accum, key) => accum + data[key], 0);
@@ -114,7 +117,7 @@ class PieChartSVG extends PureComponent {
 
     return (
       <svg
-        className="chq-charts--chart chq-charts--pie"
+        className="chq-charts--chart"
         viewBox="-1.2 -1.2 2.4 2.4"
         ref={svgRef}
       >
@@ -136,7 +139,6 @@ class PieChartSVG extends PureComponent {
               x={x}
               y={y}
               textAnchor="middle"
-              transform={`rotate(90, ${x}, ${y})`}
               fontSize={0.1}
             >
               <tspan x={x} y={y}>{label}</tspan>

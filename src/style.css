@@ -91,10 +91,6 @@
   opacity: 0;
 }
 
-.chq-charts--pie {
-  transform: rotate(-90deg);
-}
-
 .chq-charts--pie-slice {
   animation: chqChartsFadeIn 1.5s ease-in-out forwards;
   cursor: pointer;
