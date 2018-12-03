@@ -1,7 +1,7 @@
 import React, { PureComponent, memo } from "react";
 
 import getColorList from "./getColorList";
-import ChartInfoBox from "./ChartInfoBox";
+import Chart from "./Chart";
 
 const makeChartConfig = data => {
   const keys = Object.keys(data);
@@ -97,51 +97,11 @@ class ChartBar extends PureComponent {
   }
 }
 
-const ChartSVG = memo(({ data, activeKey, chartConfig, onDeselect, onToggle }) => {
-  const { keys, colors, maxValue, maxKeyLen, maxX, maxY, startX } = chartConfig;
-
-  return (
-    <svg
-      className="chq-charts--chart chq-charts--hori-bar"
-      viewBox={`0 0 ${maxX + 15} ${maxY + 10}`}
-    >
-      {keys.map((key, index) => (
-        <ChartBar
-          key={key}
-          maxKeyLen={maxKeyLen}
-          maxValue={maxValue}
-          startX={startX}
-          index={index}
-          isLast={index === keys.length - 1}
-          activeKey={activeKey}
-          dataKey={key}
-          dataValue={data[key]}
-          color={colors[index]}
-          onDeselect={onDeselect}
-          onToggle={onToggle}
-        />
-      ))}
-      <line
-        x1={startX - 5} y1={-10}
-        x2={startX - 5} y2={maxY + 10}
-        stroke="#ccc"
-        strokeWidth={1}
-      />
-    </svg>
-  );
-});
-
-class HorizontalBarChart extends PureComponent {
+class ChartSVG extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = {
-      activeKey: null,
-      chartConfig: makeChartConfig(props.data)
-    };
-
-    this.handleDeselect = this.handleDeselect.bind(this);
-    this.handleToggle = this.handleToggle.bind(this);
+    this.state = { chartConfig: makeChartConfig(props.data) };
   }
 
   componentDidUpdate(prevProps) {
@@ -152,37 +112,44 @@ class HorizontalBarChart extends PureComponent {
     }
   }
 
-  handleDeselect() {
-    this.setState({ activeKey: null });
-  }
-
-  handleToggle(activeKey) {
-    this.setState(state => ({
-      activeKey: activeKey === state.activeKey ? null : activeKey
-    }));
-  }
-
   render() {
-    const { data } = this.props;
-    const { activeKey, chartConfig } = this.state;
+    const { data, activeKey, onDeselect, onToggle } = this.props;
+    const { chartConfig } = this.state;
+
+    const { keys, colors, maxValue, maxKeyLen, maxX, maxY, startX } = chartConfig;
 
     return (
-      <div className="chq-charts--wrap">
-        <ChartSVG
-          data={data}
-          activeKey={activeKey}
-          chartConfig={chartConfig}
-          onDeselect={this.handleDeselect}
-          onToggle={this.handleToggle}
+      <svg
+        className="chq-charts--chart chq-charts--hori-bar"
+        viewBox={`0 0 ${maxX + 15} ${maxY + 10}`}
+      >
+        {keys.map((key, index) => (
+          <ChartBar
+            key={key}
+            maxKeyLen={maxKeyLen}
+            maxValue={maxValue}
+            startX={startX}
+            index={index}
+            isLast={index === keys.length - 1}
+            activeKey={activeKey}
+            dataKey={key}
+            dataValue={data[key]}
+            color={colors[index]}
+            onDeselect={onDeselect}
+            onToggle={onToggle}
+          />
+        ))}
+        <line
+          x1={startX - 5} y1={-10}
+          x2={startX - 5} y2={maxY + 10}
+          stroke="#ccc"
+          strokeWidth={1}
         />
-        <ChartInfoBox
-          data={data}
-          activeKey={activeKey}
-          onDeselect={this.handleDeselect}
-        />
-      </div>
+      </svg>
     );
   }
 }
+
+const HorizontalBarChart = ({ data }) => <Chart component={ChartSVG} data={data} />;
 
 export default HorizontalBarChart;
