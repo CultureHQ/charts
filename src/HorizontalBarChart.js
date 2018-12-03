@@ -1,4 +1,4 @@
-import React, { PureComponent, memo } from "react";
+import React, { PureComponent } from "react";
 
 import getColorList from "./getColorList";
 import Chart from "./Chart";
@@ -20,8 +20,8 @@ const makeChartConfig = data => {
 };
 
 const ChartBarGroup = ({
-  maxKeyLen, maxValue, startX, index, isLast, activeKey, dataKey, dataValue,
-  color, tabIndex, onClick, onKeyDown
+  maxKeyLen, maxValue, startX, index, isLast, dataKey, dataValue, color,
+  tabIndex, onClick, onKeyDown
 }) => (
   <g>
     <text x={(maxKeyLen + 1) * 10} y={index * 40} dy="1em" textAnchor="end">
@@ -58,8 +58,10 @@ const ChartBarGroup = ({
     </g>
     {!isLast && (
       <line
-        x1={startX - 10} y1={(index + 1) * 40 - 7.5}
-        x2={startX + 10} y2={(index + 1) * 40 - 7.5}
+        x1={startX - 10}
+        y1={(index + 1) * 40 - 7.5}
+        x2={startX + 10}
+        y2={(index + 1) * 40 - 7.5}
         stroke="#ccc"
         strokeWidth={1}
       />
@@ -112,8 +114,10 @@ class ChartSVG extends PureComponent {
           />
         ))}
         <line
-          x1={startX - 5} y1={-10}
-          x2={startX - 5} y2={maxY + 10}
+          x1={startX - 5}
+          y1={-10}
+          x2={startX - 5}
+          y2={maxY + 10}
           stroke="#ccc"
           strokeWidth={1}
         />

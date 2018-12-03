@@ -14,20 +14,25 @@ const makeChartConfig = data => {
   return { keys, colors, maxValue, maxX };
 };
 
-const ChartBarGroup = ({ dataKey, dataValue, maxValue, index, color, isLast, tabIndex, onClick, onKeyDown }) => {
+const ChartBarGroup = ({
+  dataKey, dataValue, maxValue, index, color, isLast, tabIndex, onClick,
+  onKeyDown
+}) => {
   const height = (dataValue / maxValue) * 250;
 
   return (
     <g>
       <text
-        x={index * 40} y={305}
+        x={index * 40}
+        y={305}
         textAnchor="middle"
         transform={`rotate(-30, ${index * 40}, 305)`}
       >
         {dataKey}
       </text>
       <text
-        x={index * 40 + (25 / 2)} y={265 - height}
+        x={index * 40 + (25 / 2)}
+        y={265 - height}
         textAnchor="middle"
       >
         {dataValue}
@@ -42,22 +47,26 @@ const ChartBarGroup = ({ dataKey, dataValue, maxValue, index, color, isLast, tab
           <rect
             width={25}
             height={height}
-            x={index * 40} y={275 - height}
+            x={index * 40}
+            y={275 - height}
             fill={color}
           />
           <rect
             className="chq-charts--bar-shadow"
             width={35}
             height={height + 5}
-            x={index * 40 - 5} y={270 - height}
+            x={index * 40 - 5}
+            y={270 - height}
             fill={color}
           />
         </g>
       )}
       {!isLast && (
         <line
-          x1={(index + 1) * 40 - 7.5} y1={285}
-          x2={(index + 1) * 40 - 7.5} y2={265}
+          x1={(index + 1) * 40 - 7.5}
+          y1={285}
+          x2={(index + 1) * 40 - 7.5}
+          y2={265}
           stroke="#ccc"
           strokeWidth={1}
         />
@@ -108,8 +117,10 @@ class ChartSVG extends PureComponent {
           />
         ))}
         <line
-          x1={-10} y1={280}
-          x2={maxX} y2={280}
+          x1={-10}
+          y1={280}
+          x2={maxX}
+          y2={280}
           stroke="#ccc"
           strokeWidth={1}
         />

@@ -1,5 +1,4 @@
-import React, { Fragment, PureComponent } from "react";
-import ReactDOM from "react-dom";
+import React, { PureComponent } from "react";
 
 import getColorList from "./getColorList";
 import Chart from "./Chart";
@@ -12,9 +11,9 @@ const getSlices = (data, scalar) => {
   const total = Object.keys(data).reduce((accum, key) => accum + data[key], 0);
 
   let cursor = 0;
-  let slices = [];
+  const slices = [];
 
-  Object.keys(data).forEach((key, index) => {
+  Object.keys(data).forEach(key => {
     if (data[key] === 0) {
       return;
     }
@@ -35,17 +34,17 @@ const getSlices = (data, scalar) => {
       outerPath: [
         `M ${startX} ${startY}`,
         `A 1 1 0 ${largeArc} 1 ${endX} ${endY}`,
-        `L 0 0 Z`
+        "L 0 0 Z"
       ].join(" "),
       innerPath: [
-        `M ${startX * .95} ${startY * .95}`,
-        `A .95 .95 0 ${largeArc} 1 ${endX * .95} ${endY * .95}`,
-        `L 0 0 Z`
+        `M ${startX * 0.95} ${startY * 0.95}`,
+        `A 0.95 0.95 0 ${largeArc} 1 ${endX * 0.95} ${endY * 0.95}`,
+        "L 0 0 Z"
       ].join(" "),
       legend: [centerX * 1.2, centerY * 1.2],
       leaderLine: {
-        x1: centerX * .75,
-        y1: centerY * .75,
+        x1: centerX * 0.75,
+        y1: centerY * 0.75,
         x2: centerX * 1.05,
         y2: centerY * 1.05
       }
@@ -57,11 +56,11 @@ const getSlices = (data, scalar) => {
 
 const getScalar = time => {
   if (time < 0.5) {
-    return 8 * Math.pow(time, 4);
+    return 8 * (time ** 4);
   }
 
   const inverse = 1 - time;
-  return 1 - 8 * Math.pow(inverse, 4);
+  return 1 - 8 * (inverse ** 4);
 };
 
 const PieChartGroup = ({ outerPath, innerPath, color, onClick, onKeyDown, tabIndex }) => (
@@ -133,13 +132,18 @@ class PieChartSVG extends PureComponent {
           <g key={key} className="chq-charts--noselect">
             <line {...leaderLine} stroke="#666" strokeWidth={0.01} />
             <text
-              x={x} y={y}
+              x={x}
+              y={y}
               textAnchor="middle"
               transform={`rotate(90, ${x}, ${y})`}
               fontSize={0.1}
             >
               <tspan x={x} y={y}>{label}</tspan>
-              <tspan x={x} y={y} dy="1.2em">({value})</tspan>
+              <tspan x={x} y={y} dy="1.2em">
+                (
+                {value}
+                )
+              </tspan>
             </text>
           </g>
         ))}

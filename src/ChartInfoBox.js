@@ -1,10 +1,7 @@
 import React, { PureComponent } from "react";
 
 const getRoundedMean = data => {
-  let sum = 0;
-  for (const key in data) {
-    sum += data[key];
-  }
+  const sum = Object.values(data).reduce((accum, value) => accum + value, 0);
 
   return Math.round(sum / Object.keys(data).length * 100) / 100;
 };
@@ -57,6 +54,7 @@ class ChartInfoBox extends PureComponent {
       <div
         ref={this.infoBoxRef}
         className={className}
+        role="button"
         tabIndex={activeKey ? 0 : -1}
         onKeyDown={this.handleKeyDown}
         onClick={this.handleClick}
@@ -64,11 +62,17 @@ class ChartInfoBox extends PureComponent {
         {activeKey && (
           <span>
             {activeKey}
-            <br /><br />
-            Value: <span className="chq-charts--mono">{data[activeKey]}</span>
             <br />
-            Mean: <span className="chq-charts--mono">{roundedMean}</span>
-            <br /><br />
+            <br />
+            Value:
+            {" "}
+            <span className="chq-charts--mono">{data[activeKey]}</span>
+            <br />
+            Mean:
+            {" "}
+            <span className="chq-charts--mono">{roundedMean}</span>
+            <br />
+            <br />
             <button type="button" onClick={onDeselect}>← Back</button>
           </span>
         )}
