@@ -4,18 +4,18 @@ const makeCSVCell = value => (
   value ? value.toString().replace(/"/g, "\"\"") : ""
 );
 
-const makeExports = (data, svg) => {
+const makeCSVExport = data => {
   const csvEntries = Object.keys(data).map(key => (
     `${makeCSVCell(key)},${makeCSVCell(data[key])}`
   ));
 
   const csvContent = ["Key,Value"].concat(csvEntries).join("\n");
-  const svgContent = new XMLSerializer().serializeToString(svg);
+  return `data:text/csv;charset=utf-8;base64,${btoa(csvContent)}`;
+};
 
-  return {
-    csvExport: `data:text/csv;charset=utf-8;base64,${btoa(csvContent)}`,
-    svgExport: `data:image/svg+xml;base64,${btoa(svgContent)}`
-  };
+const makeSVGExport = svg => {
+  const svgContent = new XMLSerializer().serializeToString(svg);
+  return `data:image/svg+xml;base64,${btoa(svgContent)}`;
 };
 
 class ChartExports extends PureComponent {
@@ -26,22 +26,32 @@ class ChartExports extends PureComponent {
   }
 
   componentDidMount() {
-    this.enqueueMakeExports();
+    this.componentIsMounted = true;
+    this.makeExports();
   }
 
   componentDidUpdate(prevProps) {
     const { data } = this.props;
 
     if (data !== prevProps.data) {
-      this.enqueueMakeExports();
+      this.makeExports();
     }
   }
 
-  enqueueMakeExports() {
-    setTimeout(() => {
-      const { data, svgRef } = this.props;
+  componentWillUnmount() {
+    this.componentIsMounted = false;
+  }
 
-      this.setState(makeExports(data, svgRef.current));
+  makeExports() {
+    setTimeout(() => {
+      if (this.componentIsMounted) {
+        const { data, svgRef } = this.props;
+
+        this.setState({
+          csvExport: makeCSVExport(data),
+          svgExport: makeSVGExport(svgRef.current)
+        });
+      }
     }, 2000);
   }
 

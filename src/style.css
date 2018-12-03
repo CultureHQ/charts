@@ -25,6 +25,11 @@
   background-color: white;
 }
 
+.chq-charts--wrap canvas {
+  width: 400px;
+  height: 400px;
+}
+
 .chq-charts--wrap:hover .chq-charts--export {
   opacity: 1;
   pointer-events: all;
