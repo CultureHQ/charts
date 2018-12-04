@@ -16,9 +16,21 @@ const data = {
 
 const App = () => (
   <>
-    <HorizontalBarChart data={data} />
-    <VerticalBarChart data={data} />
-    <PieChart data={data} />
+    <nav>@culturehq/charts</nav>
+    <main>
+      <HorizontalBarChart data={data} />
+      <VerticalBarChart data={data} />
+      <PieChart data={data} />
+    </main>
+    {ReactDOM.createPortal(
+      <footer>
+        <p>
+          Copyright (c) 2018 CultureHQ<br />
+          <a href="https://github.com/CultureHQ/charts">github.com/CultureHQ/charts</a>
+        </p>
+      </footer>,
+      document.body
+    )}
   </>
 );
 
