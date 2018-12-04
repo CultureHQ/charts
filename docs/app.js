@@ -25,7 +25,8 @@ const App = () => (
     {ReactDOM.createPortal(
       <footer>
         <p>
-          Copyright (c) 2018 CultureHQ<br />
+          Copyright (c) 2018 CultureHQ
+          <br />
           <a href="https://github.com/CultureHQ/charts">github.com/CultureHQ/charts</a>
         </p>
       </footer>,
