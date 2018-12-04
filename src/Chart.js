@@ -3,18 +3,43 @@ import React, { PureComponent } from "react";
 import ChartExports from "./ChartExports";
 import ChartInfoBox from "./ChartInfoBox";
 
+const ellipsizeKeys = data => {
+  const ellipsized = {};
+
+  Object.keys(data).forEach(key => {
+    let trans = key.toString();
+    trans = trans.length > 12 ? `${trans.slice(0, 10)}...` : trans;
+
+    ellipsized[trans] = data[key];
+  });
+
+  return ellipsized;
+};
+
 class Chart extends PureComponent {
   constructor(props) {
     super(props);
 
     this.svgRef = React.createRef();
-    this.state = { activeKey: null, hovering: false };
+    this.state = {
+      activeKey: null,
+      ellipsized: ellipsizeKeys(props.data),
+      hovering: false
+    };
 
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
 
     this.handleDeselect = this.handleDeselect.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { data } = this.props;
+
+    if (data !== prevProps.data) {
+      this.setState({ ellipsized: ellipsizeKeys(data) });
+    }
   }
 
   handleMouseEnter() {
@@ -37,16 +62,21 @@ class Chart extends PureComponent {
 
   render() {
     const { className, data, component: Component } = this.props;
-    const { activeKey, hovering } = this.state;
+    const { activeKey, ellipsized, hovering } = this.state;
+
+    let classList = "chq-charts--wrap";
+    if (className) {
+      classList = `${classList} ${className}`;
+    }
 
     return (
       <div
-        className={`chq-charts--wrap ${className || ""}`}
+        className={classList}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
         <Component
-          data={data}
+          data={ellipsized}
           activeKey={activeKey}
           onDeselect={this.handleDeselect}
           onToggle={this.handleToggle}

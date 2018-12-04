@@ -14,15 +14,15 @@
 
 .chq-charts--export svg {
   border-radius: 4px;
-  height: 40px;
+  height: 30px;
   margin: 0;
   padding: 8px;
   transition: background-color 150ms;
-  width: 40px;
+  width: 30px;
 }
 
 .chq-charts--export svg:hover {
-  background-color: white;
+  background-color: #f7f7f7;
 }
 
 .chq-charts--wrap canvas {
@@ -47,6 +47,10 @@
   position: absolute;
   text-align: center;
   transition: background-color 300ms ease-in-out, padding-top 400ms;
+}
+
+.chq-charts--info:focus {
+  outline: none;
 }
 
 .chq-charts--info-show {
@@ -125,6 +129,7 @@
 
 .chq-charts--vert-bar-group {
   animation: chqChartsScaleY 1.5s ease-in-out forwards;
+  cursor: pointer;
   opacity: 0;
   outline: none;
   transform: scale3d(1, 0, 1);

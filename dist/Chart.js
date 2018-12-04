@@ -33,6 +33,16 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
+var ellipsizeKeys = function ellipsizeKeys(data) {
+  var ellipsized = {};
+  Object.keys(data).forEach(function (key) {
+    var trans = key.toString();
+    trans = trans.length > 12 ? "".concat(trans.slice(0, 10), "...") : trans;
+    ellipsized[trans] = data[key];
+  });
+  return ellipsized;
+};
+
 var Chart =
 /*#__PURE__*/
 function (_PureComponent) {
@@ -47,6 +57,7 @@ function (_PureComponent) {
     _this.svgRef = _react.default.createRef();
     _this.state = {
       activeKey: null,
+      ellipsized: ellipsizeKeys(props.data),
       hovering: false
     };
     _this.handleMouseEnter = _this.handleMouseEnter.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -57,6 +68,17 @@ function (_PureComponent) {
   }
 
   _createClass(Chart, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      var data = this.props.data;
+
+      if (data !== prevProps.data) {
+        this.setState({
+          ellipsized: ellipsizeKeys(data)
+        });
+      }
+    }
+  }, {
     key: "handleMouseEnter",
     value: function handleMouseEnter() {
       this.setState({
@@ -95,13 +117,20 @@ function (_PureComponent) {
           Component = _this$props.component;
       var _this$state = this.state,
           activeKey = _this$state.activeKey,
+          ellipsized = _this$state.ellipsized,
           hovering = _this$state.hovering;
+      var classList = "chq-charts--wrap";
+
+      if (className) {
+        classList = "".concat(classList, " ").concat(className);
+      }
+
       return _react.default.createElement("div", {
-        className: "chq-charts--wrap ".concat(className || ""),
+        className: classList,
         onMouseEnter: this.handleMouseEnter,
         onMouseLeave: this.handleMouseLeave
       }, _react.default.createElement(Component, {
-        data: data,
+        data: ellipsized,
         activeKey: activeKey,
         onDeselect: this.handleDeselect,
         onToggle: this.handleToggle,
