@@ -14,6 +14,7 @@
 
 .chq-charts--export svg {
   border-radius: 4px;
+  box-sizing: content-box;
   height: 30px;
   margin: 0;
   padding: 8px;

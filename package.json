@@ -1,6 +1,6 @@
 {
   "name": "@culturehq/charts",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "An SVG charting library",
   "main": "dist/index.js",
   "scripts": {
