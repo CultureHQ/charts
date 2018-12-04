@@ -18,7 +18,7 @@ const ChartBarGroup = ({
   dataKey, dataValue, maxValue, index, color, isLast, tabIndex, onClick,
   onKeyDown
 }) => {
-  const height = (dataValue / maxValue) * 250;
+  const height = maxValue ? (dataValue / maxValue) * 250 : 0;
 
   return (
     <g>
@@ -130,6 +130,8 @@ class ChartSVG extends PureComponent {
   }
 }
 
-const VerticalBarChart = ({ data }) => <Chart component={ChartSVG} data={data} />;
+const VerticalBarChart = ({ className, data }) => (
+  <Chart className={className} component={ChartSVG} data={data} />
+);
 
 export default VerticalBarChart;

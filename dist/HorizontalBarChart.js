@@ -78,13 +78,14 @@ var ChartBarGroup = function ChartBarGroup(_ref) {
       tabIndex = _ref.tabIndex,
       onClick = _ref.onClick,
       onKeyDown = _ref.onKeyDown;
+  var perc = maxValue ? dataValue / maxValue : 0;
   return _react.default.createElement("g", null, _react.default.createElement("text", {
     x: (maxKeyLen + 1) * 10,
     y: index * 40,
     dy: "1em",
     textAnchor: "end"
   }, dataKey), _react.default.createElement("text", {
-    x: startX + dataValue / maxValue * 250 + 10,
+    x: startX + perc * 250 + 10,
     y: index * 40 + 17.5,
     textAnchor: "left"
   }, dataValue), _react.default.createElement("g", {
@@ -93,14 +94,14 @@ var ChartBarGroup = function ChartBarGroup(_ref) {
     onClick: onClick,
     onKeyDown: onKeyDown
   }, _react.default.createElement("rect", {
-    width: dataValue / maxValue * 250,
+    width: perc * 250,
     height: 25,
     x: startX,
     y: index * 40,
     fill: color
   }), _react.default.createElement("rect", {
     className: "chq-charts--bar-shadow",
-    width: dataValue / maxValue * 250 + 5,
+    width: perc * 250 + 5,
     height: 35,
     x: startX,
     y: index * 40 - 5,
@@ -200,8 +201,10 @@ function (_PureComponent) {
 }(_react.PureComponent);
 
 var HorizontalBarChart = function HorizontalBarChart(_ref2) {
-  var data = _ref2.data;
+  var className = _ref2.className,
+      data = _ref2.data;
   return _react.default.createElement(_Chart.default, {
+    className: className,
     component: ChartSVG,
     data: data
   });

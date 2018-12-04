@@ -22,52 +22,56 @@ const makeChartConfig = data => {
 const ChartBarGroup = ({
   maxKeyLen, maxValue, startX, index, isLast, dataKey, dataValue, color,
   tabIndex, onClick, onKeyDown
-}) => (
-  <g>
-    <text x={(maxKeyLen + 1) * 10} y={index * 40} dy="1em" textAnchor="end">
-      {dataKey}
-    </text>
-    <text
-      x={startX + (dataValue / maxValue) * 250 + 10}
-      y={index * 40 + 17.5}
-      textAnchor="left"
-    >
-      {dataValue}
-    </text>
-    <g
-      className="chq-charts--hori-bar-group"
-      tabIndex={tabIndex}
-      onClick={onClick}
-      onKeyDown={onKeyDown}
-    >
-      <rect
-        width={(dataValue / maxValue) * 250}
-        height={25}
-        x={startX}
-        y={index * 40}
-        fill={color}
-      />
-      <rect
-        className="chq-charts--bar-shadow"
-        width={(dataValue / maxValue) * 250 + 5}
-        height={35}
-        x={startX}
-        y={index * 40 - 5}
-        fill={color}
-      />
+}) => {
+  const perc = maxValue ? (dataValue / maxValue) : 0;
+
+  return (
+    <g>
+      <text x={(maxKeyLen + 1) * 10} y={index * 40} dy="1em" textAnchor="end">
+        {dataKey}
+      </text>
+      <text
+        x={startX + perc * 250 + 10}
+        y={index * 40 + 17.5}
+        textAnchor="left"
+      >
+        {dataValue}
+      </text>
+      <g
+        className="chq-charts--hori-bar-group"
+        tabIndex={tabIndex}
+        onClick={onClick}
+        onKeyDown={onKeyDown}
+      >
+        <rect
+          width={perc * 250}
+          height={25}
+          x={startX}
+          y={index * 40}
+          fill={color}
+        />
+        <rect
+          className="chq-charts--bar-shadow"
+          width={perc * 250 + 5}
+          height={35}
+          x={startX}
+          y={index * 40 - 5}
+          fill={color}
+        />
+      </g>
+      {!isLast && (
+        <line
+          x1={startX - 10}
+          y1={(index + 1) * 40 - 7.5}
+          x2={startX + 10}
+          y2={(index + 1) * 40 - 7.5}
+          stroke="#ccc"
+          strokeWidth={1}
+        />
+      )}
     </g>
-    {!isLast && (
-      <line
-        x1={startX - 10}
-        y1={(index + 1) * 40 - 7.5}
-        x2={startX + 10}
-        y2={(index + 1) * 40 - 7.5}
-        stroke="#ccc"
-        strokeWidth={1}
-      />
-    )}
-  </g>
-);
+  );
+};
 
 const ChartBar = props => <ChartSegment component={ChartBarGroup} {...props} />;
 
@@ -127,6 +131,8 @@ class ChartSVG extends PureComponent {
   }
 }
 
-const HorizontalBarChart = ({ data }) => <Chart component={ChartSVG} data={data} />;
+const HorizontalBarChart = ({ className, data }) => (
+  <Chart className={className} component={ChartSVG} data={data} />
+);
 
 export default HorizontalBarChart;

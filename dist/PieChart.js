@@ -260,8 +260,10 @@ function (_PureComponent) {
 }(_react.PureComponent);
 
 var PieChart = function PieChart(_ref4) {
-  var data = _ref4.data;
+  var className = _ref4.className,
+      data = _ref4.data;
   return _react.default.createElement(_Chart.default, {
+    className: className,
     component: PieChartSVG,
     data: data
   });

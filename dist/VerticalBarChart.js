@@ -68,7 +68,7 @@ var ChartBarGroup = function ChartBarGroup(_ref) {
       tabIndex = _ref.tabIndex,
       onClick = _ref.onClick,
       onKeyDown = _ref.onKeyDown;
-  var height = dataValue / maxValue * 250;
+  var height = maxValue ? dataValue / maxValue * 250 : 0;
   return _react.default.createElement("g", null, _react.default.createElement("text", {
     x: index * 40,
     y: 305,
@@ -184,8 +184,10 @@ function (_PureComponent) {
 }(_react.PureComponent);
 
 var VerticalBarChart = function VerticalBarChart(_ref2) {
-  var data = _ref2.data;
+  var className = _ref2.className,
+      data = _ref2.data;
   return _react.default.createElement(_Chart.default, {
+    className: className,
     component: ChartSVG,
     data: data
   });

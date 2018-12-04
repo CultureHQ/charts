@@ -169,6 +169,8 @@ class PieChartSVG extends PureComponent {
   }
 }
 
-const PieChart = ({ data }) => <Chart component={PieChartSVG} data={data} />;
+const PieChart = ({ className, data }) => (
+  <Chart className={className} component={PieChartSVG} data={data} />
+);
 
 export default PieChart;
