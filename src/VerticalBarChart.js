@@ -30,13 +30,15 @@ const ChartBarGroup = ({
       >
         {dataKey}
       </text>
-      <text
-        x={index * 40 + (25 / 2)}
-        y={265 - height}
-        textAnchor="middle"
-      >
-        {dataValue}
-      </text>
+      {dataValue !== 0 && (
+        <text
+          x={index * 40 + (25 / 2)}
+          y={265 - height}
+          textAnchor="middle"
+        >
+          {dataValue}
+        </text>
+      )}
       {height !== 0 && (
         <g
           className="chq-charts--vert-bar-group"

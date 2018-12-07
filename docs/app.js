@@ -7,7 +7,7 @@ import "../src/style.css";
 const getRandomDatum = () => Math.floor(Math.random() * 100);
 
 const data = {
-  alpha: getRandomDatum(),
+  alpha: 0, // getRandomDatum(),
   beta: getRandomDatum(),
   gamma: getRandomDatum(),
   delta: getRandomDatum(),
