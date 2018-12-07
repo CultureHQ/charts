@@ -45,11 +45,11 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
-var makeChartConfig = function makeChartConfig(data) {
+var makeChartConfig = function makeChartConfig(data, ellipsized) {
   var keys = Object.keys(data);
   var colors = (0, _getColorList.default)(keys.length);
   var maxValue = Math.max.apply(Math, _toConsumableArray(Object.values(data)));
-  var maxKeyLen = Math.max.apply(Math, _toConsumableArray(keys.map(function (key) {
+  var maxKeyLen = Math.max.apply(Math, _toConsumableArray(Object.keys(ellipsized).map(function (key) {
     return key.length;
   })));
   var maxX = (maxKeyLen + 3) * 10 + 250;
@@ -74,6 +74,7 @@ var ChartBarGroup = function ChartBarGroup(_ref) {
       isLast = _ref.isLast,
       dataKey = _ref.dataKey,
       dataValue = _ref.dataValue,
+      ellipsized = _ref.ellipsized,
       color = _ref.color,
       tabIndex = _ref.tabIndex,
       onClick = _ref.onClick,
@@ -84,7 +85,7 @@ var ChartBarGroup = function ChartBarGroup(_ref) {
     y: index * 40,
     dy: "1em",
     textAnchor: "end"
-  }, dataKey), dataValue !== 0 && _react.default.createElement("text", {
+  }, ellipsized), dataValue !== 0 && _react.default.createElement("text", {
     x: startX + perc * 250 + 10,
     y: index * 40 + 17.5,
     textAnchor: "left"
@@ -134,7 +135,7 @@ function (_PureComponent) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ChartSVG).call(this, props));
     _this.state = {
-      chartConfig: makeChartConfig(props.data)
+      chartConfig: makeChartConfig(props.data, props.ellipsized)
     };
     return _this;
   }
@@ -155,7 +156,7 @@ function (_PureComponent) {
     value: function render() {
       var _this$props = this.props,
           data = _this$props.data,
-          activeKey = _this$props.activeKey,
+          ellipsized = _this$props.ellipsized,
           onDeselect = _this$props.onDeselect,
           onToggle = _this$props.onToggle,
           svgRef = _this$props.svgRef;
@@ -179,9 +180,9 @@ function (_PureComponent) {
           startX: startX,
           index: index,
           isLast: index === keys.length - 1,
-          activeKey: activeKey,
           dataKey: key,
           dataValue: data[key],
+          ellipsized: ellipsized[key],
           color: colors[index],
           onDeselect: onDeselect,
           onToggle: onToggle
@@ -200,14 +201,10 @@ function (_PureComponent) {
   return ChartSVG;
 }(_react.PureComponent);
 
-var HorizontalBarChart = function HorizontalBarChart(_ref2) {
-  var className = _ref2.className,
-      data = _ref2.data;
-  return _react.default.createElement(_Chart.default, {
-    className: className,
-    component: ChartSVG,
-    data: data
-  });
+var HorizontalBarChart = function HorizontalBarChart(props) {
+  return _react.default.createElement(_Chart.default, _extends({
+    component: ChartSVG
+  }, props));
 };
 
 var _default = HorizontalBarChart;

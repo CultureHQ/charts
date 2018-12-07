@@ -61,6 +61,7 @@ var makeChartConfig = function makeChartConfig(data) {
 var ChartBarGroup = function ChartBarGroup(_ref) {
   var dataKey = _ref.dataKey,
       dataValue = _ref.dataValue,
+      ellipsized = _ref.ellipsized,
       maxValue = _ref.maxValue,
       index = _ref.index,
       color = _ref.color,
@@ -75,7 +76,7 @@ var ChartBarGroup = function ChartBarGroup(_ref) {
     y: 305,
     textAnchor: "middle",
     transform: rotateKeys ? "rotate(-30, ".concat(index * 40, ", 305)") : null
-  }, dataKey), dataValue !== 0 && _react.default.createElement("text", {
+  }, ellipsized), dataValue !== 0 && _react.default.createElement("text", {
     x: index * 40 + 25 / 2,
     y: 265 - height,
     textAnchor: "middle"
@@ -146,6 +147,7 @@ function (_PureComponent) {
     value: function render() {
       var _this$props = this.props,
           data = _this$props.data,
+          ellipsized = _this$props.ellipsized,
           onToggle = _this$props.onToggle,
           onDeselect = _this$props.onDeselect,
           _this$props$rotateKey = _this$props.rotateKeys,
@@ -165,6 +167,7 @@ function (_PureComponent) {
           key: key,
           dataKey: key,
           dataValue: data[key],
+          ellipsized: ellipsized[key],
           maxValue: maxValue,
           index: index,
           color: colors[index],
@@ -187,16 +190,10 @@ function (_PureComponent) {
   return ChartSVG;
 }(_react.PureComponent);
 
-var VerticalBarChart = function VerticalBarChart(_ref2) {
-  var className = _ref2.className,
-      data = _ref2.data,
-      rotateKeys = _ref2.rotateKeys;
-  return _react.default.createElement(_Chart.default, {
-    className: className,
-    component: ChartSVG,
-    data: data,
-    rotateKeys: rotateKeys
-  });
+var VerticalBarChart = function VerticalBarChart(props) {
+  return _react.default.createElement(_Chart.default, _extends({
+    component: ChartSVG
+  }, props));
 };
 
 var _default = VerticalBarChart;

@@ -43,8 +43,7 @@ var ellipsizeKeys = function ellipsizeKeys(data) {
   var ellipsized = {};
   Object.keys(data).forEach(function (key) {
     var trans = key.toString();
-    trans = trans.length > 12 ? "".concat(trans.slice(0, 10), "...") : trans;
-    ellipsized[trans] = data[key];
+    ellipsized[key] = trans.length > 12 ? "".concat(trans.slice(0, 10), "...") : trans;
   });
   return ellipsized;
 };
@@ -138,7 +137,8 @@ function (_PureComponent) {
         onMouseEnter: this.handleMouseEnter,
         onMouseLeave: this.handleMouseLeave
       }, _react.default.createElement(Component, _extends({}, props, {
-        data: ellipsized,
+        data: data,
+        ellipsized: ellipsized,
         activeKey: activeKey,
         onDeselect: this.handleDeselect,
         onToggle: this.handleToggle,
