@@ -3,7 +3,7 @@ import { render, fireEvent } from "react-testing-library";
 
 import Chart from "../Chart";
 
-const DummyChartSVG = ({ data, ellipsized, onToggle, svgRef }) => (
+const DummyChartSVG = ({ ellipsized, onToggle, svgRef }) => (
   <div ref={svgRef}>
     {Object.keys(ellipsized).map(key => (
       <em key={key}>{ellipsized[key]}</em>
