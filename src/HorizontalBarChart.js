@@ -20,8 +20,8 @@ const makeChartConfig = (data, ellipsized) => {
 };
 
 const ChartBarGroup = ({
-  maxKeyLen, maxValue, startX, index, isLast, dataKey, dataValue, ellipsized,
-  color, tabIndex, onClick, onKeyDown
+  maxKeyLen, maxValue, startX, index, isLast, dataValue, ellipsized, color,
+  tabIndex, onClick, onKeyDown
 }) => {
   const perc = maxValue ? (dataValue / maxValue) : 0;
 
@@ -112,7 +112,6 @@ class ChartSVG extends PureComponent {
             startX={startX}
             index={index}
             isLast={index === keys.length - 1}
-            dataKey={key}
             dataValue={data[key]}
             ellipsized={ellipsized[key]}
             color={colors[index]}

@@ -59,8 +59,7 @@ var makeChartConfig = function makeChartConfig(data) {
 };
 
 var ChartBarGroup = function ChartBarGroup(_ref) {
-  var dataKey = _ref.dataKey,
-      dataValue = _ref.dataValue,
+  var dataValue = _ref.dataValue,
       ellipsized = _ref.ellipsized,
       maxValue = _ref.maxValue,
       index = _ref.index,
@@ -165,7 +164,6 @@ function (_PureComponent) {
       }, keys.map(function (key, index) {
         return _react.default.createElement(ChartBar, {
           key: key,
-          dataKey: key,
           dataValue: data[key],
           ellipsized: ellipsized[key],
           maxValue: maxValue,

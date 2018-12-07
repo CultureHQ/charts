@@ -7,9 +7,8 @@ const ellipsizeKeys = data => {
   const ellipsized = {};
 
   Object.keys(data).forEach(key => {
-    let trans = key.toString();
-
-    ellipsized[key] = trans.length > 12 ? `${trans.slice(0, 10)}...` : trans;
+    const string = key.toString();
+    ellipsized[key] = string.length > 12 ? `${string.slice(0, 10)}...` : string;
   });
 
   return ellipsized;

@@ -15,8 +15,8 @@ const makeChartConfig = data => {
 };
 
 const ChartBarGroup = ({
-  dataKey, dataValue, ellipsized, maxValue, index, color, isLast, tabIndex,
-  onClick, onKeyDown, rotateKeys
+  dataValue, ellipsized, maxValue, index, color, isLast, tabIndex, onClick,
+  onKeyDown, rotateKeys
 }) => {
   const height = maxValue ? (dataValue / maxValue) * 250 : 0;
 
@@ -109,7 +109,6 @@ class ChartSVG extends PureComponent {
         {keys.map((key, index) => (
           <ChartBar
             key={key}
-            dataKey={key}
             dataValue={data[key]}
             ellipsized={ellipsized[key]}
             maxValue={maxValue}

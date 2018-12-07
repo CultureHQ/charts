@@ -42,8 +42,8 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 var ellipsizeKeys = function ellipsizeKeys(data) {
   var ellipsized = {};
   Object.keys(data).forEach(function (key) {
-    var trans = key.toString();
-    ellipsized[key] = trans.length > 12 ? "".concat(trans.slice(0, 10), "...") : trans;
+    var string = key.toString();
+    ellipsized[key] = string.length > 12 ? "".concat(string.slice(0, 10), "...") : string;
   });
   return ellipsized;
 };
