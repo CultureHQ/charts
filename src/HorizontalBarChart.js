@@ -30,13 +30,15 @@ const ChartBarGroup = ({
       <text x={(maxKeyLen + 1) * 10} y={index * 40} dy="1em" textAnchor="end">
         {dataKey}
       </text>
-      <text
-        x={startX + perc * 250 + 10}
-        y={index * 40 + 17.5}
-        textAnchor="left"
-      >
-        {dataValue}
-      </text>
+      {dataValue !== 0 && (
+        <text
+          x={startX + perc * 250 + 10}
+          y={index * 40 + 17.5}
+          textAnchor="left"
+        >
+          {dataValue}
+        </text>
+      )}
       <g
         className="chq-charts--hori-bar-group"
         tabIndex={tabIndex}

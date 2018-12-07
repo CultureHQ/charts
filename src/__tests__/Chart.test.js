@@ -3,8 +3,11 @@ import { render, fireEvent } from "react-testing-library";
 
 import Chart from "../Chart";
 
-const DummyChartSVG = ({ onToggle, svgRef }) => (
+const DummyChartSVG = ({ data, onToggle, svgRef }) => (
   <div ref={svgRef}>
+    {Object.keys(data).map(key => (
+      <em key={key}>{key}</em>
+    ))}
     <button type="button" onClick={() => onToggle("a")}>Toggle</button>
   </div>
 );
@@ -42,4 +45,18 @@ test("tracks hovering status", () => {
 
   fireEvent.mouseLeave(container.querySelector(".chq-charts--wrap"));
   expect(getExportsTabIndex()).toEqual(-1);
+});
+
+test("allows passing in className", () => {
+  const { container } = render(<DummyChart className="dummy" data={{ a: 10 }} />);
+
+  expect(container.querySelector(".chq-charts--wrap").classList).toContain("dummy");
+});
+
+test("shortens names", () => {
+  const data = { thisisasuperlongkey: 10, shortkey: 20 };
+  const { getByText } = render(<DummyChart data={data} />);
+
+  expect(getByText("thisisasup...")).toBeTruthy();
+  expect(getByText("shortkey")).toBeTruthy();
 });

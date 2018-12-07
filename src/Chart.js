@@ -61,7 +61,7 @@ class Chart extends PureComponent {
   }
 
   render() {
-    const { className, data, component: Component } = this.props;
+    const { className, data, component: Component, ...props } = this.props;
     const { activeKey, ellipsized, hovering } = this.state;
 
     let classList = "chq-charts--wrap";
@@ -76,6 +76,7 @@ class Chart extends PureComponent {
         onMouseLeave={this.handleMouseLeave}
       >
         <Component
+          {...props}
           data={ellipsized}
           activeKey={activeKey}
           onDeselect={this.handleDeselect}

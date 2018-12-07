@@ -160,7 +160,7 @@ class PieChartSVG extends PureComponent {
               fontSize={0.12}
             >
               <tspan x={x} y={y}>{labelTop}</tspan>
-              <tspan x={x} y={y} dy="1.2em">{labelBottom}</tspan>
+              <tspan x={x} y={y} dy=".15">{labelBottom}</tspan>
             </text>
           </g>
         ))}
