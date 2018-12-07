@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 
 const makeCSVCell = value => (
-  value ? value.toString().replace(/"/g, "\"\"") : ""
+  (value || value === 0) ? value.toString().replace(/"/g, "\"\"") : ""
 );
 
 const makeCSVExport = data => {
@@ -67,7 +67,7 @@ class ChartExports extends PureComponent {
           href={csvExport}
           target="_blank"
           rel="noopener noreferrer"
-          download
+          download="chart.csv"
           title="Export data"
           aria-label="Export data"
           tabIndex={tabIndex}
@@ -80,7 +80,7 @@ class ChartExports extends PureComponent {
           href={svgExport}
           target="_blank"
           rel="noopener noreferrer"
-          download
+          download="chart.svg"
           title="Export graphic"
           aria-label="Export graphic"
           tabIndex={tabIndex}
