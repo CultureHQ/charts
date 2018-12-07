@@ -3,10 +3,10 @@ import { render, fireEvent } from "react-testing-library";
 
 import Chart from "../Chart";
 
-const DummyChartSVG = ({ data, onToggle, svgRef }) => (
+const DummyChartSVG = ({ data, ellipsized, onToggle, svgRef }) => (
   <div ref={svgRef}>
-    {Object.keys(data).map(key => (
-      <em key={key}>{key}</em>
+    {Object.keys(ellipsized).map(key => (
+      <em key={key}>{ellipsized[key]}</em>
     ))}
     <button type="button" onClick={() => onToggle("a")}>Toggle</button>
   </div>

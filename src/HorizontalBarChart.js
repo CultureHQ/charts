@@ -85,10 +85,10 @@ class ChartSVG extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { data } = this.props;
+    const { data, ellipsized } = this.props;
 
     if (data !== prevProps.data) {
-      this.setState({ chartConfig: makeChartConfig(data) });
+      this.setState({ chartConfig: makeChartConfig(data, ellipsized) });
     }
   }
 
@@ -107,6 +107,7 @@ class ChartSVG extends PureComponent {
         {keys.map((key, index) => (
           <ChartBar
             key={key}
+            dataKey={key}
             maxKeyLen={maxKeyLen}
             maxValue={maxValue}
             startX={startX}

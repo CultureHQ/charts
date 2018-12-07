@@ -109,6 +109,7 @@ class ChartSVG extends PureComponent {
         {keys.map((key, index) => (
           <ChartBar
             key={key}
+            dataKey={key}
             dataValue={data[key]}
             ellipsized={ellipsized[key]}
             maxValue={maxValue}

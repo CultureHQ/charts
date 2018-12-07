@@ -8,7 +8,7 @@ const ellipsizeKeys = data => {
 
   Object.keys(data).forEach(key => {
     const string = key.toString();
-    ellipsized[key] = string.length > 12 ? `${string.slice(0, 10)}...` : string;
+    ellipsized[key] = string.length >= 12 ? `${string.slice(0, 10)}...` : string;
   });
 
   return ellipsized;

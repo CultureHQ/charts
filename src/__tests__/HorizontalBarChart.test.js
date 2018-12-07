@@ -13,7 +13,7 @@ test("renders bars", () => {
 test("allows interacting with bars", () => {
   const data = { a: 10, b: 20, c: 30, d: 40 };
 
-  const { container } = render(<HorizontalBarChart data={data} />);
+  const { container, debug } = render(<HorizontalBarChart data={data} />);
   const barGroup = container.querySelector(".chq-charts--hori-bar-group");
   const getInfoOpen = () => container.querySelector(".chq-charts--info-show");
 
@@ -34,7 +34,7 @@ test("allows interacting with bars", () => {
 });
 
 test("syncs with data", () => {
-  const { container, rerender } = render(<HorizontalBarChart data={{ a: 10 }} />);
+  const { container, rerender, debug } = render(<HorizontalBarChart data={{ a: 10 }} />);
 
   const data = { a: 10, b: 20, c: 30, d: 40 };
   rerender(<HorizontalBarChart data={data} />);
