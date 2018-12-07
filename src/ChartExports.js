@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 
 const makeCSVCell = value => (
-  (value || value === 0) ? value.toString().replace(/"/g, "\"\"") : ""
+  (value || value === 0) ? `"${value.toString().replace(/"/g, "\"\"")}"` : ""
 );
 
 const makeCSVExport = data => {

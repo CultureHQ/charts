@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [1.1.1] - 2018-12-07
+### Changed
+- Properly escape fields in CSV when exporting.
+- Properlty display ellipsized keys on charts.
+
 ## [1.1.0] - 2018-12-07
 ### Added
 - The `rotateKeys` option on `VerticalBarChart`.
