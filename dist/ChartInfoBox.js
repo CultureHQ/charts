@@ -27,13 +27,6 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-var getRoundedMean = function getRoundedMean(data) {
-  var sum = Object.values(data).reduce(function (accum, value) {
-    return accum + value;
-  }, 0);
-  return Math.round(sum / Object.keys(data).length * 100) / 100;
-};
-
 var ChartInfoBox =
 /*#__PURE__*/
 function (_PureComponent) {
@@ -46,26 +39,12 @@ function (_PureComponent) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ChartInfoBox).call(this, props));
     _this.infoBoxRef = _react.default.createRef();
-    _this.state = {
-      roundedMean: getRoundedMean(props.data)
-    };
     _this.handleKeyDown = _this.handleKeyDown.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
   _createClass(ChartInfoBox, [{
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {
-      var data = this.props.data;
-
-      if (data !== prevProps.data) {
-        this.setState({
-          roundedMean: getRoundedMean(data)
-        });
-      }
-    }
-  }, {
     key: "handleKeyDown",
     value: function handleKeyDown(event) {
       var onDeselect = this.props.onDeselect;
@@ -90,7 +69,6 @@ function (_PureComponent) {
           data = _this$props.data,
           activeKey = _this$props.activeKey,
           onDeselect = _this$props.onDeselect;
-      var roundedMean = this.state.roundedMean;
       var className = "chq-charts--info";
 
       if (activeKey) {
@@ -106,9 +84,7 @@ function (_PureComponent) {
         onClick: this.handleClick
       }, activeKey && _react.default.createElement("span", null, activeKey, _react.default.createElement("br", null), _react.default.createElement("br", null), "Value:", " ", _react.default.createElement("span", {
         className: "chq-charts--mono"
-      }, data[activeKey]), _react.default.createElement("br", null), "Mean:", " ", _react.default.createElement("span", {
-        className: "chq-charts--mono"
-      }, roundedMean), _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement("button", {
+      }, data[activeKey]), _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement("button", {
         type: "button",
         onClick: onDeselect
       }, "\u2190 Back")));

@@ -250,7 +250,7 @@ function (_PureComponent) {
         }, labelTop), _react.default.createElement("tspan", {
           x: x,
           y: y,
-          dy: "1.2em"
+          dy: ".15"
         }, labelBottom)));
       }));
     }

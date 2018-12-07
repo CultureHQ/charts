@@ -28,7 +28,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 var makeCSVCell = function makeCSVCell(value) {
-  return value ? value.toString().replace(/"/g, "\"\"") : "";
+  return value || value === 0 ? value.toString().replace(/"/g, "\"\"") : "";
 };
 
 var makeCSVExport = function makeCSVExport(data) {
@@ -114,7 +114,7 @@ function (_PureComponent) {
         href: csvExport,
         target: "_blank",
         rel: "noopener noreferrer",
-        download: true,
+        download: "chart.csv",
         title: "Export data",
         "aria-label": "Export data",
         tabIndex: tabIndex
@@ -126,7 +126,7 @@ function (_PureComponent) {
         href: svgExport,
         target: "_blank",
         rel: "noopener noreferrer",
-        download: true,
+        download: "chart.svg",
         title: "Export graphic",
         "aria-label": "Export graphic",
         tabIndex: tabIndex

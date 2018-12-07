@@ -84,7 +84,7 @@ var ChartBarGroup = function ChartBarGroup(_ref) {
     y: index * 40,
     dy: "1em",
     textAnchor: "end"
-  }, dataKey), _react.default.createElement("text", {
+  }, dataKey), dataValue !== 0 && _react.default.createElement("text", {
     x: startX + perc * 250 + 10,
     y: index * 40 + 17.5,
     textAnchor: "left"

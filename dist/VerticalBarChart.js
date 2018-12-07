@@ -67,14 +67,15 @@ var ChartBarGroup = function ChartBarGroup(_ref) {
       isLast = _ref.isLast,
       tabIndex = _ref.tabIndex,
       onClick = _ref.onClick,
-      onKeyDown = _ref.onKeyDown;
+      onKeyDown = _ref.onKeyDown,
+      rotateKeys = _ref.rotateKeys;
   var height = maxValue ? dataValue / maxValue * 250 : 0;
   return _react.default.createElement("g", null, _react.default.createElement("text", {
-    x: index * 40,
+    x: index * 40 + (rotateKeys ? 0 : 25 / 2),
     y: 305,
     textAnchor: "middle",
-    transform: "rotate(-30, ".concat(index * 40, ", 305)")
-  }, dataKey), _react.default.createElement("text", {
+    transform: rotateKeys ? "rotate(-30, ".concat(index * 40, ", 305)") : null
+  }, dataKey), dataValue !== 0 && _react.default.createElement("text", {
     x: index * 40 + 25 / 2,
     y: 265 - height,
     textAnchor: "middle"
@@ -147,6 +148,8 @@ function (_PureComponent) {
           data = _this$props.data,
           onToggle = _this$props.onToggle,
           onDeselect = _this$props.onDeselect,
+          _this$props$rotateKey = _this$props.rotateKeys,
+          rotateKeys = _this$props$rotateKey === void 0 ? true : _this$props$rotateKey,
           svgRef = _this$props.svgRef;
       var chartConfig = this.state.chartConfig;
       var keys = chartConfig.keys,
@@ -167,7 +170,8 @@ function (_PureComponent) {
           color: colors[index],
           isLast: index === keys.length - 1,
           onToggle: onToggle,
-          onDeselect: onDeselect
+          onDeselect: onDeselect,
+          rotateKeys: rotateKeys
         });
       }), _react.default.createElement("line", {
         x1: -10,
@@ -185,11 +189,13 @@ function (_PureComponent) {
 
 var VerticalBarChart = function VerticalBarChart(_ref2) {
   var className = _ref2.className,
-      data = _ref2.data;
+      data = _ref2.data,
+      rotateKeys = _ref2.rotateKeys;
   return _react.default.createElement(_Chart.default, {
     className: className,
     component: ChartSVG,
-    data: data
+    data: data,
+    rotateKeys: rotateKeys
   });
 };
 
