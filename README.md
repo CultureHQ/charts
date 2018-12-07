@@ -14,6 +14,10 @@ There are three basic chart types, `HorizontalBarChart`, `PieChart`, and `Vertic
 * `className?` - an optional class name for the SVG
 * `data` - an object with the keys being the name of the data series and the values being the quantity
 
+`VerticalBarChart` additionally accepts:
+
+* `rotateKeys = true` - whether or not to slightly rotate the key names in order to fit them better into the chart
+
 To get the styles, be sure to also import `@culturehq/charts/dist/style.css` into whatever stylesheet you're using.
 
 ## Testing locally

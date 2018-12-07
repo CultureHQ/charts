@@ -16,17 +16,17 @@ const makeChartConfig = data => {
 
 const ChartBarGroup = ({
   dataKey, dataValue, maxValue, index, color, isLast, tabIndex, onClick,
-  onKeyDown
+  onKeyDown, rotateKeys
 }) => {
   const height = maxValue ? (dataValue / maxValue) * 250 : 0;
 
   return (
     <g>
       <text
-        x={index * 40}
+        x={index * 40 + (rotateKeys ? 0 : (25 / 2))}
         y={305}
         textAnchor="middle"
-        transform={`rotate(-30, ${index * 40}, 305)`}
+        transform={rotateKeys ? `rotate(-30, ${index * 40}, 305)` : null}
       >
         {dataKey}
       </text>
@@ -95,7 +95,7 @@ class ChartSVG extends PureComponent {
   }
 
   render() {
-    const { data, onToggle, onDeselect, svgRef } = this.props;
+    const { data, onToggle, onDeselect, rotateKeys = true, svgRef } = this.props;
     const { chartConfig } = this.state;
 
     const { keys, colors, maxValue, maxX } = chartConfig;
@@ -117,6 +117,7 @@ class ChartSVG extends PureComponent {
             isLast={index === keys.length - 1}
             onToggle={onToggle}
             onDeselect={onDeselect}
+            rotateKeys={rotateKeys}
           />
         ))}
         <line
@@ -132,8 +133,8 @@ class ChartSVG extends PureComponent {
   }
 }
 
-const VerticalBarChart = ({ className, data }) => (
-  <Chart className={className} component={ChartSVG} data={data} />
+const VerticalBarChart = ({ className, data, rotateKeys }) => (
+  <Chart className={className} component={ChartSVG} data={data} rotateKeys={rotateKeys} />
 );
 
 export default VerticalBarChart;
