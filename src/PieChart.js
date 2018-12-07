@@ -10,7 +10,7 @@ const getCoords = percent => [
   Math.sin(TWO_PI * (percent - 0.25))
 ];
 
-const getSlices = (data, scalar) => {
+const getSlices = (data, ellipsized, scalar) => {
   const total = Object.keys(data).reduce((accum, key) => accum + data[key], 0);
 
   let cursor = 0;
@@ -32,7 +32,7 @@ const getSlices = (data, scalar) => {
 
     slices.push({
       key,
-      labelTop: key,
+      labelTop: ellipsized[key],
       labelBottom: `${Math.round(percent * 10000) / 100}% (${data[key]})`,
       outerPath: [
         `M ${startX} ${startY}`,
@@ -86,7 +86,7 @@ class PieChartSVG extends PureComponent {
 
     this.state = {
       colors: getColorList(Object.keys(props.data).length),
-      slices: getSlices(props.data, getScalar(0))
+      slices: getSlices(props.data, props.ellipsized, getScalar(0))
     };
   }
 
@@ -95,14 +95,14 @@ class PieChartSVG extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { data } = this.props;
+    const { data, ellipsized } = this.props;
 
     if (data !== prevProps.data) {
       clearInterval(this.interval);
 
       this.setState({
         colors: getColorList(Object.keys(data).length),
-        slices: getSlices(data, getScalar(0))
+        slices: getSlices(data, ellipsized, getScalar(0))
       });
 
       this.beginInterval();
@@ -114,7 +114,7 @@ class PieChartSVG extends PureComponent {
   }
 
   beginInterval() {
-    const { data } = this.props;
+    const { data, ellipsized } = this.props;
     let time = 0;
 
     this.interval = setInterval(() => {
@@ -125,7 +125,7 @@ class PieChartSVG extends PureComponent {
         return;
       }
 
-      this.setState({ slices: getSlices(data, getScalar(time)) });
+      this.setState({ slices: getSlices(data, ellipsized, getScalar(time)) });
     }, 20);
   }
 
@@ -169,8 +169,6 @@ class PieChartSVG extends PureComponent {
   }
 }
 
-const PieChart = ({ className, data }) => (
-  <Chart className={className} component={PieChartSVG} data={data} />
-);
+const PieChart = props => <Chart component={PieChartSVG} {...props} />;
 
 export default PieChart;

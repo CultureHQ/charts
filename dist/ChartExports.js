@@ -28,7 +28,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 var makeCSVCell = function makeCSVCell(value) {
-  return value || value === 0 ? value.toString().replace(/"/g, "\"\"") : "";
+  return value || value === 0 ? "\"".concat(value.toString().replace(/"/g, "\"\""), "\"") : "";
 };
 
 var makeCSVExport = function makeCSVExport(data) {

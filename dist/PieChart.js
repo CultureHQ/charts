@@ -51,7 +51,7 @@ var getCoords = function getCoords(percent) {
   return [Math.cos(TWO_PI * (percent - 0.25)), Math.sin(TWO_PI * (percent - 0.25))];
 };
 
-var getSlices = function getSlices(data, scalar) {
+var getSlices = function getSlices(data, ellipsized, scalar) {
   var total = Object.keys(data).reduce(function (accum, key) {
     return accum + data[key];
   }, 0);
@@ -83,7 +83,7 @@ var getSlices = function getSlices(data, scalar) {
     cursor += percent;
     slices.push({
       key: key,
-      labelTop: key,
+      labelTop: ellipsized[key],
       labelBottom: "".concat(Math.round(percent * 10000) / 100, "% (").concat(data[key], ")"),
       outerPath: ["M ".concat(startX, " ").concat(startY), "A 1 1 0 ".concat(largeArc, " 1 ").concat(endX, " ").concat(endY), "L 0 0 Z"].join(" "),
       innerPath: ["M ".concat(startX * 0.95, " ").concat(startY * 0.95), "A 0.95 0.95 0 ".concat(largeArc, " 1 ").concat(endX * 0.95, " ").concat(endY * 0.95), "L 0 0 Z"].join(" "),
@@ -148,7 +148,7 @@ function (_PureComponent) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(PieChartSVG).call(this, props));
     _this.state = {
       colors: (0, _getColorList.default)(Object.keys(props.data).length),
-      slices: getSlices(props.data, getScalar(0))
+      slices: getSlices(props.data, props.ellipsized, getScalar(0))
     };
     return _this;
   }
@@ -161,13 +161,15 @@ function (_PureComponent) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      var data = this.props.data;
+      var _this$props = this.props,
+          data = _this$props.data,
+          ellipsized = _this$props.ellipsized;
 
       if (data !== prevProps.data) {
         clearInterval(this.interval);
         this.setState({
           colors: (0, _getColorList.default)(Object.keys(data).length),
-          slices: getSlices(data, getScalar(0))
+          slices: getSlices(data, ellipsized, getScalar(0))
         });
         this.beginInterval();
       }
@@ -182,7 +184,9 @@ function (_PureComponent) {
     value: function beginInterval() {
       var _this2 = this;
 
-      var data = this.props.data;
+      var _this$props2 = this.props,
+          data = _this$props2.data,
+          ellipsized = _this$props2.ellipsized;
       var time = 0;
       this.interval = setInterval(function () {
         time += 0.015;
@@ -193,17 +197,17 @@ function (_PureComponent) {
         }
 
         _this2.setState({
-          slices: getSlices(data, getScalar(time))
+          slices: getSlices(data, ellipsized, getScalar(time))
         });
       }, 20);
     }
   }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          onToggle = _this$props.onToggle,
-          onDeselect = _this$props.onDeselect,
-          svgRef = _this$props.svgRef;
+      var _this$props3 = this.props,
+          onToggle = _this$props3.onToggle,
+          onDeselect = _this$props3.onDeselect,
+          svgRef = _this$props3.svgRef;
       var _this$state = this.state,
           colors = _this$state.colors,
           slices = _this$state.slices;
@@ -259,14 +263,10 @@ function (_PureComponent) {
   return PieChartSVG;
 }(_react.PureComponent);
 
-var PieChart = function PieChart(_ref4) {
-  var className = _ref4.className,
-      data = _ref4.data;
-  return _react.default.createElement(_Chart.default, {
-    className: className,
-    component: PieChartSVG,
-    data: data
-  });
+var PieChart = function PieChart(props) {
+  return _react.default.createElement(_Chart.default, _extends({
+    component: PieChartSVG
+  }, props));
 };
 
 var _default = PieChart;
