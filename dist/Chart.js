@@ -43,7 +43,7 @@ var ellipsizeKeys = function ellipsizeKeys(data) {
   var ellipsized = {};
   Object.keys(data).forEach(function (key) {
     var string = key.toString();
-    ellipsized[key] = string.length > 12 ? "".concat(string.slice(0, 10), "...") : string;
+    ellipsized[key] = string.length >= 12 ? "".concat(string.slice(0, 10), "...") : string;
   });
   return ellipsized;
 };

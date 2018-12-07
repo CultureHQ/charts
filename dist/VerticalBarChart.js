@@ -164,6 +164,7 @@ function (_PureComponent) {
       }, keys.map(function (key, index) {
         return _react.default.createElement(ChartBar, {
           key: key,
+          dataKey: key,
           dataValue: data[key],
           ellipsized: ellipsized[key],
           maxValue: maxValue,

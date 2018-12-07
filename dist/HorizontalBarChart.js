@@ -142,23 +142,25 @@ function (_PureComponent) {
   _createClass(ChartSVG, [{
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      var data = this.props.data;
+      var _this$props = this.props,
+          data = _this$props.data,
+          ellipsized = _this$props.ellipsized;
 
       if (data !== prevProps.data) {
         this.setState({
-          chartConfig: makeChartConfig(data)
+          chartConfig: makeChartConfig(data, ellipsized)
         });
       }
     }
   }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          data = _this$props.data,
-          ellipsized = _this$props.ellipsized,
-          onDeselect = _this$props.onDeselect,
-          onToggle = _this$props.onToggle,
-          svgRef = _this$props.svgRef;
+      var _this$props2 = this.props,
+          data = _this$props2.data,
+          ellipsized = _this$props2.ellipsized,
+          onDeselect = _this$props2.onDeselect,
+          onToggle = _this$props2.onToggle,
+          svgRef = _this$props2.svgRef;
       var chartConfig = this.state.chartConfig;
       var keys = chartConfig.keys,
           colors = chartConfig.colors,
@@ -174,6 +176,7 @@ function (_PureComponent) {
       }, keys.map(function (key, index) {
         return _react.default.createElement(ChartBar, {
           key: key,
+          dataKey: key,
           maxKeyLen: maxKeyLen,
           maxValue: maxValue,
           startX: startX,
