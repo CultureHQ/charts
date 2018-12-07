@@ -8,9 +8,8 @@ const ellipsizeKeys = data => {
 
   Object.keys(data).forEach(key => {
     let trans = key.toString();
-    trans = trans.length > 12 ? `${trans.slice(0, 10)}...` : trans;
 
-    ellipsized[trans] = data[key];
+    ellipsized[key] = trans.length > 12 ? `${trans.slice(0, 10)}...` : trans;
   });
 
   return ellipsized;
@@ -77,7 +76,8 @@ class Chart extends PureComponent {
       >
         <Component
           {...props}
-          data={ellipsized}
+          data={data}
+          ellipsized={ellipsized}
           activeKey={activeKey}
           onDeselect={this.handleDeselect}
           onToggle={this.handleToggle}

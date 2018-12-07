@@ -4,12 +4,12 @@ import getColorList from "./getColorList";
 import Chart from "./Chart";
 import ChartSegment from "./ChartSegment";
 
-const makeChartConfig = data => {
+const makeChartConfig = (data, ellipsized) => {
   const keys = Object.keys(data);
   const colors = getColorList(keys.length);
 
   const maxValue = Math.max(...Object.values(data));
-  const maxKeyLen = Math.max(...keys.map(key => key.length));
+  const maxKeyLen = Math.max(...Object.keys(ellipsized).map(key => key.length));
 
   const maxX = (maxKeyLen + 3) * 10 + 250;
   const maxY = (keys.length - 1) * 40 + 25;
@@ -20,15 +20,15 @@ const makeChartConfig = data => {
 };
 
 const ChartBarGroup = ({
-  maxKeyLen, maxValue, startX, index, isLast, dataKey, dataValue, color,
-  tabIndex, onClick, onKeyDown
+  maxKeyLen, maxValue, startX, index, isLast, dataKey, dataValue, ellipsized,
+  color, tabIndex, onClick, onKeyDown
 }) => {
   const perc = maxValue ? (dataValue / maxValue) : 0;
 
   return (
     <g>
       <text x={(maxKeyLen + 1) * 10} y={index * 40} dy="1em" textAnchor="end">
-        {dataKey}
+        {ellipsized}
       </text>
       {dataValue !== 0 && (
         <text
@@ -81,7 +81,7 @@ class ChartSVG extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = { chartConfig: makeChartConfig(props.data) };
+    this.state = { chartConfig: makeChartConfig(props.data, props.ellipsized) };
   }
 
   componentDidUpdate(prevProps) {
@@ -93,7 +93,7 @@ class ChartSVG extends PureComponent {
   }
 
   render() {
-    const { data, activeKey, onDeselect, onToggle, svgRef } = this.props;
+    const { data, ellipsized, onDeselect, onToggle, svgRef } = this.props;
     const { chartConfig } = this.state;
 
     const { keys, colors, maxValue, maxKeyLen, maxX, maxY, startX } = chartConfig;
@@ -112,9 +112,9 @@ class ChartSVG extends PureComponent {
             startX={startX}
             index={index}
             isLast={index === keys.length - 1}
-            activeKey={activeKey}
             dataKey={key}
             dataValue={data[key]}
+            ellipsized={ellipsized[key]}
             color={colors[index]}
             onDeselect={onDeselect}
             onToggle={onToggle}
@@ -133,8 +133,6 @@ class ChartSVG extends PureComponent {
   }
 }
 
-const HorizontalBarChart = ({ className, data }) => (
-  <Chart className={className} component={ChartSVG} data={data} />
-);
+const HorizontalBarChart = props => <Chart component={ChartSVG} {...props} />;
 
 export default HorizontalBarChart;
