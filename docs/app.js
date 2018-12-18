@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { HorizontalBarChart, VerticalBarChart, PieChart } from "../src";
+import { HorizontalBarChart, VerticalBarChart, PieChart } from "../src/Charts";
 import "../src/style.css";
 
 const getRandomDatum = () => Math.floor(Math.random() * 100);

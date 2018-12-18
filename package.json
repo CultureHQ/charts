@@ -2,7 +2,7 @@
   "name": "@culturehq/charts",
   "version": "1.1.1",
   "description": "An SVG charting library",
-  "main": "dist/index.js",
+  "main": "dist/Charts.js",
   "scripts": {
     "build": "yarn build:js && yarn build:docs",
     "build:js": "babel src --out-dir ./dist --ignore '**/__tests__/**' && cp src/style.css dist/style.css",
@@ -30,7 +30,7 @@
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.0",
     "@babel/preset-react": "^7.0.0",
-    "@culturehq/eslint-config": "^0.1.0",
+    "@culturehq/eslint-config": "^0.2.0",
     "babel-core": "^7.0.0-0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
