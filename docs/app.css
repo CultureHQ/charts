@@ -4,9 +4,14 @@ html, body {
 }
 
 body {
+  background-color: #f7f7f7;
+  color: #5c5f67;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 16px;
+  line-height: 1.42857143;
+  margin: 0;
+  padding: 0;
 }
 
 #main {
