@@ -27,7 +27,13 @@ const App = () => (
         <p>
           Copyright (c) 2018 CultureHQ
           <br />
-          <a href="https://github.com/CultureHQ/charts">github.com/CultureHQ/charts</a>
+          <a href="https://github.com/CultureHQ/charts">
+            github.com/CultureHQ/charts
+          </a>
+          <br />
+          <a href="https://engineering.culturehq.com">
+            engineering.culturehq.com
+          </a>
         </p>
       </footer>,
       document.body
