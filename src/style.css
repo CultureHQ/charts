@@ -37,7 +37,6 @@
   margin: 0;
   outline: none;
   padding: 0;
-  transform: rotate(90deg);
 }
 
 .chq-charts--export-dropdown {
@@ -62,6 +61,11 @@
 
 .chq-charts--export-dropdown a:hover {
   background-color: #f7f7f7;
+}
+
+.chq-charts--export-trigger line {
+  stroke: black;
+  stroke-width: 1.5;
 }
 
 .chq-charts--wrap canvas {

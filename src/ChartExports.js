@@ -55,6 +55,25 @@ const ChartExport = ({ ext, href, tabIndex }) => (
   </a>
 );
 
+const ChartExportTrigger = ({ open }) => {
+  if (open) {
+    return (
+      <>
+        <line x1="4" y1="4" x2="12" y2="12" />
+        <line x1="12" y1="4" x2="4" y2="12" />
+      </>
+    );
+  }
+
+  return (
+    <>
+      <path d="M 8, 3.4 m -1.3, 0 a 1.3, 1.3 0 1, 0 2.6, 0 a 1.3, 1.3 0 1, 0 -2.6, 0" />
+      <path d="M 8, 8 m -1.3, 0 a 1.3, 1.3 0 1, 0 2.6, 0 a 1.3, 1.3 0 1, 0 -2.6, 0" />
+      <path d="M 8, 12.6 m -1.3, 0 a 1.3, 1.3 0 1, 0 2.6, 0 a 1.3, 1.3 0 1, 0 -2.6, 0" />
+    </>
+  );
+};
+
 class ChartExports extends PureComponent {
   constructor(props) {
     super(props);
@@ -114,7 +133,7 @@ class ChartExports extends PureComponent {
     this.setState(({ dropdownOpen }) => ({
       dropdownOpen: !dropdownOpen
     }));
-  };
+  }
 
   render() {
     const { hovering } = this.props;
@@ -128,8 +147,8 @@ class ChartExports extends PureComponent {
           aria-label="Open dropdown"
           tabIndex={hovering ? 0 : -1}
         >
-          <svg viewBox="0 0 1024 1024">
-            <path d="M227.4 608c-55 0-99.4-42.8-99.4-96 0-53 44.4-96 99.4-96 55.2 0 99.6 43 99.6 96 0 53.2-44.4 96-99.6 96z M512 608c-55 0-99.6-42.8-99.6-96 0-53 44.6-96 99.6-96s99.4 43 99.4 96c0 53.2-44.4 96-99.4 96z M796.4 608c-55 0-99.6-42.8-99.6-96 0-53 44.4-96 99.6-96 55 0 99.6 43 99.6 96 0 53.2-44.4 96-99.6 96z" />
+          <svg viewBox="0 0 16 16" className="chq-charts--export-trigger">
+            <ChartExportTrigger open={dropdownOpen} />
           </svg>
         </button>
         {dropdownOpen && (
