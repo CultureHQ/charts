@@ -35,19 +35,19 @@
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.4",
-    "css-loader": "^2.0.1",
-    "eslint": "^5.10.0",
+    "css-loader": "^2.0.2",
+    "eslint": "^5.11.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
     "jest": "^23.6.0",
-    "react": "^16.7.0-alpha.2",
-    "react-dom": "^16.7.0-alpha.2",
+    "react": "=16.7.0-alpha.2",
+    "react-dom": "=16.7.0-alpha.2",
     "react-testing-library": "^5.4.2",
     "style-loader": "^0.23.0",
-    "webpack": "^4.28.1",
+    "webpack": "^4.28.2",
     "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.9"
+    "webpack-dev-server": "^3.1.14"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "./setupTests.js"

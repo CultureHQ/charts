@@ -38,7 +38,7 @@ test("allows interacting with the info box", () => {
 
 test("tracks hovering status", () => {
   const { container } = render(<DummyChart data={{ a: 10 }} />);
-  const getExportsTabIndex = () => container.querySelector(".chq-charts--export a").tabIndex;
+  const getExportsTabIndex = () => container.querySelector(".chq-charts--export button").tabIndex;
 
   fireEvent.mouseEnter(container.querySelector(".chq-charts--wrap"));
   expect(getExportsTabIndex()).toEqual(0);

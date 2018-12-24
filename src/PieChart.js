@@ -10,6 +10,16 @@ const getCoords = percent => [
   Math.sin(TWO_PI * (percent - 0.25))
 ];
 
+const getLegendAlignment = centerPerc => {
+  if (centerPerc >= 0.125 && centerPerc < 0.375) {
+    return ["start", 1.1];
+  }
+  if (centerPerc >= 0.625 && centerPerc < 0.875) {
+    return ["end", 1.1];
+  }
+  return ["middle", 1.25];
+};
+
 const getSlices = (data, ellipsized, scalar) => {
   const total = Object.keys(data).reduce((accum, key) => accum + data[key], 0);
 
@@ -24,8 +34,11 @@ const getSlices = (data, ellipsized, scalar) => {
     const percent = data[key] / total * scalar;
     const largeArc = percent > 0.5 ? 1 : 0;
 
+    const centerPerc = cursor + percent / 2;
+    const [textAnchor, legendScalar] = getLegendAlignment(cursor + percent / 2);
+
     const [startX, startY] = getCoords(cursor);
-    const [centerX, centerY] = getCoords(cursor + percent / 2);
+    const [centerX, centerY] = getCoords(centerPerc);
     const [endX, endY] = getCoords(cursor + percent);
 
     cursor += percent;
@@ -44,13 +57,14 @@ const getSlices = (data, ellipsized, scalar) => {
         `A 0.95 0.95 0 ${largeArc} 1 ${endX * 0.95} ${endY * 0.95}`,
         "L 0 0 Z"
       ].join(" "),
-      legend: [centerX * 1.25, centerY * 1.25],
+      legend: [centerX * legendScalar, centerY * legendScalar],
       leaderLine: {
         x1: centerX * 0.75,
         y1: centerY * 0.75,
         x2: centerX * 1.02,
         y2: centerY * 1.02
-      }
+      },
+      textAnchor
     });
   });
 
@@ -150,13 +164,13 @@ class PieChartSVG extends PureComponent {
             onDeselect={onDeselect}
           />
         ))}
-        {slices.map(({ key, labelTop, labelBottom, legend: [x, y], leaderLine }) => (
+        {slices.map(({ key, labelTop, labelBottom, legend: [x, y], leaderLine, textAnchor }) => (
           <g key={key} className="chq-charts--noselect">
             <line {...leaderLine} stroke="#666" strokeWidth={0.01} />
             <text
               x={x}
               y={y}
-              textAnchor="middle"
+              textAnchor={textAnchor}
               fontSize={0.12}
             >
               <tspan x={x} y={y}>{labelTop}</tspan>
