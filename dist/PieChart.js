@@ -51,6 +51,18 @@ var getCoords = function getCoords(percent) {
   return [Math.cos(TWO_PI * (percent - 0.25)), Math.sin(TWO_PI * (percent - 0.25))];
 };
 
+var getLegendAlignment = function getLegendAlignment(centerPerc) {
+  if (centerPerc >= 0.125 && centerPerc < 0.375) {
+    return ["start", 1.1];
+  }
+
+  if (centerPerc >= 0.625 && centerPerc < 0.875) {
+    return ["end", 1.1];
+  }
+
+  return ["middle", 1.25];
+};
+
 var getSlices = function getSlices(data, ellipsized, scalar) {
   var total = Object.keys(data).reduce(function (accum, key) {
     return accum + data[key];
@@ -64,13 +76,19 @@ var getSlices = function getSlices(data, ellipsized, scalar) {
 
     var percent = data[key] / total * scalar;
     var largeArc = percent > 0.5 ? 1 : 0;
+    var centerPerc = cursor + percent / 2;
+
+    var _getLegendAlignment = getLegendAlignment(cursor + percent / 2),
+        _getLegendAlignment2 = _slicedToArray(_getLegendAlignment, 2),
+        textAnchor = _getLegendAlignment2[0],
+        legendScalar = _getLegendAlignment2[1];
 
     var _getCoords = getCoords(cursor),
         _getCoords2 = _slicedToArray(_getCoords, 2),
         startX = _getCoords2[0],
         startY = _getCoords2[1];
 
-    var _getCoords3 = getCoords(cursor + percent / 2),
+    var _getCoords3 = getCoords(centerPerc),
         _getCoords4 = _slicedToArray(_getCoords3, 2),
         centerX = _getCoords4[0],
         centerY = _getCoords4[1];
@@ -87,13 +105,14 @@ var getSlices = function getSlices(data, ellipsized, scalar) {
       labelBottom: "".concat(Math.round(percent * 10000) / 100, "% (").concat(data[key], ")"),
       outerPath: ["M ".concat(startX, " ").concat(startY), "A 1 1 0 ".concat(largeArc, " 1 ").concat(endX, " ").concat(endY), "L 0 0 Z"].join(" "),
       innerPath: ["M ".concat(startX * 0.95, " ").concat(startY * 0.95), "A 0.95 0.95 0 ".concat(largeArc, " 1 ").concat(endX * 0.95, " ").concat(endY * 0.95), "L 0 0 Z"].join(" "),
-      legend: [centerX * 1.25, centerY * 1.25],
+      legend: [centerX * legendScalar, centerY * legendScalar],
       leaderLine: {
         x1: centerX * 0.75,
         y1: centerY * 0.75,
         x2: centerX * 1.02,
         y2: centerY * 1.02
-      }
+      },
+      textAnchor: textAnchor
     });
   });
   return slices;
@@ -235,7 +254,8 @@ function (_PureComponent) {
             _ref3$legend = _slicedToArray(_ref3.legend, 2),
             x = _ref3$legend[0],
             y = _ref3$legend[1],
-            leaderLine = _ref3.leaderLine;
+            leaderLine = _ref3.leaderLine,
+            textAnchor = _ref3.textAnchor;
 
         return _react.default.createElement("g", {
           key: key,
@@ -246,7 +266,7 @@ function (_PureComponent) {
         })), _react.default.createElement("text", {
           x: x,
           y: y,
-          textAnchor: "middle",
+          textAnchor: textAnchor,
           fontSize: 0.12
         }, _react.default.createElement("tspan", {
           x: x,

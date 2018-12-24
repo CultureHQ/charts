@@ -19,13 +19,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 var makeCSVCell = function makeCSVCell(value) {
   return value || value === 0 ? "\"".concat(value.toString().replace(/"/g, "\"\""), "\"") : "";
@@ -39,9 +39,69 @@ var makeCSVExport = function makeCSVExport(data) {
   return "data:text/csv;charset=utf-8;base64,".concat(btoa(csvContent));
 };
 
+var makePNGExport = function makePNGExport(imageSrc) {
+  return new Promise(function (resolve) {
+    var canvas = document.createElement("canvas");
+    var size = 800;
+    var padding = 100;
+    canvas.width = size;
+    canvas.height = size;
+    var image = new Image();
+
+    image.onload = function () {
+      var context = canvas.getContext("2d");
+      context.fillStyle = "white";
+      context.fillRect(0, 0, size, size);
+      context.drawImage(image, 0, 0, size, size, padding, padding, size - padding * 2, size - padding * 2);
+      resolve(canvas.toDataURL("image/png"));
+    };
+
+    image.src = imageSrc;
+  });
+};
+
 var makeSVGExport = function makeSVGExport(svg) {
   var svgContent = new XMLSerializer().serializeToString(svg);
   return "data:image/svg+xml;base64,".concat(btoa(svgContent));
+};
+
+var ChartExport = function ChartExport(_ref) {
+  var ext = _ref.ext,
+      href = _ref.href,
+      tabIndex = _ref.tabIndex;
+  return _react.default.createElement("a", {
+    href: href,
+    target: "_blank",
+    rel: "noopener noreferrer",
+    download: "chart.".concat(ext),
+    tabIndex: tabIndex
+  }, "Export .", ext);
+};
+
+var ChartExportTrigger = function ChartExportTrigger(_ref2) {
+  var open = _ref2.open;
+
+  if (open) {
+    return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("line", {
+      x1: "4",
+      y1: "4",
+      x2: "12",
+      y2: "12"
+    }), _react.default.createElement("line", {
+      x1: "12",
+      y1: "4",
+      x2: "4",
+      y2: "12"
+    }));
+  }
+
+  return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("path", {
+    d: "M 8, 3.4 m -1.3, 0 a 1.3, 1.3 0 1, 0 2.6, 0 a 1.3, 1.3 0 1, 0 -2.6, 0"
+  }), _react.default.createElement("path", {
+    d: "M 8, 8 m -1.3, 0 a 1.3, 1.3 0 1, 0 2.6, 0 a 1.3, 1.3 0 1, 0 -2.6, 0"
+  }), _react.default.createElement("path", {
+    d: "M 8, 12.6 m -1.3, 0 a 1.3, 1.3 0 1, 0 2.6, 0 a 1.3, 1.3 0 1, 0 -2.6, 0"
+  }));
 };
 
 var ChartExports =
@@ -57,8 +117,11 @@ function (_PureComponent) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ChartExports).call(this, props));
     _this.state = {
       csvExport: "#",
+      dropdownOpen: false,
+      pngExport: "#",
       svgExport: "#"
     };
+    _this.handleToggleDropdown = _this.handleToggleDropdown.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
@@ -71,10 +134,19 @@ function (_PureComponent) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      var data = this.props.data;
+      var _this$props = this.props,
+          data = _this$props.data,
+          hovering = _this$props.hovering;
+      var dropdownOpen = this.state.dropdownOpen;
 
       if (data !== prevProps.data) {
         this.makeExports();
+      }
+
+      if (hovering !== prevProps.hovering && !hovering && dropdownOpen) {
+        this.setState({
+          dropdownOpen: false
+        });
       }
     }
   }, {
@@ -88,17 +160,35 @@ function (_PureComponent) {
       var _this2 = this;
 
       setTimeout(function () {
-        if (_this2.componentIsMounted) {
-          var _this2$props = _this2.props,
-              data = _this2$props.data,
-              svgRef = _this2$props.svgRef;
-
-          _this2.setState({
-            csvExport: makeCSVExport(data),
-            svgExport: makeSVGExport(svgRef.current)
-          });
+        if (!_this2.componentIsMounted) {
+          return;
         }
+
+        var _this2$props = _this2.props,
+            data = _this2$props.data,
+            svgRef = _this2$props.svgRef;
+        var csvExport = makeCSVExport(data);
+        var svgExport = makeSVGExport(svgRef.current);
+        makePNGExport(svgExport).then(function (pngExport) {
+          if (_this2.componentIsMounted) {
+            _this2.setState({
+              csvExport: csvExport,
+              pngExport: pngExport,
+              svgExport: svgExport
+            });
+          }
+        });
       }, 2000);
+    }
+  }, {
+    key: "handleToggleDropdown",
+    value: function handleToggleDropdown() {
+      this.setState(function (_ref3) {
+        var dropdownOpen = _ref3.dropdownOpen;
+        return {
+          dropdownOpen: !dropdownOpen
+        };
+      });
     }
   }, {
     key: "render",
@@ -106,35 +196,33 @@ function (_PureComponent) {
       var hovering = this.props.hovering;
       var _this$state = this.state,
           csvExport = _this$state.csvExport,
+          dropdownOpen = _this$state.dropdownOpen,
+          pngExport = _this$state.pngExport,
           svgExport = _this$state.svgExport;
-      var tabIndex = hovering ? 0 : -1;
       return _react.default.createElement("div", {
         className: "chq-charts--export"
-      }, _react.default.createElement("a", {
-        href: csvExport,
-        target: "_blank",
-        rel: "noopener noreferrer",
-        download: "chart.csv",
-        title: "Export data",
-        "aria-label": "Export data",
-        tabIndex: tabIndex
+      }, _react.default.createElement("button", {
+        type: "button",
+        onClick: this.handleToggleDropdown,
+        "aria-label": "Open dropdown",
+        tabIndex: hovering ? 0 : -1
       }, _react.default.createElement("svg", {
-        viewBox: "0 0 1024 1024"
-      }, _react.default.createElement("path", {
-        d: "M864 160v704h-704v-704h704zM896 128h-768v768h768v-768z M384 304h384v32h-384v-32z M384 496h384v32h-384v-32z M384 688h384v32h-384v-32z M320 320c0 17.673-14.327 32-32 32s-32-14.327-32-32c0-17.673 14.327-32 32-32s32 14.327 32 32z M320 512c0 17.673-14.327 32-32 32s-32-14.327-32-32c0-17.673 14.327-32 32-32s32 14.327 32 32z M320 704c0 17.673-14.327 32-32 32s-32-14.327-32-32c0-17.673 14.327-32 32-32s32 14.327 32 32z"
-      }))), _react.default.createElement("a", {
-        href: svgExport,
-        target: "_blank",
-        rel: "noopener noreferrer",
-        download: "chart.svg",
-        title: "Export graphic",
-        "aria-label": "Export graphic",
-        tabIndex: tabIndex
-      }, _react.default.createElement("svg", {
-        viewBox: "0 0 1024 1024"
-      }, _react.default.createElement("path", {
-        d: "M835 320h-123c-64-72-84-96-109-96h-177c-25 0-44 24-109 96h-27v-32h-68v32h-27c-35 0-67 26-67 61v352c0 35 32 67 67 67h640c35 0 61-32 61-67v-352c0-35-26-61-61-61z M864 733c0 19-12 35-29 35h-640c-17 0-35-17-35-35v-352c0-16 16-29 35-29h136l10-6c8-9 15-20 22-28 23-25 39-43 51-54 9-8 12-8 12-8h177c0 0 3 0 13 9 12 11 29 33 53 60 6 7 12 14 19 21l10 6h138c18 0 29 12 29 29v352z M512 379c-94 0-171 77-171 171s77 171 171 171 171-77 171-171-77-171-171-171z M512 689c-77 0-139-62-139-139s62-139 139-139 139 62 139 139-62 139-139 139z M704 384h34v34h-34v-34z M576 550c0 35-29 64-64 64s-64-29-64-64c0-35 29-64 64-64s64 29 64 64z"
-      }))));
+        viewBox: "0 0 16 16",
+        className: "chq-charts--export-trigger"
+      }, _react.default.createElement(ChartExportTrigger, {
+        open: dropdownOpen
+      }))), dropdownOpen && _react.default.createElement("div", {
+        className: "chq-charts--export-dropdown"
+      }, _react.default.createElement(ChartExport, {
+        ext: "csv",
+        href: csvExport
+      }), _react.default.createElement(ChartExport, {
+        ext: "png",
+        href: pngExport
+      }), _react.default.createElement(ChartExport, {
+        ext: "svg",
+        href: svgExport
+      })));
     }
   }]);
 
