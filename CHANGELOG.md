@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ## [Unreleased]
 ### Added
 - The lines no longer overlap with the text on `PieChart` by virtue of the text alignment being adjusted based on how far around the circle the label is.
+- The ability to export to `.png`.
 
 ## [1.1.1] - 2018-12-07
 ### Changed

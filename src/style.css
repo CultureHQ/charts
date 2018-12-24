@@ -13,16 +13,54 @@
 }
 
 .chq-charts--export svg {
-  border-radius: 4px;
+  border-radius: 26px;
   box-sizing: content-box;
-  height: 30px;
+  height: 26px;
   margin: 0;
-  padding: 8px;
+  padding: 4px;
   transition: background-color 150ms;
-  width: 30px;
+  width: 26px;
 }
 
 .chq-charts--export svg:hover {
+  background-color: white;
+}
+
+.chq-charts--export button {
+  background: inherit;
+  border: 0;
+  cursor: pointer;
+  display: inline;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  margin: 0;
+  outline: none;
+  padding: 0;
+  transform: rotate(90deg);
+}
+
+.chq-charts--export-dropdown {
+  border: 1px solid rgba(0, 0, 0, .15);
+  border-radius: 4px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+  overflow: hidden;
+  position: absolute;
+  right: -5px;
+  top: calc(100% + 3px);
+  z-index: 1;
+}
+
+.chq-charts--export-dropdown a {
+  background-color: white;
+  color: #6a89af;
+  display: block;
+  padding: 5px 15px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.chq-charts--export-dropdown a:hover {
   background-color: #f7f7f7;
 }
 
