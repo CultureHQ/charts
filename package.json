@@ -46,6 +46,8 @@
     "webpack-dev-server": "^3.2.1"
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "./setupTests.js"
+    "setupFilesAfterEnv": [
+      "./setupTests.js"
+    ]
   }
 }
