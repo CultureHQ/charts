@@ -3,11 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -21,11 +21,11 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 var ChartInfoBox =
 /*#__PURE__*/
@@ -38,9 +38,9 @@ function (_PureComponent) {
     _classCallCheck(this, ChartInfoBox);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ChartInfoBox).call(this, props));
-    _this.infoBoxRef = _react.default.createRef();
-    _this.handleKeyDown = _this.handleKeyDown.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.infoBoxRef = _react["default"].createRef();
+    _this.handleKeyDown = _this.handleKeyDown.bind(_assertThisInitialized(_this));
+    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -75,16 +75,16 @@ function (_PureComponent) {
         className = "".concat(className, " chq-charts--info-show");
       }
 
-      return _react.default.createElement("div", {
+      return _react["default"].createElement("div", {
         ref: this.infoBoxRef,
         className: className,
         role: "button",
         tabIndex: activeKey ? 0 : -1,
         onKeyDown: this.handleKeyDown,
         onClick: this.handleClick
-      }, activeKey && _react.default.createElement("span", null, activeKey, _react.default.createElement("br", null), _react.default.createElement("br", null), "Value:", " ", _react.default.createElement("span", {
+      }, activeKey && _react["default"].createElement("span", null, activeKey, _react["default"].createElement("br", null), _react["default"].createElement("br", null), "Value:", " ", _react["default"].createElement("span", {
         className: "chq-charts--mono"
-      }, data[activeKey]), _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement("button", {
+      }, data[activeKey]), _react["default"].createElement("br", null), _react["default"].createElement("br", null), _react["default"].createElement("button", {
         type: "button",
         onClick: onDeselect
       }, "\u2190 Back")));
@@ -95,4 +95,4 @@ function (_PureComponent) {
 }(_react.PureComponent);
 
 var _default = ChartInfoBox;
-exports.default = _default;
+exports["default"] = _default;

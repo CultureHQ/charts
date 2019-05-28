@@ -3,11 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -21,11 +21,11 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 var makeCSVCell = function makeCSVCell(value) {
   return value || value === 0 ? "\"".concat(value.toString().replace(/"/g, "\"\""), "\"") : "";
@@ -69,7 +69,7 @@ var ChartExport = function ChartExport(_ref) {
   var ext = _ref.ext,
       href = _ref.href,
       tabIndex = _ref.tabIndex;
-  return _react.default.createElement("a", {
+  return _react["default"].createElement("a", {
     href: href,
     target: "_blank",
     rel: "noopener noreferrer",
@@ -82,12 +82,12 @@ var ChartExportTrigger = function ChartExportTrigger(_ref2) {
   var open = _ref2.open;
 
   if (open) {
-    return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("line", {
+    return _react["default"].createElement(_react["default"].Fragment, null, _react["default"].createElement("line", {
       x1: "4",
       y1: "4",
       x2: "12",
       y2: "12"
-    }), _react.default.createElement("line", {
+    }), _react["default"].createElement("line", {
       x1: "12",
       y1: "4",
       x2: "4",
@@ -95,11 +95,11 @@ var ChartExportTrigger = function ChartExportTrigger(_ref2) {
     }));
   }
 
-  return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("path", {
+  return _react["default"].createElement(_react["default"].Fragment, null, _react["default"].createElement("path", {
     d: "M 8, 3.4 m -1.3, 0 a 1.3, 1.3 0 1, 0 2.6, 0 a 1.3, 1.3 0 1, 0 -2.6, 0"
-  }), _react.default.createElement("path", {
+  }), _react["default"].createElement("path", {
     d: "M 8, 8 m -1.3, 0 a 1.3, 1.3 0 1, 0 2.6, 0 a 1.3, 1.3 0 1, 0 -2.6, 0"
-  }), _react.default.createElement("path", {
+  }), _react["default"].createElement("path", {
     d: "M 8, 12.6 m -1.3, 0 a 1.3, 1.3 0 1, 0 2.6, 0 a 1.3, 1.3 0 1, 0 -2.6, 0"
   }));
 };
@@ -121,7 +121,7 @@ function (_PureComponent) {
       pngExport: "#",
       svgExport: "#"
     };
-    _this.handleToggleDropdown = _this.handleToggleDropdown.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.handleToggleDropdown = _this.handleToggleDropdown.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -199,27 +199,27 @@ function (_PureComponent) {
           dropdownOpen = _this$state.dropdownOpen,
           pngExport = _this$state.pngExport,
           svgExport = _this$state.svgExport;
-      return _react.default.createElement("div", {
+      return _react["default"].createElement("div", {
         className: "chq-charts--export"
-      }, _react.default.createElement("button", {
+      }, _react["default"].createElement("button", {
         type: "button",
         onClick: this.handleToggleDropdown,
         "aria-label": "Open dropdown",
         tabIndex: hovering ? 0 : -1
-      }, _react.default.createElement("svg", {
+      }, _react["default"].createElement("svg", {
         viewBox: "0 0 16 16",
         className: "chq-charts--export-trigger"
-      }, _react.default.createElement(ChartExportTrigger, {
+      }, _react["default"].createElement(ChartExportTrigger, {
         open: dropdownOpen
-      }))), dropdownOpen && _react.default.createElement("div", {
+      }))), dropdownOpen && _react["default"].createElement("div", {
         className: "chq-charts--export-dropdown"
-      }, _react.default.createElement(ChartExport, {
+      }, _react["default"].createElement(ChartExport, {
         ext: "csv",
         href: csvExport
-      }), _react.default.createElement(ChartExport, {
+      }), _react["default"].createElement(ChartExport, {
         ext: "png",
         href: pngExport
-      }), _react.default.createElement(ChartExport, {
+      }), _react["default"].createElement(ChartExport, {
         ext: "svg",
         href: svgExport
       })));
@@ -230,4 +230,4 @@ function (_PureComponent) {
 }(_react.PureComponent);
 
 var _default = ChartExports;
-exports.default = _default;
+exports["default"] = _default;

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 var STATIC_COLORS = ["#8cb4d6", "#79b17d", "#ffd24b"];
 
 var getColorList = function getColorList(size) {
@@ -17,4 +17,4 @@ var getColorList = function getColorList(size) {
 };
 
 var _default = getColorList;
-exports.default = _default;
+exports["default"] = _default;

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -13,9 +13,9 @@ var _Chart = _interopRequireDefault(require("./Chart"));
 
 var _ChartSegment = _interopRequireDefault(require("./ChartSegment"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -134,22 +134,22 @@ var PieChartGroup = function PieChartGroup(_ref) {
       onClick = _ref.onClick,
       onKeyDown = _ref.onKeyDown,
       tabIndex = _ref.tabIndex;
-  return _react.default.createElement("g", {
+  return _react["default"].createElement("g", {
     className: "chq-charts--pie-slice",
     tabIndex: tabIndex,
     onClick: onClick,
     onKeyDown: onKeyDown
-  }, _react.default.createElement("path", {
+  }, _react["default"].createElement("path", {
     d: outerPath,
     fill: color
-  }), _react.default.createElement("path", {
+  }), _react["default"].createElement("path", {
     d: innerPath,
     fill: color
   }));
 };
 
 var PieChartSlice = function PieChartSlice(props) {
-  return _react.default.createElement(_ChartSegment.default, _extends({
+  return _react["default"].createElement(_ChartSegment["default"], _extends({
     component: PieChartGroup
   }, props));
 };
@@ -166,7 +166,7 @@ function (_PureComponent) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(PieChartSVG).call(this, props));
     _this.state = {
-      colors: (0, _getColorList.default)(Object.keys(props.data).length),
+      colors: (0, _getColorList["default"])(Object.keys(props.data).length),
       slices: getSlices(props.data, props.ellipsized, getScalar(0))
     };
     return _this;
@@ -187,7 +187,7 @@ function (_PureComponent) {
       if (data !== prevProps.data) {
         clearInterval(this.interval);
         this.setState({
-          colors: (0, _getColorList.default)(Object.keys(data).length),
+          colors: (0, _getColorList["default"])(Object.keys(data).length),
           slices: getSlices(data, ellipsized, getScalar(0))
         });
         this.beginInterval();
@@ -230,7 +230,7 @@ function (_PureComponent) {
       var _this$state = this.state,
           colors = _this$state.colors,
           slices = _this$state.slices;
-      return _react.default.createElement("svg", {
+      return _react["default"].createElement("svg", {
         className: "chq-charts--chart",
         viewBox: "-1.4 -1.4 2.8 2.8",
         ref: svgRef
@@ -238,7 +238,7 @@ function (_PureComponent) {
         var key = _ref2.key,
             outerPath = _ref2.outerPath,
             innerPath = _ref2.innerPath;
-        return _react.default.createElement(PieChartSlice, {
+        return _react["default"].createElement(PieChartSlice, {
           key: key,
           dataKey: key,
           outerPath: outerPath,
@@ -257,21 +257,21 @@ function (_PureComponent) {
             leaderLine = _ref3.leaderLine,
             textAnchor = _ref3.textAnchor;
 
-        return _react.default.createElement("g", {
+        return _react["default"].createElement("g", {
           key: key,
           className: "chq-charts--noselect"
-        }, _react.default.createElement("line", _extends({}, leaderLine, {
+        }, _react["default"].createElement("line", _extends({}, leaderLine, {
           stroke: "#666",
           strokeWidth: 0.01
-        })), _react.default.createElement("text", {
+        })), _react["default"].createElement("text", {
           x: x,
           y: y,
           textAnchor: textAnchor,
           fontSize: 0.12
-        }, _react.default.createElement("tspan", {
+        }, _react["default"].createElement("tspan", {
           x: x,
           y: y
-        }, labelTop), _react.default.createElement("tspan", {
+        }, labelTop), _react["default"].createElement("tspan", {
           x: x,
           y: y,
           dy: ".15"
@@ -284,10 +284,10 @@ function (_PureComponent) {
 }(_react.PureComponent);
 
 var PieChart = function PieChart(props) {
-  return _react.default.createElement(_Chart.default, _extends({
+  return _react["default"].createElement(_Chart["default"], _extends({
     component: PieChartSVG
   }, props));
 };
 
 var _default = PieChart;
-exports.default = _default;
+exports["default"] = _default;

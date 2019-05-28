@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -13,9 +13,9 @@ var _Chart = _interopRequireDefault(require("./Chart"));
 
 var _ChartSegment = _interopRequireDefault(require("./ChartSegment"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -47,7 +47,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 var makeChartConfig = function makeChartConfig(data, ellipsized) {
   var keys = Object.keys(data);
-  var colors = (0, _getColorList.default)(keys.length);
+  var colors = (0, _getColorList["default"])(keys.length);
   var maxValue = Math.max.apply(Math, _toConsumableArray(Object.values(data)));
   var maxKeyLen = Math.max.apply(Math, _toConsumableArray(Object.keys(ellipsized).map(function (key) {
     return key.length;
@@ -79,34 +79,34 @@ var ChartBarGroup = function ChartBarGroup(_ref) {
       onClick = _ref.onClick,
       onKeyDown = _ref.onKeyDown;
   var perc = maxValue ? dataValue / maxValue : 0;
-  return _react.default.createElement("g", null, _react.default.createElement("text", {
+  return _react["default"].createElement("g", null, _react["default"].createElement("text", {
     x: (maxKeyLen + 1) * 10,
     y: index * 40,
     dy: "1em",
     textAnchor: "end"
-  }, ellipsized), dataValue !== 0 && _react.default.createElement("text", {
+  }, ellipsized), dataValue !== 0 && _react["default"].createElement("text", {
     x: startX + perc * 250 + 10,
     y: index * 40 + 17.5,
     textAnchor: "left"
-  }, dataValue), _react.default.createElement("g", {
+  }, dataValue), _react["default"].createElement("g", {
     className: "chq-charts--hori-bar-group",
     tabIndex: tabIndex,
     onClick: onClick,
     onKeyDown: onKeyDown
-  }, _react.default.createElement("rect", {
+  }, _react["default"].createElement("rect", {
     width: perc * 250,
     height: 25,
     x: startX,
     y: index * 40,
     fill: color
-  }), _react.default.createElement("rect", {
+  }), _react["default"].createElement("rect", {
     className: "chq-charts--bar-shadow",
     width: perc * 250 + 5,
     height: 35,
     x: startX,
     y: index * 40 - 5,
     fill: color
-  })), !isLast && _react.default.createElement("line", {
+  })), !isLast && _react["default"].createElement("line", {
     x1: startX - 10,
     y1: (index + 1) * 40 - 7.5,
     x2: startX + 10,
@@ -117,7 +117,7 @@ var ChartBarGroup = function ChartBarGroup(_ref) {
 };
 
 var ChartBar = function ChartBar(props) {
-  return _react.default.createElement(_ChartSegment.default, _extends({
+  return _react["default"].createElement(_ChartSegment["default"], _extends({
     component: ChartBarGroup
   }, props));
 };
@@ -169,12 +169,12 @@ function (_PureComponent) {
           maxX = chartConfig.maxX,
           maxY = chartConfig.maxY,
           startX = chartConfig.startX;
-      return _react.default.createElement("svg", {
+      return _react["default"].createElement("svg", {
         className: "chq-charts--chart chq-charts--hori-bar",
         viewBox: "0 0 ".concat(maxX + 15, " ").concat(maxY + 10),
         ref: svgRef
       }, keys.map(function (key, index) {
-        return _react.default.createElement(ChartBar, {
+        return _react["default"].createElement(ChartBar, {
           key: key,
           dataKey: key,
           maxKeyLen: maxKeyLen,
@@ -188,7 +188,7 @@ function (_PureComponent) {
           onDeselect: onDeselect,
           onToggle: onToggle
         });
-      }), _react.default.createElement("line", {
+      }), _react["default"].createElement("line", {
         x1: startX - 5,
         y1: -10,
         x2: startX - 5,
@@ -203,10 +203,10 @@ function (_PureComponent) {
 }(_react.PureComponent);
 
 var HorizontalBarChart = function HorizontalBarChart(props) {
-  return _react.default.createElement(_Chart.default, _extends({
+  return _react["default"].createElement(_Chart["default"], _extends({
     component: ChartSVG
   }, props));
 };
 
 var _default = HorizontalBarChart;
-exports.default = _default;
+exports["default"] = _default;
