@@ -22,3 +22,11 @@ To get the styles, be sure to also import `@culturehq/charts/dist/style.css` int
 ## Testing locally
 
 You can run the tests by running `yarn test` and lint by running `yarn lint`. You can run the local server by running `yarn start` which will start the docs server on `http://localhost:8080`.
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/CultureHQ/charts.
+
+## License
+
+The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
