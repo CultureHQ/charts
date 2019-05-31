@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ## [Unreleased]
 ### Changed
 - [INTERNAL] Switched to using `@culturehq/scripts` for development.
+- [INTERNAL] Switched to using `@testing-library/react` for tests.
 
 ## [1.2.0] - 2018-12-24
 ### Added
