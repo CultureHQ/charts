@@ -1,13 +1,12 @@
 {
   "name": "@culturehq/charts",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "An SVG charting library",
   "main": "dist/Charts.js",
   "scripts": {
-    "build": "yarn build:js && yarn build:docs",
-    "build:js": "babel src --out-dir ./dist --ignore '**/__tests__/**' && cp src/style.css dist/style.css",
-    "build:docs": "webpack --mode production",
+    "docs": "webpack --mode production",
     "lint": "chq-scripts lint",
+    "prepublishOnly": "rm -f dist/* && babel src --out-dir ./dist --ignore '**/__tests__/**' && cp src/style.css dist/style.css",
     "start": "webpack-dev-server --mode development --hot",
     "test": "chq-scripts test"
   },
@@ -38,8 +37,8 @@
     "react-dom": "^16.8.6",
     "style-loader": "^0.23.0",
     "webpack": "^4.32.2",
-    "webpack-cli": "^3.3.2",
-    "webpack-dev-server": "^3.4.1"
+    "webpack-cli": "^3.3.3",
+    "webpack-dev-server": "^3.7.1"
   },
   "eslintConfig": {
     "extends": [
