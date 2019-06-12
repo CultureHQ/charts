@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 
 import getColorList from "./getColorList";
+import getMaximum from "./getMaximum";
 import Chart from "./Chart";
 import ChartSegment from "./ChartSegment";
 
@@ -8,7 +9,7 @@ const makeChartConfig = data => {
   const keys = Object.keys(data);
   const colors = getColorList(keys.length);
 
-  const maxValue = Math.max(...Object.values(data));
+  const maxValue = getMaximum(data);
   const maxX = keys.length * 40;
 
   return { keys, colors, maxValue, maxX };
