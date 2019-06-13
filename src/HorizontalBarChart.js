@@ -10,7 +10,7 @@ const makeChartConfig = (data, ellipsized) => {
   const colors = getColorList(keys.length);
 
   const maxValue = getMaximum(data);
-  const maxKeyLen = Math.max.apply(Math, Object.keys(ellipsized).map(key => key.length));
+  const maxKeyLen = Math.max(...Object.keys(ellipsized).map(key => key.length));
 
   const maxX = (maxKeyLen + 3) * 10 + 250;
   const maxY = (keys.length - 1) * 40 + 25;
