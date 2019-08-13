@@ -31,7 +31,7 @@ const getSlices = (data, ellipsized, scalar) => {
       return;
     }
 
-    const percent = data[key] / total * scalar;
+    const percent = (data[key] / total) * scalar;
     const largeArc = percent > 0.5 ? 1 : 0;
 
     const centerPerc = cursor + percent / 2;
