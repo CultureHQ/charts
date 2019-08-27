@@ -25,13 +25,16 @@ const makePNGExport = imageSrc => new Promise(resolve => {
   const image = new Image();
   image.onload = () => {
     const context = canvas.getContext("2d");
-    context.fillStyle = "white";
 
+    context.fillStyle = "white";
     context.fillRect(0, 0, size, size);
+
+    /* eslint-disable function-call-argument-newline */
     context.drawImage(
       image, 0, 0, size, size,
       padding, padding, size - padding * 2, size - padding * 2
     );
+    /* eslint-enable function-call-argument-newline */
 
     resolve(canvas.toDataURL("image/png"));
   };
