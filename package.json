@@ -29,7 +29,7 @@
     "@babel/core": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
     "@babel/preset-react": "^7.0.0",
-    "@culturehq/scripts": "^4.0.1",
+    "@culturehq/scripts": "^5.0.0",
     "@testing-library/react": "^9.1.1",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.1.0",
