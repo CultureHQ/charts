@@ -1,6 +1,6 @@
 # @culturehq/charts
 
-[![Build Status](https://github.com/CultureHQ/charts/workflows/Push/badge.svg)](https://github.com/CultureHQ/charts/actions)
+[![Build Status](https://github.com/CultureHQ/charts/workflows/Main/badge.svg)](https://github.com/CultureHQ/charts/actions)
 [![Package Version](https://img.shields.io/npm/v/@culturehq/charts.svg)](https://www.npmjs.com/package/@culturehq/charts)
 
 An SVG React charting library.
