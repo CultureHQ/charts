@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent, waitForElement } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 
 import PieChart from "../PieChart";
 
@@ -43,8 +43,8 @@ test("syncs with data", () => {
 });
 
 test("finishes animation and cancels interval", async () => {
-  const { getByText } = render(<PieChart data={{ a: 10, b: 0 }} />);
+  const { findByText } = render(<PieChart data={{ a: 10, b: 0 }} />);
 
   await new Promise(resolve => setTimeout(resolve, 2000));
-  await waitForElement(() => getByText("100% (10)"));
+  await findByText("100% (10)");
 });
