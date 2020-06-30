@@ -45,6 +45,9 @@ test("syncs with data", () => {
 test("finishes animation and cancels interval", async () => {
   const { findByText } = render(<PieChart data={{ a: 10, b: 0 }} />);
 
-  await new Promise(resolve => setTimeout(resolve, 2000));
+  await new Promise(resolve => {
+    setTimeout(resolve, 2000);
+  });
+
   await findByText("100% (10)");
 });
